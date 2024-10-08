@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for, redirect
+import flask_login
 
 
 app = Flask(__name__)
@@ -31,4 +32,8 @@ def profile():
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(debug=True)
+=======
+    app.run(debug=True)
+>>>>>>> 23f391d7caebc00a44656f2396ea57f915e1e021
