@@ -1,12 +1,13 @@
 :root {
-    --color_hover: #cca700;
+    --color_hover: #af8f00;
     --main_color: #ffd000;
     --link-color: #ffffff;
     --link-text: #ffe13a;
 }
 
-body{
+body {
     background-color: #111111;
+    position: relative;
 }
 
 .container {
@@ -17,11 +18,6 @@ body{
     width: 100%;
 }
 
-/* @media screen and (min-width: 480px) {
-    .container {
-        width: 90;
-    }
-} */
 
 @media screen and (min-width: 768px) {
     .container {
@@ -37,37 +33,83 @@ body{
 
 /* header */
 
-@media screen and (min-width: 480px) {
-    .header__nav__list{
-        display: flex;
-        width: 100%;
-        height: 50px;
-        gap: 10px;
-    }
+.header__nav__list {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    gap: 10px;
 
-    .header__nav{
-        padding-bottom: 10px;
-    }
+}
 
-    .header__nav__item{
-        width: 50%;
-    }
+.header__nav__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    .header__nav__item__btn{
-        font-size: 25px;
-        width: 100%;
-        height: 100%;
-        background-color: var(--main_color);
-        border: none;
-    }
+.header__list__nav{
+    display: flex;
+    gap: 20px;
+}
 
-    .header__nav__item__btn:hover{
-        background-color: var(--color_hover);
-    }
+.header__item__nav{
+    font-size: 25px;
+}
 
-    .header__nav__link__img{
-        width: 100px;
-        background-color: white;
-        border-radius: 50%;
-    }
-} 
+.header__item__nav{
+    font-size: 25px;
+}
+
+.header__item__nav:hover{
+    color: var(--color_hover);
+    font-size: 27px;
+}
+
+.header__div{
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
+    align-items: center;
+}
+
+.header__nav {
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.header__nav__link__list {
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.header__list__nav{
+
+}
+
+.header__nav__link__img {
+    width: 100px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.header__nav__item {
+    width: 50%;
+}
+
+.header__nav__item__btn {
+    font-size: 25px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: white;
+}
+
+.header__nav__item__btn:hover {
+    background-color: rgb(24, 24, 24);
+}
