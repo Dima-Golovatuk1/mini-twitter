@@ -30,15 +30,5 @@ def bookmarks():
 def profile():
     render_template('index.html')
 
-<<<<<<< HEAD
-
 if __name__ == '__main__':
-<<<<<<< HEAD
     app.run(debug=True)
-=======
-    app.run(debug=True)
->>>>>>> 23f391d7caebc00a44656f2396ea57f915e1e021
-=======
-if __name__ == "__main__":
-    app.run(debug=True)
->>>>>>> 491090f7eedfdbc15226440c69cd9dccc66799b9
