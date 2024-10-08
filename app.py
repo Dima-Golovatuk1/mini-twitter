@@ -13,22 +13,23 @@ def home():
 
 @app.route('/explore')
 def explore():
-    render_template('index.html')
+    return render_template('index.html')
 
 
 @app.route('/messages')
 def messages():
-    render_template('index.html')
+    return render_template('index.html')
 
 
 @app.route('/bookmarks')
 def bookmarks():
-    render_template('index.html')
+    return render_template('index.html')
 
 
 @app.route('/profile')
 def profile():
-    render_template('index.html')
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
