@@ -7,27 +7,28 @@ app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
 @app.route('/')
 def Home():
-    render_template('index.html')
+    return render_template('index.html')
 
 
-@app.route('/')
+@app.route('/Explore')
 def Explore():
-    render_template('index.html')
+    return render_template('index.html')
 
 
-@app.route('/')
+@app.route('/Messages')
 def Messages():
-    render_template('index.html')
+    return render_template('index.html')
 
 
-@app.route('/')
+@app.route('/Bookmarks')
 def Bookmarks():
-    render_template('index.html')
+    return render_template('index.html')
 
 
-@app.route('/')
+@app.route('/Profile')
 def Profile():
-    render_template('index.html')
+    return render_template('index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
