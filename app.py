@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, redirect
-from flask_login import login_required
+import flask_login
 
 
 app = Flask(__name__)
