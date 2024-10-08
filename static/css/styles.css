@@ -45,6 +45,10 @@ body{
         gap: 10px;
     }
 
+    .header__nav{
+        padding-bottom: 10px;
+    }
+
     .header__nav__item{
         width: 50%;
     }

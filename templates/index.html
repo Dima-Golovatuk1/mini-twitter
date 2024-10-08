@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+
 <body>
     <header class="header">
         <div class="container">
-            <a class="header__nav__link" href="">
-                <img class="header__nav__link__img" src="../static/img/profile.png" alt="#">
-            </a>
-        <nav class="header__nav">
-            <ul class="header__nav__list">
-                <li class="header__nav__item"><button class="header__nav__item__btn">Global</button></li>
-                <li class="header__nav__item"><button class="header__nav__item__btn">Following</button></li>
-            </ul>
-        </nav>
-    </div>
+            <nav class="header__nav">
+                <a class="header__nav__link" href="">
+                    <img class="header__nav__link__img" src="../static/img/profile.png" alt="#">
+                </a>
+                <ul class="header__nav__list">
+                    <li class="header__nav__item"><button class="header__nav__item__btn">Global</button></li>
+                    <li class="header__nav__item"><button class="header__nav__item__btn">Following</button></li>
+                </ul>
+            </nav>
+        </div>
     </header>
     <footer>
         <ul>
@@ -26,4 +28,5 @@
         </ul>
     </footer>
 </body>
+
 </html>
