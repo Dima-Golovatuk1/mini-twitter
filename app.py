@@ -25,31 +25,5 @@ def Messages():
 def Bookmarks():
     return render_template('index.html')
 
-
-@app.route('/Profile')
-def Profile():
-def home():
-    return render_template('index.html')
-
-
-@app.route('/explore')
-def explore():
-    return render_template('index.html')
-
-
-@app.route('/messages')
-def messages():
-    return render_template('index.html')
-
-
-@app.route('/bookmarks')
-def bookmarks():
-    return render_template('index.html')
-
-
-@app.route('/profile')
-def profile():
-
-
 if __name__ == '__main__':
     app.run(debug=True)
