@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
 
+
+<body>
+    <main class="login">
+        <div class="container">
+            <form class="form__login" action="/submit_registration" method="POST">
+                <h2 class="login__title">Вхід</h2>
+                <ul class="form__login__list">
+                    <li class="form__login__item">
+                        <label class="form__login__item__label" for="email">Електронна пошта:</label>
+                        <input class="form__login__item__input" type="email" id="email" name="email" required>
+                    </li>
+                    <li class="form__login__item">
+                        <label class="form__login__item__label" for="password">Пароль:</label>
+                        <input class="form__login__item__input" type="password" id="password" name="password" required>
+                    </li>
+                </ul>
+                <input class="form__login__btn" type="submit" value="Зареєструватися">
+            </form>
+        </div>
+    </main>
 </body>
+
 </html>
