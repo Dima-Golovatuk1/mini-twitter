@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+
+<body>
+    <main class="register">
+        <div class="container">
+            <h2 class="register__title">Форма реєстрації</h2>
+
+            <form class="form__register" action="/submit_registration" method="POST">
+                <ul class="form__register__list">
+                    <li class="form__register__item">
+                        <label class="form__register__item__label" for="username">Ім'я користувача:</label>
+                        <input class="form__register__item__input" type="text" id="username" name="username" required>
+                    </li>
+                    <li class="form__register__item">
+                        <label class="form__register__item__label" for="email">Електронна пошта:</label>
+                        <input class="form__register__item__input" type="email" id="email" name="email" required>
+                    </li>
+                    <li class="form__register__item">
+                        <label class="form__register__item__label" for="password">Пароль:</label>
+                        <input class="form__register__item__input" type="password" id="password" name="password" required>
+                    </li>
+                    <li class="form__register__item">
+                        <label class="form__register__item__label" for="confirm_password">Підтвердіть пароль:</label>
+                        <input class="form__register__item__input" type="password" id="confirm_password" name="confirm_password" required>
+                    </li>
+                    <li class="form__register__item">
+                        <label class="form__register__item__label" for="dob">Дата народження:</label>
+                        <input class="form__register__item__input" type="date" id="dob" name="dob">
+                    </li>
+                    <li class="form__register__item">
+                        <label class="form__register__item__label" for="gender">Стать:</label>
+                        <select class="form__register__item__input" id="gender" name="gender">
+                            <option value="male">Чоловік</option>
+                            <option value="female">Жінка</option>
+                            <option value="other">Інше</option>
+                        </select>
+                    </li>
+                </ul>
+                <input class="form__register__btn" type="submit" value="Зареєструватися">
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
