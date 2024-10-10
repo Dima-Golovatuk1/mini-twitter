@@ -11,11 +11,6 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/explore')
-def explore():
-    return render_template('index.html')
-
-
 @app.route('/messages')
 def messages():
     return render_template('index.html')
@@ -29,6 +24,21 @@ def bookmarks():
 @app.route('/profile')
 def profile():
     return render_template('index.html')
+
+
+@app.route('/explore')
+def explore():
+    return render_template('explore.html')
+
+
+@app.route('/messages')
+def messages():
+    return render_template('messages.html')
+
+
+@app.route('/notifications')
+def notifications():
+    return render_template('notifications.html')
 
 
 if __name__ == '__main__':
