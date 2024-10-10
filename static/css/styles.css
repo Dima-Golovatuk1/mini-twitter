@@ -319,3 +319,7 @@ body {
 .form__login__btn:hover {
     background-color: var(--color_hover);
 }
+
+.register__btn {
+color: yellow;
+}
