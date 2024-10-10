@@ -7,7 +7,7 @@ app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
 
 @app.route('/')
-def Home():
+def home():
     return render_template('index.html')
 
 
@@ -21,28 +21,28 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/Explore')
-def Explore():
+@app.route('/explore')
+def explore():
     return render_template('explore.html')
 
 
-@app.route('/Messages.html')
-def Messages():
+@app.route('/messages.html')
+def messages():
     return render_template('messages.html')
 
 
-@app.route('/Bookmarks')
-def Bookmarks():
+@app.route('/bookmarks')
+def bookmarks():
     return render_template('bookmarks.html')
 
 
-@app.route('/Profile')
-def Profile():
+@app.route('/profile')
+def profile():
     return render_template('profile.html')
 
 
-@app.route('/Notifications')
-def Notifications():
+@app.route('/notifications')
+def notifications():
     return render_template('notifications.html')
 
 
