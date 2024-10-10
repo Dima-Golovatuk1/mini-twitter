@@ -12,40 +12,46 @@
 <body>
     <main class="register">
         <div class="container">
-            <h2 class="register__title">Зареєструватися</h2>
+            <h1 class="big_g">X-Whisper</h1>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h3 class="register__title">Register</h3>
 
             <form class="form__register" action="/submit_registration" method="POST">
                 <ul class="form__register__list">
                     <li class="form__register__item">
-                        <label class="form__register__item__label" for="username">Ім'я користувача:</label>
+                        <label class="form__register__item__label" for="username">Username:</label>
                         <input class="form__register__item__input" type="text" id="username" name="username" required>
                     </li>
                     <li class="form__register__item">
-                        <label class="form__register__item__label" for="email">Електронна пошта:</label>
+                        <label class="form__register__item__label" for="email">Email:</label>
                         <input class="form__register__item__input" type="email" id="email" name="email" required>
                     </li>
                     <li class="form__register__item">
-                        <label class="form__register__item__label" for="password">Пароль:</label>
+                        <label class="form__register__item__label" for="password">Password:</label>
                         <input class="form__register__item__input" type="password" id="password" name="password" required>
                     </li>
                     <li class="form__register__item">
-                        <label class="form__register__item__label" for="confirm_password">Підтвердіть пароль:</label>
+                        <label class="form__register__item__label" for="confirm_password">Repeat password:</label>
                         <input class="form__register__item__input" type="password" id="confirm_password" name="confirm_password" required>
                     </li>
                     <li class="form__register__item">
-                        <label class="form__register__item__label" for="dob">Дата народження:</label>
+                        <label class="form__register__item__label" for="dob">Date of birthday:</label>
                         <input class="form__register__item__input" type="date" id="dob" name="dob">
                     </li>
                     <li class="form__register__item">
-                        <label class="form__register__item__label" for="gender">Стать:</label>
+                        <label class="form__register__item__label" for="gender">Gender:</label>
                         <select class="form__register__item__input" id="gender" name="gender">
-                            <option value="male">Чоловік</option>
-                            <option value="female">Жінка</option>
-                            <option value="other">Інше</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
                         </select>
                     </li>
                 </ul>
-                <input class="form__register__btn" type="submit" value="Зареєструватися">
+                <input class="form__register__btn" type="submit" value="Register">
             </form>
         </div>
     </main>

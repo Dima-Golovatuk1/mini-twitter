@@ -321,5 +321,36 @@ body {
 }
 
 .register__btn {
-color: yellow;
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.message_about_name {
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1.big {
+    font-size: 6rem;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1.big_g {
+    font-size: 4rem;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

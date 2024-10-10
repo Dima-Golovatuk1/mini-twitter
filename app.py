@@ -6,7 +6,6 @@ from http import HTTPStatus
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
-
 users = []
 
 login_manager = LoginManager()
@@ -48,8 +47,15 @@ def unauthorized():
 
 
 @app.route('/')
+@login_required
 def home():
-    return render_template('index.html')
+    if current_user.is_authenticated:
+        name = current_user.name
+        user_id = current_user.id
+    else:
+        name = None
+        user_id = None
+    return render_template('index.html', user_id=user_id, username=name)
 
 
 @app.route('/login', methods=["POST", "GET"])
