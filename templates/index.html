@@ -26,16 +26,16 @@
                     </a>
                     <ul class="header__list__nav">
                         <li class="header__item__nav">
-                            <a href="">Home</a>
+                            <a href="http://127.0.0.1:5000/">Home</a>
                         </li>
                         <li class="header__item__nav">
-                            <a href="">Explore</a>
+                            <a href="http://127.0.0.1:5000/explore">Explore</a>
                         </li>
                         <li class="header__item__nav">
-                            <a href="">Notifications</a>
+                            <a href="http://127.0.0.1:5000/notifications">Notifications</a>
                         </li>
                         <li class="header__item__nav">
-                            <a href="">Messages</a>
+                            <a href="http://127.0.0.1:5000/messages">Messages</a>
                         </li>
                     </ul>
                 </div>
@@ -50,13 +50,15 @@
         <div class="container">
             <section class="section__post">
                 <ul class="section__post__list">
-                    <li class="section__post__item">
-                        <a href="">
-                            <h3 class="section__post__item__title">123</h3>
-                            <p class="section__post__item__text">vgdsgvdxgbd</p>
-                            <img class="section__post__item__img" src="" alt="">
-                        </a>
-                    </li>
+                    {% for post in posts %}
+                        <li class="section__post__item">
+                            <a href="{{ url_for('post', post_id=post.id) }}">
+                                <h3 class="section__post__item__title">{{ post.post_name }}</h3>
+                                <p class="section__post__item__text">{{ post.content }}</p>
+                                <img class="section__post__item__img" src="{{ post.image_url }}" alt="">
+                            </a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </section>
         </div>

@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from http import HTTPStatus
+import psycopg2
+from psycopg2 import sql
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
@@ -10,6 +12,35 @@ users = []
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+def get_db_connection():
+    connection = psycopg2.connect(
+        host="",
+        database="",
+        user="",
+        password=""
+    )
+    return connection
+
+
+def get_post_by_id(post_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    query = sql.SQL("SELECT post_name, content FROM posts WHERE id = %s")
+    cursor.execute(query, (post_id,))
+    post = cursor.fetchone()
+    cursor.close()
+    connection.close()
+
+    if post:
+        post_name, content = post
+        return {
+            'post_name': post_name,
+            'content': content
+        }
+    else:
+        return None
 
 
 class User(UserMixin):
@@ -52,10 +83,13 @@ def home():
     if current_user.is_authenticated:
         name = current_user.name
         user_id = current_user.id
+        posts = []
     else:
         name = None
         user_id = None
-    return render_template('index.html', user_id=user_id, username=name)
+        posts = []
+
+    return render_template('index.html', user_id=user_id, username=name, posts=posts)
 
 
 @app.route('/login', methods=["POST", "GET"])
@@ -70,7 +104,7 @@ def login():
             flash('Login successful', 'success')
             return redirect(url_for('profile'))
         else:
-            flash('Invalid email or password', 'danger')
+            return None
 
     return render_template('login.html')
 
@@ -106,6 +140,7 @@ def logout():
 
 
 @app.route('/explore')
+@login_required
 def explore():
     return render_template('explore.html')
 
@@ -132,6 +167,18 @@ def profile():
 @login_required
 def notifications():
     return render_template('notifications.html')
+
+
+@app.route('/post/<int:post_id>')
+@login_required
+def post(post_id):
+    post_data = get_post_by_id(post_id)
+    if post_data:
+        post_name = post_data['post_name']
+        content = post_data['content']
+        return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
+    else:
+        return redirect(url_for('explore'))
 
 
 if __name__ == '__main__':
