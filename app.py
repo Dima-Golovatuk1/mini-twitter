@@ -110,6 +110,7 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         user = User.get_by_email(email)
+        rem = request.form.get('remember', 'off')
 
         if user and check_password_hash(user.password, password):
             login_user(user)
