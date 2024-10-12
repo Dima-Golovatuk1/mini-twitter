@@ -8,16 +8,12 @@ from data.data_base import *
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
-<<<<<<< HEAD
-=======
 
 users = {}
->>>>>>> 3a4ae7b65e02d3e8c1c83377da1b70528e9caa69
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-<<<<<<< HEAD
 def get_db_connection():
     connection = psycopg2.connect(
         host="",
@@ -47,11 +43,6 @@ def get_post_by_id(post_id):
         return None
 
 
-users = {}
-
-
-=======
->>>>>>> 3a4ae7b65e02d3e8c1c83377da1b70528e9caa69
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
         self.id = id
@@ -83,6 +74,7 @@ class User(UserMixin):
             if user.email == email:
                 return user
         return None
+
 
 @login_manager.user_loader
 def load_user(user_id):
