@@ -14,6 +14,35 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+def get_db_connection():
+    connection = psycopg2.connect(
+        host="",
+        database="",
+        user="",
+        password=""
+    )
+    return connection
+
+
+def get_post_by_id(post_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    query = sql.SQL("SELECT post_name, content FROM posts WHERE id = %s")
+    cursor.execute(query, (post_id,))
+    post = cursor.fetchone()
+    cursor.close()
+    connection.close()
+
+    if post:
+        post_name, content = post
+        return {
+            'post_name': post_name,
+            'content': content
+        }
+    else:
+        return None
+
+
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
         self.id = id
@@ -48,7 +77,7 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(user_id):
-    for user in users:
+    for user in users.keys():
         if user.id == int(user_id):
             return user
     return None
