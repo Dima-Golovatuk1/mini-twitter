@@ -81,4 +81,21 @@ def look_user_by_id(_id: int):
             cursor.close()
             connection.close()
             logging.info('[INFO] PostgreSQL connection closed')
-            
+
+
+def delete_user_by_id(_id: int):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        query = """DELETE FROM users WHERE id = %s"""
+        cursor.execute(query, (_id,))
+        connection.commit()
+
+    except Exception as ex:
+        logging.error('[INFO] Error while working with PostgreSQL', exc_info=True)
+
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+            logging.info('[INFO] PostgreSQL connection closed')
