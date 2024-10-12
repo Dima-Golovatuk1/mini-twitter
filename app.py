@@ -4,10 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from http import HTTPStatus
 from data.data_base import *
 
-
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
-
 
 users = {}
 login_manager = LoginManager()
@@ -74,6 +72,7 @@ class User(UserMixin):
             if user.email == email:
                 return user
         return None
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -196,4 +195,3 @@ def post(post_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
