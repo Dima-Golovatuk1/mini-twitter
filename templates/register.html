@@ -34,14 +34,14 @@
                     </li>
                     <li class="form__register__item">
                         <label class="form__register__item__label" for="dob">Date of birthday:</label>
-                        <input class="form__register__item__input" type="date" id="dob" name="dob">
+                        <input class="form__register__item__input" type="date" id="dob" name="dob" required>
                     </li>
                     <li class="form__register__item">
                         <label class="form__register__item__label" for="gender">Gender:</label>
-                        <select class="form__register__item__input" id="gender" name="gender">
+                        <select class="form__register__item__input" id="gender" name="gender" required>
+                            <option value="other">Other</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
-                            <option value="other">Other</option>
                         </select>
                     </li>
                 </ul>
