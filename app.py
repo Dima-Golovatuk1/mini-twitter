@@ -2,16 +2,22 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from http import HTTPStatus
-import psycopg2
-from psycopg2 import sql
+from data.data_base import *
+
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
+<<<<<<< HEAD
+=======
+
+users = {}
+>>>>>>> 3a4ae7b65e02d3e8c1c83377da1b70528e9caa69
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+<<<<<<< HEAD
 def get_db_connection():
     connection = psycopg2.connect(
         host="",
@@ -44,14 +50,29 @@ def get_post_by_id(post_id):
 users = {}
 
 
+=======
+>>>>>>> 3a4ae7b65e02d3e8c1c83377da1b70528e9caa69
 class User(UserMixin):
-    def __init__(self, id, email, name, password, DOB, gender):
+    def __init__(self, id, email, name, password, DOB, gender, rem=None):
         self.id = id
         self.name = name
         self.email = email
         self.password = password
         self.DOB = DOB
         self.gender = gender
+        self.rem = rem
+
+    def remember(self):
+        return self.rem == 'on'
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
 
     def get_id(self):
         return str(self.id)
@@ -62,7 +83,6 @@ class User(UserMixin):
             if user.email == email:
                 return user
         return None
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -99,6 +119,7 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         user = User.get_by_email(email)
+        rem = request.form.get('remember', 'off')
 
         if user and check_password_hash(user.password, password):
             login_user(user)

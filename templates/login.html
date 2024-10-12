@@ -12,8 +12,8 @@
     <main class="login">
         <div class="container">
             <form class="form__login" action="/submit_registration" method="POST">
-                <h1 class="big">X-Whisper</h1>
-                <h4>You need to be logged in to join our forum</h4>
+                <h1 class="login__main__title">X-Whisper</h1>
+                <p class="form__login__text">You need to be logged in to join our forum</p>
                 <h2 class="login__title">Log in</h2>
                 <ul class="form__login__list">
                     <li class="form__login__item">
@@ -24,13 +24,20 @@
                         <label class="form__login__item__label" for="password">Password:</label>
                         <input class="form__login__item__input" type="password" id="password" name="password" required>
                     </li>
+                    <li class="form__login__item">
+                        <div class="form__login__item__check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember">
+                            <label class="form-check-label" for="exampleCheck1">remember me</label>
+                        </div>
+                    </li>
+                    <li class="form__login__item">
+                        <h2 class="form__login__item__text">Haven't account? <a href="/register"
+                                class="form__login__item__link">Register now</a></h2>
+                    </li>
                 </ul>
                 <input class="form__login__btn" type="submit" value="Log in">
             </form>
-            <div class="register__link">
-                <br>
-                <h2>Haven't account? <a href="/register" class="register__btn">Register now</a></h2>
-            </div>
+
         </div>
     </main>
 </body>

@@ -12,15 +12,9 @@
 <body>
     <main class="register">
         <div class="container">
-            <h1 class="big_g">X-Whisper</h1>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h3 class="register__title">Register</h3>
-
             <form class="form__register" action="/submit_registration" method="POST">
+                <h1 class="register__main__title">X-Whisper</h1>
+                <h3 class="register__title">Register</h3>
                 <ul class="form__register__list">
                     <li class="form__register__item">
                         <label class="form__register__item__label" for="username">Username:</label>
@@ -40,14 +34,14 @@
                     </li>
                     <li class="form__register__item">
                         <label class="form__register__item__label" for="dob">Date of birthday:</label>
-                        <input class="form__register__item__input" type="date" id="dob" name="dob">
+                        <input class="form__register__item__input" type="date" id="dob" name="dob" required>
                     </li>
                     <li class="form__register__item">
                         <label class="form__register__item__label" for="gender">Gender:</label>
-                        <select class="form__register__item__input" id="gender" name="gender">
+                        <select class="form__register__item__input" id="gender" name="gender" required>
+                            <option value="other">Other</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
-                            <option value="other">Other</option>
                         </select>
                     </li>
                 </ul>
