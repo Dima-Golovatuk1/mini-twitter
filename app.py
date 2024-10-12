@@ -75,7 +75,6 @@ class User(UserMixin):
                 return user
         return None
 
-
 @login_manager.user_loader
 def load_user(user_id):
     for user in users.keys():
