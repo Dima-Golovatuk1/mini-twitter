@@ -8,8 +8,6 @@ from psycopg2 import sql
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
-users = []
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -43,6 +41,9 @@ def get_post_by_id(post_id):
         return None
 
 
+users = {}
+
+
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender):
         self.id = id
@@ -65,7 +66,7 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(user_id):
-    for user in users:
+    for user in users.keys():
         if user.id == int(user_id):
             return user
     return None
