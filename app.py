@@ -2,45 +2,16 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from http import HTTPStatus
-import psycopg2
-from psycopg2 import sql
+from data.data_base import *
+
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
-users = []
 
+users = {}
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-
-def get_db_connection():
-    connection = psycopg2.connect(
-        host="",
-        database="",
-        user="",
-        password=""
-    )
-    return connection
-
-
-def get_post_by_id(post_id):
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    query = sql.SQL("SELECT post_name, content FROM posts WHERE id = %s")
-    cursor.execute(query, (post_id,))
-    post = cursor.fetchone()
-    cursor.close()
-    connection.close()
-
-    if post:
-        post_name, content = post
-        return {
-            'post_name': post_name,
-            'content': content
-        }
-    else:
-        return None
 
 
 class User(UserMixin):
