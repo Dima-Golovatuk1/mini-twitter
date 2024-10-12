@@ -19,7 +19,7 @@ body {
 
 @media screen and (min-width: 768px) {
     .container {
-        width: 90%;
+        width: 100vw;
     }
 }
 
@@ -169,7 +169,7 @@ body {
 /* register */
 .register {
     background-image: linear-gradient(to right, rgba(47, 48, 58, 0.4), rgba(47, 48, 58, 0.4)),
-    url('../img/huji23.jpg'); /* Перевірте правильність шляху */
+    url('../img/huji23.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -181,6 +181,19 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.register__main__title {
+    font-size: 80px;
+    text-transform: uppercase;
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #0B2349;
+    display: table;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
 
 .register__title {
     font-size: 30px;
@@ -243,7 +256,7 @@ body {
 /* login */
 .login {
     background-image: linear-gradient(to right, rgba(47, 48, 58, 0.4), rgba(47, 48, 58, 0.4)),
-    url('../img/huji23.jpg'); /* Перевірте правильність шляху */
+    url('../img/huji23.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -260,7 +273,23 @@ body {
 }
 
 .login__card{
+}
 
+.login__main__title {
+    font-size: 80px;
+    text-transform: uppercase;
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #0B2349;
+    display: table;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
+.form__login__text {
+    margin-bottom: 50px;
+    font-size: 20px;
 }
 
 .login__title {
@@ -304,6 +333,23 @@ body {
     border-radius: 5px;
 }
 
+.form__login__item__check {
+    display: flex;
+    justify-content: start;
+    font-size: 20px;
+    color: var(--link-text);
+}
+
+.form-check-input{
+    width: 20px;
+    height: 20px;
+}
+
+.form__login__item__link {
+    color: #ffd000;
+    border-bottom: 1px solid var(--color_hover);
+}
+
 .form__login__btn {
     margin-top: 20px;
     padding: 10px 20px;
@@ -320,7 +366,7 @@ body {
     background-color: var(--color_hover);
 }
 
-.register__btn {
+/* .register__btn {
     background: -webkit-linear-gradient(black, yellow, white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -338,7 +384,7 @@ h1.big {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    background: -webkit-linear-gradient(black, yellow, white);
+    
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -353,4 +399,4 @@ h1.big_g {
     background: -webkit-linear-gradient(black, yellow, white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
+} */

@@ -44,13 +44,26 @@ def get_post_by_id(post_id):
 
 
 class User(UserMixin):
-    def __init__(self, id, email, name, password, DOB, gender):
+    def __init__(self, id, email, name, password, DOB, gender, rem=None):
         self.id = id
         self.name = name
         self.email = email
         self.password = password
         self.DOB = DOB
         self.gender = gender
+        self.rem = rem
+
+    def remember(self):
+        return self.rem == 'on'
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
 
     def get_id(self):
         return str(self.id)
@@ -61,7 +74,6 @@ class User(UserMixin):
             if user.email == email:
                 return user
         return None
-
 
 @login_manager.user_loader
 def load_user(user_id):
