@@ -1,43 +1,40 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from handlers import get_users_by_id, get_users, get_users_by_email, add_user_to_users
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
 users = {}
-login_manager = LoginManager()
-login_manager.init_app(app)
+
+# def get_db_connection():
+#     connection = psycopg2.connect(
+#         host="",
+#         database="",
+#         user="",
+#         password=""
+#     )
+#     return connection
 
 
-def get_db_connection():
-    connection = psycopg2.connect(
-        host="",
-        database="",
-        user="",
-        password=""
-    )
-    return connection
+# def get_post_by_id(post_id):
+#     connection = get_db_connection()
+#     cursor = connection.cursor()
+#     query = sql.SQL("SELECT post_name, content FROM posts WHERE id = %s")
+#     cursor.execute(query, (post_id,))
+#     post = cursor.fetchone()
+#     cursor.close()
+#     connection.close()
 
-
-def get_post_by_id(post_id):
-    connection = get_db_connection()
-    cursor = connection.cursor()
-    query = sql.SQL("SELECT post_name, content FROM posts WHERE id = %s")
-    cursor.execute(query, (post_id,))
-    post = cursor.fetchone()
-    cursor.close()
-    connection.close()
-
-    if post:
-        post_name, content = post
-        return {
-            'post_name': post_name,
-            'content': content
-        }
-    else:
-        return None
+    # if post:
+    #     post_name, content = post
+    #     return {
+    #         'post_name': post_name,
+    #         'content': content
+    #     }
+    # else:
+    #     return None
 
 
 class User(UserMixin):
@@ -65,19 +62,29 @@ class User(UserMixin):
     def get_id(self):
         return str(self.id)
 
-    @staticmethod
-    def get_by_email(email):
-        for user in users:
-            if user.email == email:
-                return user
-        return None
+    # @staticmethod
+    # def get_by_email(email):
+    #     for user in users:
+    #         if user.email == email:
+    #             return user
+    #     return None
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     for user in users.keys():
+#         if user.id == int(user_id):
+#             return user
+#     return None
 
 @login_manager.user_loader
 def load_user(user_id):
-    for user in users.keys():
-        if user.id == int(user_id):
-            return user
+    user = get_users_by_id(user_id)
+    if user:
+        return User(id=user[0]['id'], email=user[0]['email'], name=user[0]['name'], password=user[0]['password'],
+                    DOB=user[0]['birthday'], gender=user[0]['sex'],)
     return None
 
 
@@ -119,25 +126,51 @@ def login():
 
     return render_template('login.html')
 
+# @app.route('/login', methods=["POST", "GET"])
+# def login():
+#     if request.method == 'POST':
+#         email = request.form.get('email')
+#         password = request.form.get('password')
+#         user = get_users_by_email(email)
+#         rem = request.form.get('remember', 'off')
+
+#         if user and check_password_hash(user[0]['password'], password):
+#             user_obj = User(id=user[0]['id'], name=user[0]['name'], email=user[0]['email'], password=user[0]['password'],
+#                             DOB=user[0]['birthday'], gender=user[0]['sex'], rem=rem)
+#             login_user(user_obj, remember=user_obj.remember())
+#             flash('Login successful', 'success')
+#             return redirect(url_for('profile'))
+#         else:
+#             flash('Invalid credentials', 'danger')
+#             return render_template('login.html')
+
+#     return render_template('login.html')
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == 'POST':
         email = request.form.get('email')
-        name = request.form.get('name')
+        name = request.form.get('username')
         password = request.form.get('password')
-        DOB = request.form.get('DOB')
+        confirm_password = request.form.get('confirm_password')
+        DOB = request.form.get('dob')
         gender = request.form.get('gender')
+        users_list = get_users()
+        print(email)
 
-        if User.get_by_email(email):
-            flash('Email is already registered', 'danger')
-        else:
-            hashed_password = generate_password_hash(password, method='sha256')
-            user_id = len(users) + 1
-            new_user = User(user_id, email, name, hashed_password, DOB, gender)
-            users.append(new_user)
-            flash('Registration successful! Please log in.', 'success')
-            return redirect(url_for('login'))
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            return render_template('register.html')
+
+        for user in users_list:
+            if user["email"] == email:
+                flash('Email is already registered.', 'danger')
+                return render_template('register.html')
+
+        hash_password = generate_password_hash(password)
+        add_user_to_users(name, email, hash_password, DOB, gender)
+
+        return redirect(url_for('login'))
 
     return render_template('register.html')
 
