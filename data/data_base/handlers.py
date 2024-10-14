@@ -1,20 +1,22 @@
 from supabase import create_client, Client
+from config import *
 
-url = "https://igckzyzeayjxipwqpzuh.supabase.co"
-key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnY2t6eXplYXlqeGlwd3FwenVoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyODc1MTY3MSwiZXhwIjoyMDQ0MzI3NjcxfQ.wmXPXkmeUUNJNhrPcFdz8qCUn1wc6bUf-LFRLrGS4HU"
 
 supabase: Client = create_client(url, key)
 
 
+def add_user_to_users(name, email, password, birthday, sex):
+    data = {
+        'name': name,
+        'email': email,
+        'password': password,
+        'birthday': birthday,
+        'sex': sex
+    }
+    response = supabase.table('users').insert(data).execute()
 
-# response = (
-#     supabase.table("users")
-#     .insert({"name": "Denmarkhf",
-#              'email': 'adafhsd@gmai;.com',
-#              'password': 146831,
-#              'birthday': '06-12-2000',
-#              'sex': 'man'})
-#     .execute()
-# )
-response = supabase.table("users").select("*").execute()
-print(response.data[0])
+
+def delete_user_from_users(name):
+    response = supabase.table('users').delete().eq('name', name).execute()
+
+
