@@ -6,7 +6,8 @@
 }
 
 body {
-    background-color: #111111;
+    background-image: linear-gradient(to right, rgba(47, 48, 58, 0.4), rgba(47, 48, 58, 0.4)),
+    url('../img/img.png');
     position: relative;
 }
 
@@ -234,26 +235,32 @@ body {
 }
 
 .form__register__btn {
+    background: -webkit-linear-gradient(black, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: var(--main_color);
-    color: #111;
-    font-size: 20px;
-    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid yellow;
     border-radius: 5px;
+    text-align: center;
+    display: inline-block;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .form__register__btn:hover {
-    background-color: var(--color_hover);
+    background: yellow;
+    -webkit-text-fill-color: black;
+    border-color: black;
 }
 
 
 /* login */
 .login {
     background-image: linear-gradient(to right, rgba(47, 48, 58, 0.4), rgba(47, 48, 58, 0.4)),
-        url('../img/huji23.jpg');
+    url('../img/img.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -310,6 +317,13 @@ body {
     gap: 5px;
 }
 
+li.dont_have {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 5px;
+}
+
 .form__login__item__label {
     font-size: 20px;
     color: var(--link-text);
@@ -344,19 +358,25 @@ body {
 }
 
 .form__login__btn {
+    background: -webkit-linear-gradient(black, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: var(--main_color);
-    color: #111;
-    font-size: 20px;
-    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid yellow;
     border-radius: 5px;
+    text-align: center;
+    display: inline-block;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .form__login__btn:hover {
-    background-color: var(--color_hover);
+    background: yellow;
+    -webkit-text-fill-color: black;
+    border-color: black;
 }
 
 .register__btn {
@@ -392,6 +412,18 @@ body {
 
 /* profile  */
 .profile {
+    background-image: linear-gradient(to right, rgba(47, 48, 58, 0.4), rgba(47, 48, 58, 0.4)),
+    url('../img/img.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: 98vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .profile__me {
 }
@@ -404,3 +436,24 @@ body {
 }
 .profile__me__item {
 }
+
+.logout {
+    background: -webkit-linear-gradient(white, #ff4d4d, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid red;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout:hover {
+    background: red;
+    -webkit-text-fill-color: white;
+    border-color: black;

@@ -40,8 +40,8 @@ def create_new_post(user_id, post_name, post_cont):
         'post_name': post_name,
         'post_content': post_cont
     }
-    responce = supabase.table('posts').insert(data).execute()
+    response = supabase.table('posts').insert(data).execute()
 
 
 def delete_post_by_id(post_id):
-    responce = supabase.table('posts').delete().eq('id', post_id).execute()
+    response = supabase.table('posts').delete().eq('id', post_id).execute()

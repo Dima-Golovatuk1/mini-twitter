@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -10,14 +10,16 @@
 
 <body>
     <main class="profile">
+        <a class="logout" href="http://127.0.0.1:5000/logout">LOGOUT</a>
         <section class="profile__me">
             <div class="container">
                 <img class="profile__me__img" src="../static/img/profile.png" alt="#">
                 <ul class="profile__me__list">
-                    <li class="profile__me__item">123</li>
-                    <li class="profile__me__item">321</li>
-                    <li class="profile__me__item">556</li>
-                    <li class="profile__me__item">61</li>
+                    <li class="profile__me__item">Username: {{username}}</li>
+                    <li class="profile__me__item">Email: {{email}}</li>
+                    <li class="profile__me__item">Gender: {{gender}}</li>
+                    <li class="profile__me__item">Date of birthday: {{DOB}}</li>
+                    <li class="profile__me__item">id: {{user_id}}</li>
                 </ul>
             </div>
         </section>

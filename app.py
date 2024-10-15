@@ -60,7 +60,7 @@ def load_user(user_id):
     user = get_users_by_id(user_id)
     if user:
         return User(id=user[0]['id'], email=user[0]['email'], name=user[0]['name'], password=user[0]['password'],
-                    DOB=user[0]['birthday'], gender=user[0]['sex'],)
+                    DOB=user[0]['birthday'], gender=user[0]['sex'], )
     return None
 
 
@@ -154,12 +154,10 @@ def explore():
     return render_template('explore.html')
 
 
-@app.route('/messages',  methods=["GET", "POST"])
+@app.route('/messages', methods=["GET", "POST"])
 @login_required
 def messages():
     if request.method == 'POST':
-
-
         return render_template('messages.html')
 
 
@@ -172,15 +170,15 @@ def bookmarks():
 @app.route('/profile')
 @login_required
 def profile():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        name = request.form.get('username')
-        password = request.form.get('password')
-        confirm_password = request.form.get('confirm_password')
-        DOB = request.form.get('dob')
-        gender = request.form.get('gender')
-
-    return render_template('profile.html')
+    name = current_user.name
+    user_id = current_user.id
+    email = current_user.email
+    DOB = current_user.DOB
+    gender = current_user.gender
+    password = current_user.password
+    print(name, user_id, email, DOB, gender, password)
+    return render_template('profile.html',
+                           username=name, email=email, DOB=DOB, gender=gender, user_id=user_id)
 
 
 @app.route('/notifications')
