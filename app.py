@@ -78,20 +78,18 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        user = User.get_by_email(email)
         rem = request.form.get('remember', 'off')
+        user = get_users_by_email(email)
+        user = user[0]
+        print(user)
         list_users = get_users()
-        for i in list_users:
-            if i[2] == email:
-                user = i
-                break
-
-        if user and check_password_hash(user.password, password):
-            login_user(user)
-            flash('Login successful', 'success')
-            return redirect(url_for(''))
+        if check_password_hash(user['password'], password):
+            user_obj = User(id=user["id"], name=user["name"], email=user["email"], password=user["password"],
+                            DOB=user["birthday"], gender=user["sex"], rem=rem)
+            login_user(user_obj, remember=user_obj.remember())
+            return render_template("index.html")
         else:
-            return None
+            return "Invalid credentials", 401
 
     return render_template('login.html')
 
@@ -176,16 +174,16 @@ def notifications():
     return render_template('notifications.html')
 
 
-@app.route('/post/<int:post_id>')
-@login_required
-def post(post_id):
-    post_data = get_post_by_id(post_id)
-    if post_data:
-        post_name = post_data['post_name']
-        content = post_data['content']
-        return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
-    else:
-        return redirect(url_for('explore'))
+# @app.route('/post/<int:post_id>')
+# @login_required
+# def post(post_id):
+#     post_data = get_post_by_id(post_id)
+#     if post_data:
+#         post_name = post_data['post_name']
+#         content = post_data['content']
+#         return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
+#     else:
+#         return redirect(url_for('explore'))
 
 
 if __name__ == '__main__':
