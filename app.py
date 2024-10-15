@@ -78,20 +78,18 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        user = User.get_by_email(email)
         rem = request.form.get('remember', 'off')
+        user = get_users_by_email(email)
+        user = user[0]
+        print(user)
         list_users = get_users()
-        for i in list_users:
-            if i[2] == email:
-                user = i
-                break
-
-        if user and check_password_hash(user.password, password):
-            login_user(user)
-            flash('Login successful', 'success')
-            return redirect(url_for(''))
+        if check_password_hash(user['password'], password):
+            user_obj = User(id=user["id"], name=user["name"], email=user["email"], password=user["password"],
+                            DOB=user["birthday"], gender=user["sex"], rem=rem)
+            login_user(user_obj, remember=user_obj.remember())
+            return render_template("index.html")
         else:
-            return None
+            return "Invalid credentials", 401
 
     return render_template('login.html')
 
@@ -108,14 +106,14 @@ def register():
         users_list = get_users()
         print(email)
 
-        if password != confirm_password:
-            flash('Passwords do not match.', 'danger')
-            return render_template('register.html')
-
         for user in users_list:
             if user["email"] == email:
                 flash('Email is already registered.', 'danger')
                 return render_template('register.html')
+
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            return render_template('register.html')
 
         hash_password = generate_password_hash(password)
         add_user_to_users(name, email, hash_password, DOB, gender)
@@ -132,6 +130,7 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
+
 @app.route('/')
 @login_required
 def home():
@@ -146,16 +145,20 @@ def home():
 
     return render_template('index.html', user_id=user_id, username=name, posts=posts)
 
+
 @app.route('/explore')
 @login_required
 def explore():
     return render_template('explore.html')
 
 
-@app.route('/messages')
+@app.route('/messages',  methods=["GET", "POST"])
 @login_required
 def messages():
-    return render_template('messages.html')
+    if request.method == 'POST':
+
+
+        return render_template('messages.html')
 
 
 @app.route('/bookmarks')
@@ -167,6 +170,14 @@ def bookmarks():
 @app.route('/profile')
 @login_required
 def profile():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        name = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        DOB = request.form.get('dob')
+        gender = request.form.get('gender')
+
     return render_template('profile.html')
 
 
@@ -176,16 +187,16 @@ def notifications():
     return render_template('notifications.html')
 
 
-@app.route('/post/<int:post_id>')
-@login_required
-def post(post_id):
-    post_data = get_post_by_id(post_id)
-    if post_data:
-        post_name = post_data['post_name']
-        content = post_data['content']
-        return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
-    else:
-        return redirect(url_for('explore'))
+# @app.route('/post/<int:post_id>')
+# @login_required
+# def post(post_id):
+#     post_data = get_post_by_id(post_id)
+#     if post_data:
+#         post_name = post_data['post_name']
+#         content = post_data['content']
+#         return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
+#     else:
+#         return redirect(url_for('explore'))
 
 
 if __name__ == '__main__':
