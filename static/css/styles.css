@@ -30,7 +30,7 @@ body {
 }
 
 /* header */
-.header .container{
+.header .container {
     background-color: #1a1a1a;
     margin-bottom: 40px;
     border-radius: 10px;
@@ -52,26 +52,26 @@ body {
     gap: 10px;
 }
 
-.header__list__nav{
+.header__list__nav {
     display: flex;
     gap: 20px;
 }
 
-.header__item__nav{
+.header__item__nav {
     font-size: 25px;
 }
 
-.header__item__nav{
+.header__item__nav {
     font-size: 25px;
     transition: color 0.5s;
 }
 
-.header__item__nav:hover{
+.header__item__nav:hover {
     color: var(--color_hover);
     font-size: 27px;
 }
 
-.header__div{
+.header__div {
     display: flex;
     justify-content: space-between;
     color: #ffffff;
@@ -92,9 +92,7 @@ body {
     gap: 5px;
 }
 
-.header__list__nav{
-
-}
+.header__list__nav {}
 
 .header__nav__link__img {
     width: 100px;
@@ -194,7 +192,6 @@ body {
     margin-bottom: 5px;
 }
 
-
 .register__title {
     font-size: 30px;
     margin-bottom: 20px;
@@ -256,7 +253,7 @@ body {
 /* login */
 .login {
     background-image: linear-gradient(to right, rgba(47, 48, 58, 0.4), rgba(47, 48, 58, 0.4)),
-    url('../img/huji23.jpg');
+        url('../img/huji23.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -267,12 +264,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.container {
-}
-
-.login__card{
 }
 
 .login__main__title {
@@ -340,7 +331,7 @@ body {
     color: var(--link-text);
 }
 
-.form-check-input{
+.form-check-input {
     width: 20px;
     height: 20px;
 }
@@ -368,7 +359,7 @@ body {
     background-color: var(--color_hover);
 }
 
- .register__btn {
+.register__btn {
     background: -webkit-linear-gradient(black, yellow, white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -396,4 +387,20 @@ body {
     background: -webkit-linear-gradient(black, red, white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+
+/* profile  */
+.profile {
+}
+.profile__me {
+}
+.profile__me__img {
+    width: 200px;
+    background-color: white;
+    border-radius: 50%;
+}
+.profile__me__list {
+}
+.profile__me__item {
 }
