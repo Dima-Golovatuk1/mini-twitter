@@ -1,12 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from handlers import get_users_by_id, get_users, get_users_by_email, add_user_to_users
+from data.data_base.handlers import get_users_by_id, add_user_to_users, get_users, get_users_by_email
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
-
-users = {}
 
 
 # def get_post_by_id(post_id):
@@ -26,7 +24,6 @@ users = {}
 #         }
 #     else:
 #        return None
-
 
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
@@ -73,19 +70,7 @@ def unauthorized():
     return redirect(url_for('login'))
 
 
-@app.route('/')
-@login_required
-def home():
-    if current_user.is_authenticated:
-        name = current_user.name
-        user_id = current_user.id
-        posts = []
-    else:
-        name = None
-        user_id = None
-        posts = []
 
-    return render_template('index.html', user_id=user_id, username=name, posts=posts)
 
 
 @app.route('/login', methods=["POST", "GET"])
@@ -142,6 +127,19 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
+@app.route('/')
+@login_required
+def home():
+    if current_user.is_authenticated:
+        name = current_user.name
+        user_id = current_user.id
+        posts = []
+    else:
+        name = None
+        user_id = None
+        posts = []
+
+    return render_template('index.html', user_id=user_id, username=name, posts=posts)
 
 @app.route('/explore')
 @login_required
