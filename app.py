@@ -87,7 +87,7 @@ def login():
             user_obj = User(id=user["id"], name=user["name"], email=user["email"], password=user["password"],
                             DOB=user["birthday"], gender=user["sex"], rem=rem)
             login_user(user_obj, remember=user_obj.remember())
-            return render_template("index.html")
+            return redirect('/')
         else:
             return "Invalid credentials", 401
 
