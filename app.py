@@ -80,6 +80,11 @@ def login():
         password = request.form.get('password')
         user = User.get_by_email(email)
         rem = request.form.get('remember', 'off')
+        list_users = get_users()
+        for i in list_users:
+            if i[2] == email:
+                user = i
+                break
 
         if user and check_password_hash(user.password, password):
             login_user(user)
