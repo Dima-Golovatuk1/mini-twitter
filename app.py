@@ -106,14 +106,14 @@ def register():
         users_list = get_users()
         print(email)
 
-        if password != confirm_password:
-            flash('Passwords do not match.', 'danger')
-            return render_template('register.html')
-
         for user in users_list:
             if user["email"] == email:
                 flash('Email is already registered.', 'danger')
                 return render_template('register.html')
+
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            return render_template('register.html')
 
         hash_password = generate_password_hash(password)
         add_user_to_users(name, email, hash_password, DOB, gender)
@@ -130,6 +130,7 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
+
 @app.route('/')
 @login_required
 def home():
@@ -144,16 +145,20 @@ def home():
 
     return render_template('index.html', user_id=user_id, username=name, posts=posts)
 
+
 @app.route('/explore')
 @login_required
 def explore():
     return render_template('explore.html')
 
 
-@app.route('/messages')
+@app.route('/messages',  methods=["GET", "POST"])
 @login_required
 def messages():
-    return render_template('messages.html')
+    if request.method == 'POST':
+
+
+        return render_template('messages.html')
 
 
 @app.route('/bookmarks')
@@ -165,6 +170,14 @@ def bookmarks():
 @app.route('/profile')
 @login_required
 def profile():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        name = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        DOB = request.form.get('dob')
+        gender = request.form.get('gender')
+
     return render_template('profile.html')
 
 
