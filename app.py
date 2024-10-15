@@ -69,6 +69,7 @@ class User(UserMixin):
     #             return user
     #     return None
 
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -78,6 +79,7 @@ login_manager.init_app(app)
 #         if user.id == int(user_id):
 #             return user
 #     return None
+
 
 @login_manager.user_loader
 def load_user(user_id):
