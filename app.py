@@ -8,15 +8,6 @@ app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
 users = {}
 
-# def get_db_connection():
-#     connection = psycopg2.connect(
-#         host="",
-#         database="",
-#         user="",
-#         password=""
-#     )
-#     return connection
-
 
 # def get_post_by_id(post_id):
 #     connection = get_db_connection()
@@ -27,14 +18,14 @@ users = {}
 #     cursor.close()
 #     connection.close()
 
-    # if post:
-    #     post_name, content = post
-    #     return {
-    #         'post_name': post_name,
-    #         'content': content
-    #     }
-    # else:
-    #     return None
+#     if post:
+#         post_name, content = post
+#         return {
+#             'post_name': post_name,
+#             'content': content
+#         }
+#     else:
+#        return None
 
 
 class User(UserMixin):
@@ -62,23 +53,9 @@ class User(UserMixin):
     def get_id(self):
         return str(self.id)
 
-    # @staticmethod
-    # def get_by_email(email):
-    #     for user in users:
-    #         if user.email == email:
-    #             return user
-    #     return None
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     for user in users.keys():
-#         if user.id == int(user_id):
-#             return user
-#     return None
 
 
 @login_manager.user_loader
@@ -122,31 +99,12 @@ def login():
         if user and check_password_hash(user.password, password):
             login_user(user)
             flash('Login successful', 'success')
-            return redirect(url_for('profile'))
+            return redirect(url_for(''))
         else:
             return None
 
     return render_template('login.html')
 
-# @app.route('/login', methods=["POST", "GET"])
-# def login():
-#     if request.method == 'POST':
-#         email = request.form.get('email')
-#         password = request.form.get('password')
-#         user = get_users_by_email(email)
-#         rem = request.form.get('remember', 'off')
-
-#         if user and check_password_hash(user[0]['password'], password):
-#             user_obj = User(id=user[0]['id'], name=user[0]['name'], email=user[0]['email'], password=user[0]['password'],
-#                             DOB=user[0]['birthday'], gender=user[0]['sex'], rem=rem)
-#             login_user(user_obj, remember=user_obj.remember())
-#             flash('Login successful', 'success')
-#             return redirect(url_for('profile'))
-#         else:
-#             flash('Invalid credentials', 'danger')
-#             return render_template('login.html')
-
-#     return render_template('login.html')
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
