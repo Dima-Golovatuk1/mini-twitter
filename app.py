@@ -70,6 +70,11 @@ def login():
         password = request.form.get('password')
         user = User.get_by_email(email)
         rem = request.form.get('remember', 'off')
+        list_users = get_users()
+        for i in list_users:
+            if i[2] == email:
+                user = i
+                break
 
         if user and check_password_hash(user.password, password):
             login_user(user)
@@ -80,25 +85,6 @@ def login():
 
     return render_template('login.html')
 
-# @app.route('/login', methods=["POST", "GET"])
-# def login():
-#     if request.method == 'POST':
-#         email = request.form.get('email')
-#         password = request.form.get('password')
-#         user = get_users_by_email(email)
-#         rem = request.form.get('remember', 'off')
-
-#         if user and check_password_hash(user[0]['password'], password):
-#             user_obj = User(id=user[0]['id'], name=user[0]['name'], email=user[0]['email'], password=user[0]['password'],
-#                             DOB=user[0]['birthday'], gender=user[0]['sex'], rem=rem)
-#             login_user(user_obj, remember=user_obj.remember())
-#             flash('Login successful', 'success')
-#             return redirect(url_for('profile'))
-#         else:
-#             flash('Invalid credentials', 'danger')
-#             return render_template('login.html')
-
-#     return render_template('login.html')
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
