@@ -75,18 +75,14 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        user = User.get_by_email(email)
+        user = get_users_by_email(email)
         rem = request.form.get('remember', 'off')
         list_users = get_users()
-        for i in list_users:
-            if i[2] == email:
-                user = i
-                break
 
-        if user and check_password_hash(user.password, password):
+        if user and check_password_hash(user['password'], password):
             login_user(user)
             flash('Login successful', 'success')
-            return redirect(url_for(''))
+            return redirect(url_for('/'))
         else:
             return None
 
