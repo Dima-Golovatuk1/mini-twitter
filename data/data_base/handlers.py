@@ -1,7 +1,6 @@
 from supabase import create_client, Client
 from data.data_base.config import key, url
 
-
 supabase: Client = create_client(url, key)
 
 
@@ -32,7 +31,6 @@ def get_users_by_email(email):
     return response.data
 
 
+
 def delete_user_from_users(name):
     response = supabase.table('users').delete().eq('name', name).execute()
-
-
