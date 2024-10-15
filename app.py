@@ -70,9 +70,6 @@ def unauthorized():
     return redirect(url_for('login'))
 
 
-
-
-
 @app.route('/login', methods=["POST", "GET"])
 def login():
     if request.method == 'POST':
@@ -87,7 +84,7 @@ def login():
             user_obj = User(id=user["id"], name=user["name"], email=user["email"], password=user["password"],
                             DOB=user["birthday"], gender=user["sex"], rem=rem)
             login_user(user_obj, remember=user_obj.remember())
-            return render_template("index.html")
+            return redirect('/')
         else:
             return "Invalid credentials", 401
 
@@ -105,6 +102,11 @@ def register():
         gender = request.form.get('gender')
         users_list = get_users()
         print(email)
+
+        for user in users_list:
+            if user["name"] == name:
+                flash('Username is already registered.', 'danger')
+                return render_template('register.html')
 
         for user in users_list:
             if user["email"] == email:
