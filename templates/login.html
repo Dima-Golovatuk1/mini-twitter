@@ -11,6 +11,7 @@
 <body>
     <main class="login">
         <div class="container">
+<<<<<<< HEAD
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <div class="flash-messages">
@@ -23,6 +24,9 @@
                 {% endif %}
             {% endwith %}
             <form class="form__login" action="{{ url_for('login') }}" method="POST">
+=======
+            <form class="form__login" action="/login" method="POST">
+>>>>>>> 1d60e5d78d439283b09b780ce5210dc18f1721d8
                 <h1 class="login__main__title">X-Whisper</h1>
                 <p class="form__login__text">You need to be logged in to join our forum</p>
                 <h2 class="login__title">Log in</h2>
