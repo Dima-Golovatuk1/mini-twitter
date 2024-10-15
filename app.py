@@ -78,8 +78,7 @@ def login():
         user = get_users_by_email(email)
         rem = request.form.get('remember', 'off')
         list_users = get_users()
-
-        if user and check_password_hash(user['password'], password):
+        if user and check_password_hash(s, password):
             login_user(user)
             flash('Login successful', 'success')
             return redirect(url_for('/'))
@@ -147,10 +146,13 @@ def explore():
     return render_template('explore.html')
 
 
-@app.route('/messages')
+@app.route('/messages',  methods=["GET", "POST"])
 @login_required
 def messages():
-    return render_template('messages.html')
+    if request.method == 'POST':
+
+
+        return render_template('messages.html')
 
 
 @app.route('/bookmarks')
@@ -162,6 +164,14 @@ def bookmarks():
 @app.route('/profile')
 @login_required
 def profile():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        name = request.form.get('username')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        DOB = request.form.get('dob')
+        gender = request.form.get('gender')
+
     return render_template('profile.html')
 
 
