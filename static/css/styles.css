@@ -374,3 +374,26 @@ body {
     -webkit-text-fill-color: transparent;
     border-bottom: 1px solid var(--color_hover);
 }
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background: -webkit-linear-gradient(black, red, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.alert-warning {
+    background: -webkit-linear-gradient(black, red, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -70,9 +70,6 @@ def unauthorized():
     return redirect(url_for('login'))
 
 
-
-
-
 @app.route('/login', methods=["POST", "GET"])
 def login():
     if request.method == 'POST':
@@ -103,14 +100,14 @@ def register():
         users_list = get_users()
         print(email)
 
-        if password != confirm_password:
-            flash('Passwords do not match.', 'danger')
-            return render_template('register.html')
-
         for user in users_list:
             if user["email"] == email:
                 flash('Email is already registered.', 'danger')
                 return render_template('register.html')
+
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            return render_template('register.html')
 
         hash_password = generate_password_hash(password)
         add_user_to_users(name, email, hash_password, DOB, gender)
@@ -127,6 +124,7 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
+
 @app.route('/')
 @login_required
 def home():
@@ -140,6 +138,7 @@ def home():
         posts = []
 
     return render_template('index.html', user_id=user_id, username=name, posts=posts)
+
 
 @app.route('/explore')
 @login_required

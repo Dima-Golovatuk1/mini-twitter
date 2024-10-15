@@ -31,6 +31,5 @@ def get_users_by_email(email):
     return response.data
 
 
-
 def delete_user_from_users(name):
     response = supabase.table('users').delete().eq('name', name).execute()
