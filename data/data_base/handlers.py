@@ -12,13 +12,7 @@ def add_user_to_users(name, email, password, birthday, sex):
         'birthday': birthday,
         'sex': sex
     }
-    print(123)
     response = supabase.table('users').insert(data).execute()
-
-
-def get_user_by_id(user_id):
-    response = supabase.table("users").select("*").eq("id", user_id).execute()
-    return response
 
 
 def get_users():
@@ -40,8 +34,14 @@ def delete_user_from_users(name):
     response = supabase.table('users').delete().eq('name', name).execute()
 
 
-def plus_one_new_follower(user_id):
-    response = supabase.table('users')\
-        .update({'followers': supabase.table('users').select('followers')\
-                .eq('id', user_id).execute().data[0]['followers'] + 1})\
-        .eq('id', user_id).execute()
+def create_new_post(user_id, post_name, post_cont):
+    data = {
+        'user_id': user_id,
+        'post_name': post_name,
+        'post_content': post_cont
+    }
+    responce = supabase.table('posts').insert(data).execute()
+
+
+def delete_post_by_id(post_id):
+    responce = supabase.table('posts').delete().eq('id', post_id).execute()
