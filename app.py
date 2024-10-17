@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts
+from email_validator import validate_email, EmailNotValidError
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
@@ -72,35 +73,54 @@ def unauthorized():
 
 @app.route('/login', methods=["POST", "GET"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     if request.method == 'POST':
         email = request.form.get('email')
-        list_users = get_users()
         password = request.form.get('password')
         rem = request.form.get('remember', 'off')
         user = get_users_by_email(email)
 
         if not user:
-            flash("Email doesn't exist.", "danger")
-            return redirect('login')
+            flash("Email doesn't exist", "danger")
+            return redirect(url_for('login'))
 
         user = user[0]
-        print(user)
 
         if check_password_hash(user['password'], password):
-            user_obj = User(id=user["id"], name=user["name"], email=user["email"], password=user["password"],
-                            DOB=user["birthday"], gender=user["sex"], rem=rem)
+            user_obj = User(
+                id=user["id"],
+                name=user["name"],
+                email=user["email"],
+                password=user["password"],
+                DOB=user["birthday"],
+                gender=user["sex"],
+                rem=rem
+            )
             login_user(user_obj, remember=user_obj.remember())
-            return redirect('/')
+            return redirect(url_for('home'))
         else:
-            flash('Password do not match', 'danger')
-            return redirect('login')
+            flash('Invalid email or password', 'danger')
+            return redirect(url_for('login'))
 
     return render_template('login.html')
 
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     if request.method == 'POST':
+
+        def validate_email_format(email):
+            try:
+                valid = validate_email(email)
+                return True
+            except EmailNotValidError:
+                return False
+
         email = request.form.get('email')
         name = request.form.get('username')
         password = request.form.get('password')
@@ -108,33 +128,37 @@ def register():
         DOB = request.form.get('dob')
         gender = request.form.get('gender')
         users_list = get_users()
-        print(email)
 
         for user in users_list:
             if user["name"] == name:
-                flash('Username is already registered.', 'danger')
+                flash('Username is already registered', 'danger')
                 return render_template('register.html')
+
+        if not validate_email_format(email):
+            flash("Invalid email format", "danger")
+            return render_template('register.html')
 
         for user in users_list:
             if user["email"] == email:
-                flash('Email is already registered.', 'danger')
+                flash('Email is already registered', 'danger')
                 return render_template('register.html')
 
         if len(password) < 8:
-            flash('Your password must have more than 8 symbols', 'danger')
+            flash('Your password must have more than 8 characters', 'danger')
             return render_template('register.html')
 
         if not any(char.isalpha() for char in password):
-            flash('Your password must contain at least one letter.', 'danger')
+            flash('Your password must contain at least one letter', 'danger')
             return render_template('register.html')
 
         if password != confirm_password:
-            flash('Passwords do not match.', 'danger')
+            flash('Passwords do not match', 'danger')
             return render_template('register.html')
 
         hash_password = generate_password_hash(password)
         add_user_to_users(name, email, hash_password, DOB, gender)
 
+        flash('Registration successful! You can now log in.', 'success')
         return redirect(url_for('login'))
 
     return render_template('register.html')
@@ -208,6 +232,12 @@ def global_page():
 @login_required
 def following():
     return render_template('following.html')
+
+
+@app.route('/myposts')
+@login_required
+def my_posts():
+    return render_template('myposts.html')
 
 # @app.route('/post/<int:post_id>')
 # @login_required
