@@ -484,8 +484,32 @@ li.dont_have {
     transition: all 0.3s ease;
 }
 
+.logout:hover {
+    background: red;
+    -webkit-text-fill-color: white;
+    border-color: white;
+}
 
-
+.my__posts {
+    background: -webkit-linear-gradient(black, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid yellow;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.my__posts:hover {
+    background: yellow;
+    -webkit-text-fill-color: black;
+    border-color: black;
+}
 
 
 .my__post-section {
