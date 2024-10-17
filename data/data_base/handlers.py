@@ -45,3 +45,8 @@ def create_new_post(user_id, post_name, post_cont):
 
 def delete_post_by_id(post_id):
     response = supabase.table('posts').delete().eq('id', post_id).execute()
+
+
+def get_all_posts():
+    responce = supabase.table('posts').select('*').execute()
+    return responce.data
