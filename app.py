@@ -124,6 +124,10 @@ def register():
             flash('Your password must have more than 8 symbols', 'danger')
             return render_template('register.html')
 
+        if not any(char.isalpha() for char in password):
+            flash('Your password must contain at least one letter.', 'danger')
+            return render_template('register.html')
+
         if password != confirm_password:
             flash('Passwords do not match.', 'danger')
             return render_template('register.html')
@@ -196,10 +200,8 @@ def notifications():
 @app.route('/global')
 @login_required
 def global_page():
-    get_all_posts()
-    title = response.data['title']
-    content = response.data['content']
-    return render_template('global.html')
+    data = get_all_posts()
+    return render_template('global.html', data=data)
 
 
 @app.route('/following')
