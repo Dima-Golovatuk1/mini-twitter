@@ -80,11 +80,10 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         rem = request.form.get('remember', 'off')
-
         user = get_users_by_email(email)
 
         if not user:
-            flash("Email doesn't exist.", "danger")
+            flash("Email doesn't exist", "danger")
             return redirect(url_for('login'))
 
         user = user[0]
