@@ -60,7 +60,7 @@ def load_user(user_id):
     user = get_users_by_id(user_id)
     if user:
         return User(id=user[0]['id'], email=user[0]['email'], name=user[0]['name'], password=user[0]['password'],
-                    DOB=user[0]['birthday'], gender=user[0]['sex'], )
+                    DOB=user[0]['birthday'], gender=user[0]['sex'])
     return None
 
 
@@ -74,19 +74,26 @@ def unauthorized():
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
+        list_users = get_users()
         password = request.form.get('password')
         rem = request.form.get('remember', 'off')
         user = get_users_by_email(email)
+
+        if not user:
+            flash("Email doesn't exist.", "danger")
+            return redirect('login')
+
         user = user[0]
         print(user)
-        list_users = get_users()
+
         if check_password_hash(user['password'], password):
             user_obj = User(id=user["id"], name=user["name"], email=user["email"], password=user["password"],
                             DOB=user["birthday"], gender=user["sex"], rem=rem)
             login_user(user_obj, remember=user_obj.remember())
             return redirect('/')
         else:
-            return "Invalid credentials", 401
+            flash('Password do not match', 'danger')
+            return redirect('login')
 
     return render_template('login.html')
 
@@ -113,6 +120,10 @@ def register():
                 flash('Email is already registered.', 'danger')
                 return render_template('register.html')
 
+        if len(password) < 8:
+            flash('Your password must have more than 8 symbols', 'danger')
+            return render_template('register.html')
+
         if password != confirm_password:
             flash('Passwords do not match.', 'danger')
             return render_template('register.html')
@@ -136,14 +147,9 @@ def logout():
 @app.route('/')
 @login_required
 def home():
-    if current_user.is_authenticated:
-        name = current_user.name
-        user_id = current_user.id
-        posts = []
-    else:
-        name = None
-        user_id = None
-        posts = []
+    name = current_user.name
+    user_id = current_user.id
+    posts = []
 
     return render_template('index.html', user_id=user_id, username=name, posts=posts)
 
