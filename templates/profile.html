@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -10,19 +11,19 @@
 
 <body>
     <main class="profile">
-        <a class="logout" href="http://127.0.0.1:5000/logout">LOGOUT</a> -->
         <section class="profile__me">
             <div class="container">
+                <!-- <a class="logout" href="http://127.0.0.1:5000/logout">LOGOUT</a> -->
                 <img class="profile__me__img" src="../static/img/profile.png" alt="#">
                 <ul class="profile__me__list">
                     <li class="profile__me__item">{{username}}</li>
-                    <li class="profile__me__item">Email: {{email}}</li>
-                    <li class="profile__me__item">Gender: {{gender}}</li>
-                    <li class="profile__me__item">Date of birthday: {{DOB}}</li>
                     <li class="profile__me__item">id: {{user_id}}</li>
+                    <li class="profile__me__item">gender: {{gender}}</li>
+                    <li class="profile__me__item">{{DOB}}</li>
                 </ul>
             </div>
         </section>
+
         <section class="my__post-section">
                 <ul class="my__post-section__list">
                     <li class="my__post-section__item">
