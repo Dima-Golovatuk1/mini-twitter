@@ -10,11 +10,33 @@
 </head>
 
 <body>
+    <header class="header">
+        <div class="container">
+            <nav class="header__nav">
+                <div class="header__div">
+                    <ul class="header__list__nav">
+                        <li class="header__item__nav">
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/explore">Explore</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/notifications">Notifications</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/messages">Messages</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
     <main class="profile">
-        <a class="logout" href="http://127.0.0.1:5000/logout">LOGOUT</a> -->
         <section class="profile__me">
             <div class="container">
-                <!-- <a class="logout" href="http://127.0.0.1:5000/logout">LOGOUT</a> -->
+                <div class="background"></div>
+                <a class="profile__me__icon" href=""><img src="../static/img/icon-editing.png" alt=""></a>
                 <img class="profile__me__img" src="../static/img/profile.png" alt="#">
                 <ul class="profile__me__list">
                     <li class="profile__me__item">{{username}}</li>
@@ -22,6 +44,7 @@
                     <li class="profile__me__item">gender: {{gender}}</li>
                     <li class="profile__me__item">{{DOB}}</li>
                 </ul>
+                <a class="logout" href="http://127.0.0.1:5000/logout">LOGOUT</a>
             </div>
         </section>
 
