@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts
-from email_validator import validate_email, EmailNotValidError
+# from email_validator import validate_email, EmailNotValidError
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
