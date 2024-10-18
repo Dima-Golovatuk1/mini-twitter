@@ -8,7 +8,15 @@
 body {
     background-image: linear-gradient(to right, rgba(47, 48, 58, 0.4), rgba(47, 48, 58, 0.4)),
         url('../img/img.png');
-    position: relative;
+        background-color: #2F303A;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover; /* Забезпечить покриття всього екрану */
+        background-attachment: fixed; /* Фон залишається на місці під час прокрутки */
+        height: 100vh; /* Встановлює висоту 100% висоти вікна браузера */
+        margin: 0; /* Виправляє можливі відступи */
+        padding: 0;
+        overflow-x: hidden; /* Запобігає горизонтальній прокрутці */
 }
 
 .container {
@@ -128,7 +136,7 @@ body {
 
 
 
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 750px) {
     .header .container {
         background-color: #1a1a1a;
         margin-bottom: 40px;
@@ -285,7 +293,7 @@ body {
 }
 
 .register__main__title {
-    font-size: 80px;
+    font-size: 45px;
     text-transform: uppercase;
     background: -webkit-linear-gradient(black, yellow, white);
     -webkit-background-clip: text;
@@ -360,6 +368,13 @@ body {
 }
 
 
+@media screen and (min-width: 768px) {
+    .register__main__title {
+        font-size: 80px;
+    }
+}
+
+
 
 
 
@@ -377,7 +392,7 @@ body {
 }
 
 .login__main__title {
-    font-size: 80px;
+    font-size: 45px;
     text-transform: uppercase;
     background: -webkit-linear-gradient(black, yellow, white);
     -webkit-background-clip: text;
@@ -514,7 +529,11 @@ li.dont_have {
 
 
 
-
+@media screen and (min-width: 768px) {
+    .login__main__title {
+        font-size: 80px;
+    }
+}
 
 
 /* profile  */
@@ -529,6 +548,27 @@ li.dont_have {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
+}
+
+
+.background{
+    height: 200px;
+    width: 100%;
+    top: 0;
+    background-color: #383838;
+    position: absolute;
+    z-index: 1;
+}
+
+
+.profile__me__icon{
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
 }
 
 
@@ -537,6 +577,7 @@ li.dont_have {
     background-color: white;
     border-radius: 50%;
     margin-bottom: 25px;
+    z-index: 2;
 }
 
 
@@ -546,6 +587,7 @@ li.dont_have {
     flex-wrap: wrap;
     gap: 8px;
     padding-bottom: 20px;
+    z-index: 2;
 }
 
 
@@ -568,6 +610,8 @@ li.dont_have {
     display: inline-block;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
 }
 
 .logout:hover {
@@ -611,11 +655,24 @@ li.dont_have {
         justify-content: space-around;
         flex-direction: row;
     }
+
+
+    .logout {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
 }
 
 @media screen and (min-width: 1200px) {
     .profile__me__list {
         flex-direction: row;
         gap: 40px;
+    }
+    
+    .logout {
+        position: relative;
+        top: 80px;
+        left: 75px;
     }
 }
