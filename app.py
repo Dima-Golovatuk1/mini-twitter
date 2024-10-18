@@ -6,7 +6,7 @@ from email_validator import validate_email, EmailNotValidError
 import undetected_chromedriver as uc
 from twocaptcha import TwoCaptcha
 import time
-from distutils.version import LooseVersion
+
 from packaging.version import Version
 
 app = Flask(__name__)
@@ -91,13 +91,6 @@ def login():
             flash("Email doesn't exist", "danger")
             return redirect(url_for('login'))
 
-        try:
-            captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
-            print(f"Captcha solved with response: {captcha_result}")
-        except Exception:
-            flash("CAPTCHA verification failed. Please try again.", "danger")
-            return redirect(url_for('login'))
-
         user = user[0]
 
         if check_password_hash(user['password'], password):
@@ -140,13 +133,6 @@ def register():
         DOB = request.form.get('dob')
         gender = request.form.get('gender')
         users_list = get_users()
-
-        # try:
-        #    captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
-        #    print(f"Captcha solved with response: {captcha_result}")
-        #   except Exception:
-        #    flash("CAPTCHA verification failed. Please try again.", "danger")
-        #    return render_template('register.html')
 
         for user in users_list:
             if user["name"] == name:

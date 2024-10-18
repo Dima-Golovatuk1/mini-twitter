@@ -24,7 +24,6 @@
                     </div>
                 {% endif %}
             {% endwith %}
-            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
             <form class="form__register" action="{{ url_for('register') }}" method="POST">
                 <h1 class="register__main__title">X-Whisper</h1>
                 <h3 class="register__title">Register</h3>
@@ -56,9 +55,6 @@
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
-                    </li>
-                    <li class="form__register__item">
-                        <div class="g-recaptcha" data-sitekey=""></div>
                     </li>
                 </ul>
                 <input class="form__register__btn" type="submit" value="Register">
