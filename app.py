@@ -3,6 +3,11 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts
 from email_validator import validate_email, EmailNotValidError
+import undetected_chromedriver as uc
+from twocaptcha import TwoCaptcha
+import time
+from distutils.version import LooseVersion
+from packaging.version import Version
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
@@ -86,6 +91,13 @@ def login():
             flash("Email doesn't exist", "danger")
             return redirect(url_for('login'))
 
+        try:
+            captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
+            print(f"Captcha solved with response: {captcha_result}")
+        except Exception:
+            flash("CAPTCHA verification failed. Please try again.", "danger")
+            return redirect(url_for('login'))
+
         user = user[0]
 
         if check_password_hash(user['password'], password):
@@ -129,6 +141,13 @@ def register():
         gender = request.form.get('gender')
         users_list = get_users()
 
+        # try:
+        #    captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
+        #    print(f"Captcha solved with response: {captcha_result}")
+        #   except Exception:
+        #    flash("CAPTCHA verification failed. Please try again.", "danger")
+        #    return render_template('register.html')
+
         for user in users_list:
             if user["name"] == name:
                 flash('Username is already registered', 'danger')
@@ -151,8 +170,31 @@ def register():
             flash('Your password must contain at least one letter', 'danger')
             return render_template('register.html')
 
+        if not any(char.isupper() for char in password):
+            flash('Your password must contain at least one uppercase letter', 'danger')
+            return render_template('register.html')
+
+        if not any(char.islower() for char in password):
+            flash('Your password must contain at least one lowercase letter', 'danger')
+            return render_template('register.html')
+
+        if not any(char.isdigit() for char in password):
+            flash('Your password must contain at least one digit ', 'danger')
+            return render_template('register.html')
+
+        if any(char.isspace() for char in password):
+            flash("Your password can't contain spaces", 'danger')
+            return render_template('register.html')
+
+        special_characters = '!@#$%^&*(),.?":{}|<>'
+        special_characters_list = list(special_characters)
+        print(special_characters_list)
+        if not any(special_characters_list for special_character in password):
+            flash('Your password must contain at least one special character', 'danger')
+            return render_template('register.html')
+
         if password != confirm_password:
-            flash('Passwords do not match', 'danger')
+            flash("Passwords don't match", 'danger')
             return render_template('register.html')
 
         hash_password = generate_password_hash(password)
@@ -234,10 +276,11 @@ def following():
     return render_template('following.html')
 
 
-@app.route('/myposts')
+@app.route('/addpost')
 @login_required
-def my_posts():
-    return render_template('myposts.html')
+def addpost():
+    return render_template('addpost.html')
+
 
 # @app.route('/post/<int:post_id>')
 # @login_required
