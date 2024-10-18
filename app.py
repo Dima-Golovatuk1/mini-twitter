@@ -141,12 +141,12 @@ def register():
         gender = request.form.get('gender')
         users_list = get_users()
 
-        try:
-            captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
-            print(f"Captcha solved with response: {captcha_result}")
-        except Exception:
-            flash("CAPTCHA verification failed. Please try again.", "danger")
-            return render_template('register.html')
+        # try:
+        #    captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
+        #    print(f"Captcha solved with response: {captcha_result}")
+        #   except Exception:
+        #    flash("CAPTCHA verification failed. Please try again.", "danger")
+        #    return render_template('register.html')
 
         for user in users_list:
             if user["name"] == name:
@@ -166,16 +166,35 @@ def register():
             flash('Your password must have more than 8 characters', 'danger')
             return render_template('register.html')
 
-        if len(password) == 0:
-            flash('Your password must have at least 1 digit', 'danger')
-            return render_template('register.html')
-
         if not any(char.isalpha() for char in password):
             flash('Your password must contain at least one letter', 'danger')
             return render_template('register.html')
 
+        if not any(char.isupper() for char in password):
+            flash('Your password must contain at least one uppercase letter', 'danger')
+            return render_template('register.html')
+
+        if not any(char.islower() for char in password):
+            flash('Your password must contain at least one lowercase letter', 'danger')
+            return render_template('register.html')
+
+        if not any(char.isdigit() for char in password):
+            flash('Your password must contain at least one digit ', 'danger')
+            return render_template('register.html')
+
+        if any(char.isspace() for char in password):
+            flash("Your password can't contain spaces", 'danger')
+            return render_template('register.html')
+
+        special_characters = '!@#$%^&*(),.?":{}|<>'
+        special_characters_list = list(special_characters)
+        print(special_characters_list)
+        if not any(special_characters_list for special_character in password):
+            flash('Your password must contain at least one special character', 'danger')
+            return render_template('register.html')
+
         if password != confirm_password:
-            flash('Passwords do not match', 'danger')
+            flash("Passwords don't match", 'danger')
             return render_template('register.html')
 
         hash_password = generate_password_hash(password)
