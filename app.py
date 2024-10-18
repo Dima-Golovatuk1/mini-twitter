@@ -129,13 +129,6 @@ def register():
         gender = request.form.get('gender')
         users_list = get_users()
 
-        # try:
-        #    captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
-        #    print(f"Captcha solved with response: {captcha_result}")
-        #   except Exception:
-        #    flash("CAPTCHA verification failed. Please try again.", "danger")
-        #    return render_template('register.html')
-
         for user in users_list:
             if user["name"] == name:
                 flash('Username is already registered', 'danger')
