@@ -3,11 +3,6 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts
 from email_validator import validate_email, EmailNotValidError
-import undetected_chromedriver as uc
-from twocaptcha import TwoCaptcha
-import time
-from distutils.version import LooseVersion
-from packaging.version import Version
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
@@ -89,13 +84,6 @@ def login():
 
         if not user:
             flash("Email doesn't exist", "danger")
-            return redirect(url_for('login'))
-
-        try:
-            captcha_result = solve_captcha("https://www.google.com/recaptcha/api2/demo")
-            print(f"Captcha solved with response: {captcha_result}")
-        except Exception:
-            flash("CAPTCHA verification failed. Please try again.", "danger")
             return redirect(url_for('login'))
 
         user = user[0]
