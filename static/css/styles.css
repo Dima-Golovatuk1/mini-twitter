@@ -601,13 +601,13 @@ li.dont_have {
 
 
 .logout {
-    background: -webkit-linear-gradient(white, #fff700, red);
+    background: -webkit-linear-gradient(white, red, black);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     padding: 5px 10px;
     font-size: 12px;
     font-weight: bold;
-    border: 2px solid rgb(157, 160, 0);
+    border: 2px solid red;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
@@ -620,9 +620,9 @@ li.dont_have {
 }
 
 .logout:hover {
-    background: #836b00;
+    background: red;
     -webkit-text-fill-color: rgb(255, 255, 255);
-    border-color: rgb(255, 221, 0);
+    border-color: rgb(black);
 }
 
 .my__posts {
