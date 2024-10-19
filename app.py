@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import (
     get_users_by_id, add_user_to_users, get_users, get_users_by_email,
     get_all_posts, get_all_posts_by_user_id, create_new_post)
+from data.data_base.handlers import (get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts,
+                                     get_all_posts_by_user_id)
 from email_validator import validate_email, EmailNotValidError
 
 app = Flask(__name__)
@@ -219,6 +221,7 @@ def profile():
     password = current_user.password
     posts = []
     all_user_posts = get_all_posts_by_user_id(user_id)
+    post = get_all_posts_by_user_id(user_id)
     return render_template('profile.html',
                            username=name, email=email, DOB=DOB, gender=gender, user_id=user_id,
                            posts=posts, all_post=all_user_posts)
