@@ -248,6 +248,7 @@ body {
 .section__post__item {
     border-radius: 10px;
     border: #000000 1px solid;
+    background-color: #1b1b1b76;
     padding: 15px;
     margin-bottom: 20px;
     transition: box-shadow 0.3s ease, background-color 0.3s;
@@ -597,27 +598,28 @@ li.dont_have {
 
 
 .logout {
-    background: -webkit-linear-gradient(white, #ff4d4d, red);
+    background: -webkit-linear-gradient(white, #fff700, red);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
+    padding: 5px 10px;
+    font-size: 12px;
     font-weight: bold;
-    border: 2px solid red;
+    border: 2px solid rgb(157, 160, 0);
     border-radius: 5px;
     text-align: center;
     display: inline-block;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     z-index: 2;
 }
 
 .logout:hover {
-    background: red;
-    -webkit-text-fill-color: white;
-    border-color: white;
+    background: #836b00;
+    -webkit-text-fill-color: rgb(255, 255, 255);
+    border-color: rgb(255, 221, 0);
 }
 
 .my__posts {
@@ -656,23 +658,10 @@ li.dont_have {
         flex-direction: row;
     }
 
-
-    .logout {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-    }
-}
-
 @media screen and (min-width: 1200px) {
     .profile__me__list {
         flex-direction: row;
         gap: 40px;
     }
-    
-    .logout {
-        position: relative;
-        top: 80px;
-        left: 75px;
-    }
+}
 }

@@ -201,8 +201,8 @@ def home():
     name = current_user.name
     user_id = current_user.id
     posts = []
-
-    return render_template('index.html', user_id=user_id, username=name, posts=posts)
+    all_post = get_all_posts()
+    return render_template('index.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
 @app.route('/explore')
