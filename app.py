@@ -9,24 +9,6 @@ app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
 
-# def get_post_by_id(post_id):
-#     connection = get_db_connection()
-#     cursor = connection.cursor()
-#     query = sql.SQL("SELECT post_name, content FROM posts WHERE id = %s")
-#     cursor.execute(query, (post_id,))
-#     post = cursor.fetchone()
-#     cursor.close()
-#     connection.close()
-
-#     if post:
-#         post_name, content = post
-#         return {
-#             'post_name': post_name,
-#             'content': content
-#         }
-#     else:
-#        return None
-
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
         self.id = id
@@ -51,7 +33,6 @@ class User(UserMixin):
 
     def get_id(self):
         return str(self.id)
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -261,19 +242,20 @@ def following():
 @app.route('/addpost')
 @login_required
 def addpost():
-    return render_template('addpost.html')
+    data = get_all_posts()
+    return render_template('addpost.html', data=data)
 
 
-# @app.route('/post/<int:post_id>')
-# @login_required
-# def post(post_id):
-#     post_data = get_post_by_id(post_id)
-#     if post_data:
-#         post_name = post_data['post_name']
-#         content = post_data['content']
-#         return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
-#     else:
-#         return redirect(url_for('explore'))
+@app.route('/post/<int:post_id>')
+@login_required
+def post(post_id):
+    post_data = get_post_by_id(post_id)
+    if post_data:
+        post_name = post_data['post_name']
+        content = post_data['content']
+        return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
+    else:
+        return redirect(url_for('explore'))
 
 
 if __name__ == '__main__':
