@@ -60,25 +60,29 @@
         </div>
     </header>
     <main>
-        <div class="container">
-            <section class="section__post">
+        <section class="section__post">
+            <div class="container">
                 <ul class="section__post__list">
                     {% for post in all_post|sort(attribute='id', reverse=True) %}
-                        <li class="section__post__item">
-                            <a href="/post/{{post['id']}}">
-                                <h3 class="section__post__item__title">{{ post['title'] }}</h3>
-                                <p class="section__post__item__text">{{ post['content']}}</p>
-                                <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
-                            </a>
+                    <li class="section__post__item">
+                        <a href="/post/{{post['id']}}">
+                            <h3 class="section__post__item__title">{{ post['title'] }}</h3>
+                            <p class="section__post__item__text">{{ post['content']}}</p>
+                            <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
+                        </a>
+                        <div class="section__post__item__media">
                             {% if post['video_url'] is not none %}
-                            <iframe width="600" height="400" src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            <video src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}"></video>
+                            <iframe class="section__post__item__media__video"
+                                src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
                         {% endif %}
-                        </li>
+                        </div>
+                    </li>
                     {% endfor %}
                 </ul>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 </body>
 
