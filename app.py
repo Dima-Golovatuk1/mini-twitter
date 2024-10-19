@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from data.data_base.handlers import get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts
+from data.data_base.handlers import (
+    get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts, get_all_posts_by_user_id)
 from email_validator import validate_email, EmailNotValidError
 
 app = Flask(__name__)
@@ -32,6 +33,7 @@ class User(UserMixin):
 
     def get_id(self):
         return str(self.id)
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -214,9 +216,11 @@ def profile():
     DOB = current_user.DOB
     gender = current_user.gender
     password = current_user.password
-    print(name, user_id, email, DOB, gender, password)
+    posts = []
+    all_user_posts = get_all_posts_by_user_id(user_id)
     return render_template('profile.html',
-                           username=name, email=email, DOB=DOB, gender=gender, user_id=user_id)
+                           username=name, email=email, DOB=DOB, gender=gender, user_id=user_id,
+                           posts=posts, all_post=all_user_posts)
 
 
 @app.route('/notifications')
