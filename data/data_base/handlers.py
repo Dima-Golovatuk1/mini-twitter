@@ -34,11 +34,13 @@ def delete_user_from_users(name):
     response = supabase.table('users').delete().eq('name', name).execute()
 
 
-def create_new_post(user_id, post_name, post_cont):
+def create_new_post(user_id, title, content, image_url, video_url):
     data = {
         'user_id': user_id,
-        'post_name': post_name,
-        'post_content': post_cont
+        'title': title,
+        'content': content,
+        'image_url': image_url,
+        'video_url': video_url
     }
     response = supabase.table('posts').insert(data).execute()
 

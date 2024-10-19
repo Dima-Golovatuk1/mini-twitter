@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import (
-    get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts, get_all_posts_by_user_id)
+    get_users_by_id, add_user_to_users, get_users, get_users_by_email,
+    get_all_posts, get_all_posts_by_user_id, create_new_post)
 from email_validator import validate_email, EmailNotValidError
 
 app = Flask(__name__)
@@ -242,11 +243,32 @@ def following():
     return render_template('following.html')
 
 
-@app.route('/addpost')
+@app.route('/addpost', methods=["GET", "POST"])
 @login_required
 def addpost():
-    data = get_all_posts()
-    return render_template('addpost.html', data=data)
+    if request.method == 'POST':
+        user_id = current_user.id
+        title = request.form.get('title')
+        content = request.form.get('content')
+        post_img = request.files.get('post_img')
+        post_video = request.form.get('post_video')
+
+        if not title or not content:
+            flash('Please fill out all required fields.', 'danger')
+            return render_template('addpost.html')
+
+        if post_img:
+            image = post_img.filename
+            image_path = f'static/downloaded_images/{image}'
+            post_img.save(image_path)
+        else:
+            image_path = None
+
+        create_new_post(user_id, title, content, image_path, post_video)
+        flash('Post created successfully!', 'success')
+        return redirect(url_for('profile'))
+
+    return render_template('addpost.html')
 
 
 @app.route('/post/<int:post_id>')
