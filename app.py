@@ -119,15 +119,13 @@ def register():
             if user["name"] == name:
                 flash('Username is already registered', 'danger')
                 return render_template('register.html')
+            if user["email"] == email:
+                flash('Email is already registered', 'danger')
+                return render_template('register.html')
 
         if not validate_email_format(email):
             flash("Invalid email format", "danger")
             return render_template('register.html')
-
-        for user in users_list:
-            if user["email"] == email:
-                flash('Email is already registered', 'danger')
-                return render_template('register.html')
 
         if len(password) < 8:
             flash('Your password must have more than 8 characters', 'danger')

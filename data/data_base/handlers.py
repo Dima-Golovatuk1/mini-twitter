@@ -4,6 +4,22 @@ from data.data_base.config import key, url
 supabase: Client = create_client(url, key)
 
 
+def checking_email(email):
+    response = supabase.table('users').select('*').eq('email', email).execute()
+    if response.data == []:
+        return False
+    else:
+        return True
+
+
+def checking_name(name):
+    response = supabase.table('users').select('*').eq('name', name).execute()
+    if response.data == []:
+        return False
+    else:
+        return True
+
+
 def add_user_to_users(name, email, password, birthday, sex):
     data = {
         'name': name,
@@ -57,3 +73,16 @@ def get_all_posts():
 def get_all_posts_by_user_id(user_id):
     response = supabase.table('posts').select('*').eq('user_id', user_id).execute()
     return response.data
+
+
+def add_comment(post_id, user_id, comment):
+    data = {
+        'user_id': user_id,
+        'post_id': post_id,
+        'comment': comment
+    }
+    response = supabase.table('comment').insert(data).execute()
+
+
+def get_all_comments_by_post_id(post_id):
+    response = supabase.table('comments').select('*').eq('post_id', post_id)
