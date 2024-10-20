@@ -1,11 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>{{ post_name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+
 <body>
-    <h1>{{ post_name }}</h1>
-    <p>{{ content }}</p>
+    <header class="header" style="margin-top: 50px;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+        <div class="container">
+            <nav class="header__nav">
+                <div class="header__div">
+                    <ul class="header__list__nav" >
+                        <li class="header__item__nav">
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/explore">Explore</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/notifications">Notifications</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/messages">Messages</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="section__post">
+            <div class="container">
+                <ul class="section__post__list">
+                    <li class="section__post__item">
+                            <h2 class="section__post__item__title">{{ post_name }}</h2>
+                            <br>
+                            <p>{{ content }}</p>
+                            <img class="section__post__item__img" src="{{ image_url }}" alt="">
+                        {% if video_url %}
+                        <div class="section__post__item__media">
+                            <iframe class="section__post__item__media__video"
+                                src="{{ video_url | replace('watch?v=', 'embed/') }}" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                            </div>
+                            {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
 </body>
+
 </html>
