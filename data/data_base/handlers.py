@@ -59,9 +59,9 @@ def get_all_posts_by_user_id(user_id):
     return response.data
 
 
-def get_post_by_id(post_id):
+#def get_post_by_id(post_id):
 
-    return response.data
+    #return response.data
 
 
 def add_comment(post_id, user_id, comment):
