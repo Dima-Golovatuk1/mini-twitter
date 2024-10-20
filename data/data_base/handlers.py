@@ -59,8 +59,8 @@ def get_all_posts_by_user_id(user_id):
     return response.data
 
 
-def get_post_by_id(post_id):
-    response = supabase.table('posts').select('*').eq('id', post_id).execute()
+def get_post_by_id(id):
+    response = supabase.table('posts').select('*').eq('id', id).execute()
     return response.data
 
 
@@ -70,7 +70,7 @@ def add_comment(post_id, user_id, comment):
         'post_id': post_id,
         'comment': comment
     }
-    response = supabase.table('comment').insert(data).execute()
+    response = supabase.table('comments').insert(data).execute()
 
 
 def get_all_comments_by_post_id(post_id):

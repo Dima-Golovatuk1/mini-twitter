@@ -80,10 +80,14 @@
                                 <p class="section__post__item__text">{{ post['content']}}</p>
                                 <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
                             </a>
-                            {% if post['video_url'] is not none %}
-                            <iframe width="600" height="400" src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            <video src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}"></video>
-                        {% endif %}
+                            {% if post['video_url']%}
+                            <div class="section__post__item__media">
+                                <iframe class="section__post__item__media__video"
+                                    src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                                </div>
+                                {% endif %}
                         </li>
                     {% endfor %}
                 </ul>

@@ -133,6 +133,26 @@ body {
     transform: scale(1.01);
 }
 
+.comment {
+    background: -webkit-linear-gradient(black, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid yellow;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.comment:hover {
+    background: yellow;
+    -webkit-text-fill-color: black;
+    border-color: black;
+}
 
 @media screen and (min-width: 750px) {
     .header .container {
