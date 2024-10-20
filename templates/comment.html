@@ -7,12 +7,15 @@
 </head>
 <body>
     <h1>Post a Comment</h1>
+    <h1>{{ title }}</h1>
+    <p>{{ content }}</p>
 
     <form action="/post_comment" method="POST">
         <input type="hidden" name="post_id" value="{{ post.id }}">
 
         <label for="comment">Your Comment:</label><br>
-        <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
+        <input id="comment" name="comment" required>
+        <br>
 
         <button type="submit">Submit Comment</button>
     </form>
