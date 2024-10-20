@@ -299,5 +299,9 @@ def post(id):
                            title=title, content=content, id=id, comments=comments)
 
 
+@app.route('/delete_post')
+@login_required
+def delete_post():
+
 if __name__ == '__main__':
     app.run(debug=True)
