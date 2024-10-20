@@ -163,8 +163,6 @@ def register():
         if password != confirm_password:
             flash("Passwords don't match", 'danger')
             return render_template('register.html')
-        
-        time.sleep(2)
 
         hash_password = generate_password_hash(password)
         add_user_to_users(name, email, hash_password, DOB, gender)
