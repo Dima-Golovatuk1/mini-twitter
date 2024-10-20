@@ -7,6 +7,7 @@ from data.data_base.handlers import (
 from data.data_base.handlers import (get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts,
                                      get_all_posts_by_user_id)
 from email_validator import validate_email, EmailNotValidError
+import time
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
@@ -159,6 +160,8 @@ def register():
         if password != confirm_password:
             flash("Passwords don't match", 'danger')
             return render_template('register.html')
+        
+        time.sleep(2)
 
         hash_password = generate_password_hash(password)
         add_user_to_users(name, email, hash_password, DOB, gender)
