@@ -4,22 +4,6 @@ from data.data_base.config import key, url
 supabase: Client = create_client(url, key)
 
 
-def checking_email(email):
-    response = supabase.table('users').select('*').eq('email', email).execute()
-    if response.data != []:
-        return True
-    else:
-        return False
-
-
-def checking_name(name):
-    response = supabase.table('users').select('*').eq('name', name).execute()
-    if response.data != []:
-        return True
-    else:
-        return False
-
-
 def add_user_to_users(name, email, password, birthday, sex):
     data = {
         'name': name,
