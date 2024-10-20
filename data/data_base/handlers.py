@@ -22,7 +22,7 @@ def get_users():
 
 def get_user_by_id(user_id):
     response = supabase.table("users").select("*").eq("id", user_id).execute()
-    return response.data
+    return response.data[0]
 
 
 def get_users_by_email(email):
