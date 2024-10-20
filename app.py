@@ -274,14 +274,14 @@ def addpost():
     return render_template('addpost.html')
 
 
-@app.route('/post/<int:post_id>')
+@app.route('/post/<int:id>', methods=('POST', 'GET'))
 @login_required
-def post(post_id):
-    post_data = get_post_by_id(post_id)
+def post(id):
+    post_data = get_post_by_id(id)
     if post_data:
-        post_name = post_data['title']
-        content = post_data['content']
-        return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
+        post_name = post_data[0]['title']
+        content = post_data[0]['content']
+        return render_template('post.html', post_name=post_name, content=content, id=id)
     else:
         return redirect(url_for('explore'))
 
@@ -300,7 +300,7 @@ def post_comment():
         add_comment(post_id=post_id, user_id=current_user.id, comment=comment_text)
 
         flash("Comment added successfully!", "success")
-        return redirect(url_for('home', post_id=post_id))
+        return redirect(url_for('post_comment', post_id=post_id))
 
     post_id = request.args.get('post_id')
     if post_id:
