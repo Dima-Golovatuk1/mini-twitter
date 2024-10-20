@@ -279,43 +279,23 @@ def addpost():
 def post(id):
     post_data = get_post_by_id(id)
     if post_data:
-        post_name = post_data[0]['title']
+        title = post_data[0]['title']
         content = post_data[0]['content']
-        return render_template('post.html', post_name=post_name, content=content, id=id)
+        return render_template('post.html', title=title, content=content, id=id)
     else:
         return redirect(url_for('explore'))
 
 
-@app.route('/post_comment', methods=['POST', 'GET'])
+@app.route('/comment/<int:id>', methods=('POST', 'GET'))
 @login_required
-def post_comment():
-    if request.method == 'POST':
-        post_id = request.form.get('post_id')
-        comment_text = request.form.get('comment')
-
-        print(f"Post ID: {post_id}, Comment: {comment_text}")
-
-        post = get_post_by_id(post_id)
-
-        add_comment(post_id=post_id, user_id=current_user.id, comment=comment_text)
-
-        flash("Comment added successfully!", "success")
-        return redirect(url_for('post_comment', post_id=post_id))
-
-    post_id = request.args.get('post_id')
-    if post_id:
-        try:
-            post_id = int(post_id)
-        except ValueError:
-            flash("Invalid post ID", "error")
-            return redirect(url_for('home'))
-
-        post = get_post_by_id(post_id)
-
-        return render_template('post_comment.html', post=post)
-
-    flash("No post ID provided", "error")
-    return redirect(url_for('home'))
+def comment(id):
+    post_data = get_post_by_id(id)
+    if post_data:
+        title = post_data[0]['title']
+        content = post_data[0]['content']
+        return render_template('comment.html', title=title, content=content, id=id)
+    else:
+        return redirect(url_for('explore'))
 
 
 if __name__ == '__main__':
