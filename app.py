@@ -1,11 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from data.data_base.handlers import (
-    get_users_by_id, add_user_to_users, get_users, get_users_by_email,
-    get_all_posts, get_all_posts_by_user_id, create_new_post)
-from data.data_base.handlers import (get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts,
-                                     get_all_posts_by_user_id, get_post_by_id)
+from data.data_base.handlers import *
 from email_validator import validate_email, EmailNotValidError
 import time
 
@@ -45,7 +41,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = get_users_by_id(user_id)
+    user = get_user_by_id(user_id)
     if user:
         return User(id=user[0]['id'], email=user[0]['email'], name=user[0]['name'], password=user[0]['password'],
                     DOB=user[0]['birthday'], gender=user[0]['sex'])
@@ -278,24 +274,21 @@ def addpost():
 @login_required
 def post(id):
     post_data = get_post_by_id(id)
-    if post_data:
-        title = post_data[0]['title']
-        content = post_data[0]['content']
-        return render_template('post.html', title=title, content=content, id=id)
-    else:
+    if not post_data:
         return redirect(url_for('explore'))
 
+    title = post_data[0]['title']
+    content = post_data[0]['content']
+    comments = get_all_comments_by_post_id(post_id=id)
 
-@app.route('/comment/<int:id>', methods=('POST', 'GET'))
-@login_required
-def comment(id):
-    post_data = get_post_by_id(id)
-    if post_data:
-        title = post_data[0]['title']
-        content = post_data[0]['content']
-        return render_template('comment.html', title=title, content=content, id=id)
-    else:
-        return redirect(url_for('explore'))
+    if request.method == 'POST':
+        comment = request.form.get('comment')
+        if comment:
+            add_comment(id, comment)
+            return redirect(url_for('post', id=id))
+
+    return render_template('post.html',
+                           title=title, content=content, id=id, comments=comments)
 
 
 if __name__ == '__main__':

@@ -20,7 +20,7 @@ def get_users():
     return response.data
 
 
-def get_users_by_id(user_id):
+def get_user_by_id(user_id):
     response = supabase.table("users").select("*").eq("id", user_id).execute()
     return response.data
 
@@ -64,9 +64,8 @@ def get_post_by_id(id):
     return response.data
 
 
-def add_comment(post_id, user_id, comment):
+def add_comment(post_id, comment):
     data = {
-        'user_id': user_id,
         'post_id': post_id,
         'comment': comment
     }
