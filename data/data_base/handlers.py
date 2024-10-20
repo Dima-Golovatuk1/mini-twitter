@@ -6,7 +6,7 @@ supabase: Client = create_client(url, key)
 
 def checking_email(email):
     response = supabase.table('users').select('*').eq('email', email).execute()
-    if email in response.data[0]['email']:
+    if response.data != []:
         return True
     else:
         return False
@@ -14,7 +14,7 @@ def checking_email(email):
 
 def checking_name(name):
     response = supabase.table('users').select('*').eq('name', name).execute()
-    if name in response.data[0]['name']:
+    if response.data != []:
         return True
     else:
         return False
