@@ -66,6 +66,7 @@
                     {% for post in all_post|sort(attribute='id', reverse=True) %}
                     <li class="section__post__item">
                         <a href="/post/{{post['id']}}">
+                             <p class="header__nav__link__nik">{{username}}</p>
                             <h3 class="section__post__item__title">{{ post['title'] }}</h3>
                             <p class="section__post__item__text">{{ post['content']}}</p>
                             <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">

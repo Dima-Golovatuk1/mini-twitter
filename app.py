@@ -120,6 +120,7 @@ def register():
             if user['name'] == name:
                 flash('Username is already registered', 'danger')
                 return render_template('register.html')
+
             if user['email'] == email:
                 flash('Email is already registered', 'danger')
                 return render_template('register.html')
