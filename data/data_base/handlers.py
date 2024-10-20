@@ -34,9 +34,9 @@ def delete_user_from_users(name):
     response = supabase.table('users').delete().eq('name', name).execute()
 
 
-def create_new_post(user_name, title, content, image_url, video_url):
+def create_new_post(user_id, title, content, image_url, video_url):
     data = {
-        'user_name': user_name,
+        'user_id': user_id,
         'title': title,
         'content': content,
         'image_url': image_url,
@@ -64,9 +64,9 @@ def get_post_by_id(post_id):
     return response.data
 
 
-def add_comment(post_id, user_name, comment):
+def add_comment(post_id, user_id, comment):
     data = {
-        'user_name': user_name,
+        'user_id': user_id,
         'post_id': post_id,
         'comment': comment
     }
@@ -74,4 +74,5 @@ def add_comment(post_id, user_name, comment):
 
 
 def get_all_comments_by_post_id(post_id):
-    response = supabase.table('comments').select('*').eq('post_id', post_id)
+    response = supabase.table('comments').select('*').eq('post_id', post_id).execute()
+    return response.data
