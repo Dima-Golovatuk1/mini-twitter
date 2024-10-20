@@ -3,7 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import (
     get_users_by_id, add_user_to_users, get_users, get_users_by_email,
-    get_all_posts, get_all_posts_by_user_id, create_new_post)
+    get_all_posts, get_all_posts_by_user_id, create_new_post, checking_email, checking_name)
 from data.data_base.handlers import (get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts,
                                      get_all_posts_by_user_id)
 from email_validator import validate_email, EmailNotValidError
@@ -113,15 +113,13 @@ def register():
         confirm_password = request.form.get('confirm_password')
         DOB = request.form.get('dob')
         gender = request.form.get('gender')
-        users_list = get_users()
 
-        for user in users_list:
-            if user["name"] == name:
-                flash('Username is already registered', 'danger')
-                return render_template('register.html')
-            if user["email"] == email:
-                flash('Email is already registered', 'danger')
-                return render_template('register.html')
+        if checking_name(name):
+            flash('Username is already registered', 'danger')
+            return render_template('register.html')
+        if checking_email(email):
+            flash('Email is already registered', 'danger')
+            return render_template('register.html')
 
         if not validate_email_format(email):
             flash("Invalid email format", "danger")
