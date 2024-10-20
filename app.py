@@ -3,10 +3,11 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import (
     get_users_by_id, add_user_to_users, get_users, get_users_by_email,
-    get_all_posts, get_all_posts_by_user_id, create_new_post, checking_email, checking_name)
+    get_all_posts, get_all_posts_by_user_id, create_new_post)
 from data.data_base.handlers import (get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts,
                                      get_all_posts_by_user_id)
 from email_validator import validate_email, EmailNotValidError
+import time
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
@@ -113,13 +114,16 @@ def register():
         confirm_password = request.form.get('confirm_password')
         DOB = request.form.get('dob')
         gender = request.form.get('gender')
+        users_list = get_users()
 
-        if checking_name(name):
-            flash('Username is already registered', 'danger')
-            return render_template('register.html')
-        if checking_email(email):
-            flash('Email is already registered', 'danger')
-            return render_template('register.html')
+        for user in users_list:
+            if user['name'] == name:
+                flash('Username is already registered', 'danger')
+                return render_template('register.html')
+
+            if user['email'] == email:
+                flash('Email is already registered', 'danger')
+                return render_template('register.html')
 
         if not validate_email_format(email):
             flash("Invalid email format", "danger")
@@ -275,7 +279,7 @@ def addpost():
 def post(post_id):
     post_data = get_post_by_id(post_id)
     if post_data:
-        post_name = post_data['post_name']
+        post_name = post_data['title']
         content = post_data['content']
         return render_template('post.html', post_name=post_name, content=content, post_id=post_id)
     else:

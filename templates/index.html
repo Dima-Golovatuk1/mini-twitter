@@ -66,8 +66,9 @@
                     {% for post in all_post|sort(attribute='id', reverse=True) %}
                     <li class="section__post__item">
                         <a href="/post/{{post['id']}}">
-                            <h3 class="section__post__item__title">{{ post['title'] }}</h3>
-                            <p class="section__post__item__text">{{ post['content']}}</p>
+                            <h2 class="section__post__item__title">{{ post['title'] }}</h2>
+                            <br>
+                            <h3 class="section__post__item__text">{{ post['content']}}</h3>
                             <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
                         </a>
                         {% if post['video_url']%}
