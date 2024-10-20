@@ -3,7 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from data.data_base.handlers import (
     get_users_by_id, add_user_to_users, get_users, get_users_by_email,
-    get_all_posts, get_all_posts_by_user_id, create_new_post, checking_email, checking_name)
+    get_all_posts, get_all_posts_by_user_id, create_new_post)
 from data.data_base.handlers import (get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts,
                                      get_all_posts_by_user_id)
 from email_validator import validate_email, EmailNotValidError
@@ -120,6 +120,7 @@ def register():
             if user['name'] == name:
                 flash('Username is already registered', 'danger')
                 return render_template('register.html')
+
             if user['email'] == email:
                 flash('Email is already registered', 'danger')
                 return render_template('register.html')
