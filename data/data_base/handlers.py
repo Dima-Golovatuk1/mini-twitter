@@ -76,3 +76,8 @@ def add_comment(post_id, user_id, comment):
 def get_all_comments_by_post_id(post_id):
     response = supabase.table('comments').select('*').eq('post_id', post_id).execute()
     return response.data
+
+
+def delete_comment_by_id(comment_id):
+    response = supabase.table('comments').delete().eq('id', comment_id).execute()
+    
