@@ -1,11 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from data.data_base.handlers import (
-    get_users_by_id, add_user_to_users, get_users, get_users_by_email,
-    get_all_posts, get_all_posts_by_user_id, create_new_post)
-from data.data_base.handlers import (get_users_by_id, add_user_to_users, get_users, get_users_by_email, get_all_posts,
-                                     get_all_posts_by_user_id, get_post_by_id)
+from data.data_base.handlers import *
 from email_validator import validate_email, EmailNotValidError
 import time
 
@@ -45,10 +41,10 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = get_users_by_id(user_id)
+    user = get_user_by_id(user_id)
     if user:
-        return User(id=user[0]['id'], email=user[0]['email'], name=user[0]['name'], password=user[0]['password'],
-                    DOB=user[0]['birthday'], gender=user[0]['sex'])
+        return User(id=user['id'], email=user['email'], name=user['name'], password=user['password'],
+                    DOB=user['birthday'], gender=user['sex'])
     return None
 
 
@@ -221,10 +217,18 @@ def profile():
     password = current_user.password
     posts = []
     all_user_posts = get_all_posts_by_user_id(user_id)
-    post = get_all_posts_by_user_id(user_id)
     return render_template('profile.html',
                            username=name, email=email, DOB=DOB, gender=gender, user_id=user_id,
                            posts=posts, all_post=all_user_posts)
+
+
+@app.route('/view_profile/<int:id>', methods=['GET'])
+def view_profile(id):
+    user = get_user_by_id(id)
+    all_post = get_all_posts_by_user_id(id)
+    if request.method == 'GET':
+        return render_template('view.html', name=user['name'],
+                               id=id, birthday=user['birthday'], sex=user['sex'], posts=all_post)
 
 
 @app.route('/notifications')
