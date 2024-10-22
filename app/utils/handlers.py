@@ -1,6 +1,10 @@
 from supabase import create_client, Client
+<<<<<<< Updated upstream:data/data_base/handlers.py
 from config import *
 
+=======
+from config import key, url
+>>>>>>> Stashed changes:app/utils/handlers.py
 
 supabase: Client = create_client(url, key)
 
