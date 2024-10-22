@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from data.data_base.handlers import *
 from email_validator import validate_email, EmailNotValidError
-import time
+from data.data_base.handlers import *
+
 
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
@@ -151,7 +151,6 @@ def register():
 
         special_characters = '!@#$%^&*(),.?":{}|<>'
         special_characters_list = list(special_characters)
-        print(special_characters_list)
         if not any(special_characters_list for special_character in password):
             flash('Your password must contain at least one special character', 'danger')
             return render_template('register.html')
@@ -163,7 +162,7 @@ def register():
         hash_password = generate_password_hash(password)
         add_user_to_users(name, email, hash_password, DOB, gender)
 
-        flash('Registration successful! You can now log in.', 'success')
+        flash('Registration successful! You can now log in', 'success')
         return redirect(url_for('login'))
 
     return render_template('register.html')
@@ -299,9 +298,10 @@ def post(id):
                            title=title, content=content, id=id, comments=comments)
 
 
-@app.route('/delete_post')
-@login_required
-def delete_post():
+#@app.route('/delete_post')
+#@login_required
+#def delete_post():
+
 
 if __name__ == '__main__':
     app.run(debug=True)
