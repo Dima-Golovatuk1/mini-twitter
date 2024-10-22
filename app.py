@@ -227,7 +227,7 @@ def view_profile(id):
     all_post = get_all_posts_by_user_id(id)
     if request.method == 'GET':
         return render_template('view.html', name=user['name'],
-                               id=id, birthday=user['birthday'], sex=user['sex'], posts=all_post)
+                               id=id, birthday=user['birthday'], sex=user['sex'], all_post=all_post)
 
 
 @app.route('/notifications')
