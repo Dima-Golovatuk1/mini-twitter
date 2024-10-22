@@ -733,3 +733,69 @@ li.dont_have {
     font-size: 20px;
     color: var(--link-text);
 }
+
+
+.delete__post {
+        background: -webkit-linear-gradient(white, red, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    border: 2px solid red;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.delete__post:hover {
+    background: red;
+    -webkit-text-fill-color: rgb(255, 255, 255);
+    border-color: rgb(black);
+}
+
+.delete__post_h1 {
+    font-size: 40px;
+    text-transform: uppercase;
+    background: -webkit-linear-gradient(black, red, yellow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.delete__post__submit {
+    background: -webkit-linear-gradient(black, red, yellow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid red;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete__post__submit:hover {
+    background: red;
+    -webkit-text-fill-color: black;
+    border-color: black;
+}
+
+.add__post_h1 {
+    font-size: 40px;
+    text-transform: uppercase;
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}

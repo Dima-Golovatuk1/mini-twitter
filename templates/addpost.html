@@ -48,6 +48,31 @@
             </form>
         </div>
     </main>
-
+    <h1 class="add__post_h1">Your posts</h1>
+    <main>
+        <div class="container">
+            <section class="section__post">
+                <ul class="section__post__list">
+                    {% for post in all_post|sort(attribute='id', reverse=True) %}
+                        <li class="section__post__item">
+                            <a href="/post/{{post['id']}}">
+                                <h3 class="section__post__item__title">{{ post['title'] }}</h3>
+                                <p class="section__post__item__text">{{ post['content']}}</p>
+                                <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
+                            </a>
+                            {% if post['video_url']%}
+                            <div class="section__post__item__media">
+                                <iframe class="section__post__item__media__video"
+                                    src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                                </div>
+                                {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </main>
 </body>
 </html>

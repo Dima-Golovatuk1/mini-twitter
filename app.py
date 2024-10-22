@@ -230,17 +230,14 @@ def view_profile(id):
                                id=id, birthday=user['birthday'], sex=user['sex'], all_post=all_post)
 
 
-@app.route('/notifications')
-@login_required
-def notifications():
-    return render_template('notifications.html')
-
-
 @app.route('/global')
 @login_required
 def global_page():
-    data = get_all_posts()
-    return render_template('global.html', data=data)
+    name = current_user.name
+    user_id = current_user.id
+    posts = []
+    all_post = get_all_posts()
+    return render_template('global.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
 @app.route('/following')
@@ -252,6 +249,8 @@ def following():
 @app.route('/addpost', methods=["GET", "POST"])
 @login_required
 def addpost():
+    user_id = current_user.id
+    all_user_posts = get_all_posts_by_user_id(user_id)
     if request.method == 'POST':
         user_id = current_user.id
         title = request.form.get('title')
@@ -274,7 +273,7 @@ def addpost():
         flash('Post created successfully!', 'success')
         return redirect(url_for('profile'))
 
-    return render_template('addpost.html')
+    return render_template('addpost.html', all_post=all_user_posts)
 
 
 @app.route('/post/<int:id>', methods=('POST', 'GET'))
@@ -286,7 +285,7 @@ def post(id):
 
     title = post_data[0]['title']
     content = post_data[0]['content']
-    comments = get_all_comments_by_post_id(post_id=id)
+    comments = get_all_comments_by_post_id(id)
 
     if request.method == 'POST':
         comment = request.form.get('comment')
@@ -298,9 +297,24 @@ def post(id):
                            title=title, content=content, id=id, comments=comments)
 
 
-#@app.route('/delete_post')
-#@login_required
-#def delete_post():
+@app.route('/delete_post', methods=['GET', 'POST'])
+@login_required
+def delete_post():
+    user_id = current_user.id
+    all_user_posts = get_all_posts_by_user_id(user_id)
+
+    if request.method == 'POST':
+        post_title = request.form.get('delete_post')
+        if post_title:
+            post = get_post_by_title_and_user_id(post_title, user_id)
+            if post:
+                delete_post_by_id(post['id'])
+                return redirect(url_for('delete_post'))
+            else:
+                flash("No post found with that title.")
+                return redirect(url_for('delete_post'))
+
+    return render_template('delete_post.html', user_id=user_id, all_post=all_user_posts)
 
 
 if __name__ == '__main__':

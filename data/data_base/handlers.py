@@ -45,8 +45,8 @@ def create_new_post(user_id, title, content, image_url, video_url):
     response = supabase.table('posts').insert(data).execute()
 
 
-def delete_post_by_id(post_id):
-    response = supabase.table('posts').delete().eq('id', post_id).execute()
+def delete_post_by_id(id):
+    response = supabase.table('posts').delete().eq('id', id).execute()
 
 
 def get_all_posts():
@@ -64,19 +64,31 @@ def get_post_by_id(id):
     return response.data
 
 
-def add_comment(post_id, comment):
+def add_comment(id, comment):
     data = {
-        'post_id': post_id,
+        'id': id,
         'comment': comment
     }
     response = supabase.table('comments').insert(data).execute()
 
 
-def get_all_comments_by_post_id(post_id):
-    response = supabase.table('comments').select('*').eq('post_id', post_id).execute()
+def get_all_comments_by_post_id(id):
+    response = supabase.table('comments').select('*').eq('id', id).execute()
     return response.data
 
 
 def delete_comment_by_id(comment_id):
     response = supabase.table('comments').delete().eq('id', comment_id).execute()
-    
+
+
+def delete_post_by_title_and_user_id(title, user_id):
+    response = supabase.table('posts').delete().eq('title', title).eq('user_id', user_id).execute()
+    return response
+
+
+def get_post_by_title_and_user_id(title, user_id):
+    response = supabase.table('posts').select('*').eq('title', title).eq('user_id', user_id).execute()
+
+    if response.data:
+        return response.data[0]
+    return None
