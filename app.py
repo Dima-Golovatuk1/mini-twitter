@@ -186,10 +186,22 @@ def home():
     return render_template('index.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
-@app.route('/explore')
+@app.route('/explore', methods=['POST', 'GET'])
 @login_required
 def explore():
-    return render_template('explore.html')
+    all_posts = get_all_posts()
+
+    if request.method == 'POST':
+        title = request.form.get('explore_input').strip()
+        posts_by_title = get_post_by_title_partial(title)
+
+        if posts_by_title:
+            return render_template('explore.html', all_post=posts_by_title, search=title)
+        else:
+            flash('No posts found for the search query.', 'danger')
+            return render_template('explore.html', all_post=None, search=title)
+
+    return render_template('explore.html', all_post=all_posts)
 
 
 @app.route('/messages', methods=["GET", "POST"])

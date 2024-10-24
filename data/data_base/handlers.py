@@ -92,3 +92,13 @@ def get_post_by_title_and_user_id(title, user_id):
     if response.data:
         return response.data[0]
     return None
+
+
+def get_post_by_title(title):
+    response = supabase.table('posts').select('*').eq('title', title).execute()
+    return response.data
+
+
+def get_post_by_title_partial(title):
+    response = supabase.table('posts').select('*').ilike('title', f'%{title}%').execute()
+    return response.data
