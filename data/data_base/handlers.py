@@ -92,3 +92,23 @@ def get_post_by_title_and_user_id(title, user_id):
     if response.data:
         return response.data[0]
     return None
+
+
+def add_new_followers(user_id: int, followers_id: list):
+    data = {
+        'user_id': user_id,
+        'followers_id': followers_id
+    }
+    response = supabase.table('followers').insert(data).execute()
+
+
+def update_followers_by_user_id(user_id: int, followers_id: list):
+    data_update = {
+        'followers_id': get_followers_by_user_id(user_id) + followers_id
+    }
+    response = supabase.table('followers').update(data_update).eq('user_id', user_id).execute()
+
+
+def get_followers_by_user_id(user_id: int):
+    response = supabase.table('followers').select('followers_id').eq('user_id', user_id).execute()
+    return response.data[0]['followers_id']
