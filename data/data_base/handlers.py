@@ -66,7 +66,7 @@ def get_post_by_id(id):
 
 def add_comment(id, comment):
     data = {
-        'id': id,
+        'post_id': id,
         'comment': comment
     }
     response = supabase.table('comments').insert(data).execute()
