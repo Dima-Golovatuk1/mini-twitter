@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from email_validator import validate_email, EmailNotValidError
 from data.data_base.handlers import *
 
-
 app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
@@ -234,12 +233,17 @@ def profile():
 
 
 @app.route('/view_profile/<int:id>', methods=['GET'])
+@login_required
 def view_profile(id):
     user = get_user_by_id(id)
     all_post = get_all_posts_by_user_id(id)
     if request.method == 'GET':
-        return render_template('view.html', name=user['name'],
-                               id=id, birthday=user['birthday'], sex=user['sex'], all_post=all_post)
+        if user:
+            return render_template('view.html', name=user['name'],
+                                   id=id, birthday=user['birthday'], sex=user['sex'], all_post=all_post)
+        else:
+            flash("user doesn't exists")
+            return redirect(url_for('home'))
 
 
 @app.route('/global')
@@ -327,6 +331,12 @@ def delete_post():
                 return redirect(url_for('delete_post'))
 
     return render_template('delete_post.html', user_id=user_id, all_post=all_user_posts)
+
+
+@app.route('/delete_comment/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_comment():
+    return render_template('delete_comment')
 
 
 if __name__ == '__main__':

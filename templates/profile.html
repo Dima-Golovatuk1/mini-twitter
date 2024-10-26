@@ -11,6 +11,29 @@
 
 <body>
     <header class="header" style="margin-top: 50px;">
+        <div class="container">
+            <nav class="header__nav">
+                <div class="header__div">
+                    <ul class="header__list__nav">
+                        <li class="header__item__nav">
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/explore">Explore</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/messages">Messages</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/addpost">Add a post</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/delete_post">Delete a post</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         <div class="flash-messages">
@@ -22,26 +45,6 @@
         </div>
     {% endif %}
 {% endwith %}
-        <div class="container">
-            <nav class="header__nav">
-                <div class="header__div">
-                    <ul class="header__list__nav" >
-                        <li class="header__item__nav">
-                            <a href="/">Home</a>
-                        </li>
-                        <li class="header__item__nav">
-                            <a href="/explore">Explore</a>
-                        </li>
-                        <li class="header__item__nav">
-                            <a href="/notifications">Notifications</a>
-                        </li>
-                        <li class="header__item__nav">
-                            <a href="/messages">Messages</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
     </header>
     <main class="profile">
         <section class="profile__me">
@@ -55,9 +58,9 @@
                     <li class="profile__me__item">gender: {{gender}}</li>
                     <li class="profile__me__item">{{DOB}}</li>
                 </ul>
-                <a class="logout" href="/logout">LOGOUT</a>
+                <a style="z-index: 2;" class="logout" href="/logout">LOGOUT</a>
                 <a style="z-index: 2;" class="my__posts" href="/addpost">ADD A POST</a>
-                <a class="delete__post" href="/delete_post">DELETE A POST</a>
+                <a style="z-index: 2;" class="delete__post" href="/delete_post">DELETE A POST</a>
             </div>
         </section>
 
