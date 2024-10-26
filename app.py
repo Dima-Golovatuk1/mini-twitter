@@ -233,13 +233,36 @@ def profile():
                            posts=posts, all_post=all_user_posts)
 
 
-@app.route('/view_profile/<int:id>', methods=['GET'])
+@app.route('/view_profile/<int:id>', methods=['GET', 'POST'])
+@login_required
 def view_profile(id):
+    followers = get_followers_by_user_id(id) or []  # якщо followers == None, замінюємо на порожній список
+    user_id = current_user.id
     user = get_user_by_id(id)
+
+    if user is None:
+        return redirect(url_for('home'))
+
     all_post = get_all_posts_by_user_id(id)
-    if request.method == 'GET':
-        return render_template('view.html', name=user['name'],
-                               id=id, birthday=user['birthday'], sex=user['sex'], all_post=all_post)
+    follow = False  # Значення за замовчуванням
+
+    if request.method == 'POST':
+        if user_id not in followers:
+            follow = True
+            add_new_followers(user_id, id)
+            flash('You have successfully subscribed.')
+        else:
+            flash('You are already subscribed.')
+
+    return render_template(
+        'view.html',
+        id=id,
+        name=user['name'],
+        birthday=user['birthday'],
+        sex=user['sex'],
+        all_post=all_post,
+        follow=follow
+    )
 
 
 @app.route('/global')
