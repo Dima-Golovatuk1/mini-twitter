@@ -73,7 +73,7 @@ def add_comment(id, comment):
 
 
 def get_all_comments_by_post_id(id):
-    response = supabase.table('comments').select('*').eq('id', id).execute()
+    response = supabase.table('comments').select('*').eq('post_id', id).execute()
     return response.data
 
 
