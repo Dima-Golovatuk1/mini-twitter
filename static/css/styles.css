@@ -288,8 +288,8 @@ body {
     font-size: 1rem;
     color: #cccccc;
     margin-bottom: 10px;
-    white-space: nowrap; 
-    overflow: hidden;          
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
@@ -645,7 +645,7 @@ li.dont_have {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    ;
 }
 
 .logout:hover {
@@ -736,11 +736,12 @@ li.dont_have {
 
 
 .delete__post {
-        background: -webkit-linear-gradient(white, red, black);
+    background: -webkit-linear-gradient(black, red, yellow);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    padding: 5px 10px;
-    font-size: 12px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
     font-weight: bold;
     border: 2px solid red;
     border-radius: 5px;
@@ -748,10 +749,6 @@ li.dont_have {
     display: inline-block;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
 }
 
 .delete__post:hover {

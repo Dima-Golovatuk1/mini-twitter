@@ -352,5 +352,11 @@ def delete_post():
     return render_template('delete_post.html', user_id=user_id, all_post=all_user_posts)
 
 
+@app.route('/delete_comment/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_comment():
+    return render_template('delete_comment')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
