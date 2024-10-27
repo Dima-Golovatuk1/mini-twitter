@@ -327,7 +327,7 @@ def delete_post():
                 delete_post_by_id(post['id'])
                 return redirect(url_for('delete_post'))
             else:
-                flash("No post found with that title.")
+                flash("No post found with that title.", 'danger')
                 return redirect(url_for('delete_post'))
 
     return render_template('delete_post.html', user_id=user_id, all_post=all_user_posts)
@@ -335,8 +335,33 @@ def delete_post():
 
 @app.route('/delete_comment/<int:id>', methods=['GET', 'POST'])
 @login_required
-def delete_comment():
-    return render_template('delete_comment')
+def delete_comment(id):
+    comment = get_comment_by_id(id)
+
+    if not comment:
+        flash("Comment not found.", "danger")
+        return redirect(url_for("home"))
+
+    post_id = comment[0]['post_id']
+    post = get_post_by_id(post_id)
+
+    if not post:
+        flash("Post not found.", "danger")
+        return redirect(url_for("home"))
+
+    comment_owner = comment[0]['user_id']
+    user_id = current_user.id
+
+    if comment_owner != user_id:
+        flash("You are not the owner of this comment to delete it.", "danger")
+        return redirect(url_for("post", id=post_id))
+
+    if request.method == 'POST':
+        delete_comment_by_id(id)
+        flash("Comment deleted successfully.", "success")
+        return redirect(url_for("post", id=post_id))
+
+    return render_template('delete_comment.html', comment=comment[0], post_id=post_id)
 
 
 if __name__ == '__main__':
