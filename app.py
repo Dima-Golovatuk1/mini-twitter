@@ -168,12 +168,14 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
-    logout_user()
-    flash('You have been logged out.', 'info')
-    return redirect(url_for('login'))
+    if request.method == 'POST':
+        logout_user()
+        flash('You have been logged out.', 'info')
+        return redirect(url_for('login'))
+    return render_template('logout.html')
 
 
 @app.route('/')
@@ -202,19 +204,6 @@ def explore():
             return render_template('explore.html', all_post=None, search=title)
 
     return render_template('explore.html', all_post=all_posts)
-
-
-@app.route('/messages', methods=["GET", "POST"])
-@login_required
-def messages():
-    if request.method == 'POST':
-        return render_template('messages.html')
-
-
-@app.route('/bookmarks')
-@login_required
-def bookmarks():
-    return render_template('bookmarks.html')
 
 
 @app.route('/profile')
@@ -314,9 +303,11 @@ def post(id):
     comments = get_all_comments_by_post_id(id)
 
     if request.method == 'POST':
+        user_id = current_user.id
+        post_id = id
         comment = request.form.get('comment')
         if comment:
-            add_comment(id, comment)
+            add_comment(user_id, post_id, comment)
             return redirect(url_for('post', id=id))
 
     return render_template('post.html',
