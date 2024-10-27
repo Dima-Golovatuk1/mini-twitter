@@ -22,7 +22,10 @@ def get_users():
 
 def get_user_by_id(user_id):
     response = supabase.table("users").select("*").eq("id", user_id).execute()
-    return response.data[0]
+    if response.data:
+        return response.data[0]
+    else:
+        return None
 
 
 def get_users_by_email(email):
@@ -64,9 +67,10 @@ def get_post_by_id(id):
     return response.data
 
 
-def add_comment(id, comment):
+def add_comment(user_id, post_id, comment):
     data = {
-        'post_id': id,
+        'user_id': user_id,
+        'post_id': post_id,
         'comment': comment
     }
     response = supabase.table('comments').insert(data).execute()
@@ -104,19 +108,12 @@ def get_post_by_title_partial(title):
     return response.data
 
 
-def add_new_followers(user_id: int, followers_id: list):
+def add_new_followers(user_id: int, follower_id: int):
     data = {
         'user_id': user_id,
-        'followers_id': followers_id
+        'follower_id': follower_id
     }
     response = supabase.table('followers').insert(data).execute()
-
-
-def update_followers_by_user_id(user_id: int, followers_id: list):
-    data_update = {
-        'followers_id': get_followers_by_user_id(user_id) + followers_id
-    }
-    response = supabase.table('followers').update(data_update).eq('user_id', user_id).execute()
 
 
 def get_followers_by_user_id(user_id: int):

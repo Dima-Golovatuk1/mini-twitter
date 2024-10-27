@@ -47,7 +47,13 @@
         <section class="profile__me">
             <div class="container">
                 <div class="background"></div>
-                    <a style="z-index: 2;" class="my__posts" href="#">FOLLOW</a>
+                    <form class="buttons_follow" action="{{ url_for('view_profile', id=id) }}" method="post">
+                    {% if follow == False %}
+                        <button type="submit" class="follow-btn">FOLLOW</button>
+                    {% elif follow == True %}
+                        <button type="submit" class="unfollow-btn">UNFOLLOW</button>
+                    {% endif %}
+                    </form>
                 <img class="profile__me__img" src="../static/img/profile.png" alt="#">
                 <ul class="profile__me__list">
                     <li class="profile__me__item">{{name}}</li>
