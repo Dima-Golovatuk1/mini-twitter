@@ -236,7 +236,7 @@ def profile():
 @app.route('/view_profile/<int:id>', methods=['GET', 'POST'])
 @login_required
 def view_profile(id):
-    followers = get_followers_by_user_id(id) or []  # якщо followers == None, замінюємо на порожній список
+    followers = get_followers_by_user_id(id)
     user_id = current_user.id
     user = get_user_by_id(id)
 
@@ -244,7 +244,7 @@ def view_profile(id):
         return redirect(url_for('home'))
 
     all_post = get_all_posts_by_user_id(id)
-    follow = False  # Значення за замовчуванням
+    follow = False
 
     if request.method == 'POST':
         if user_id not in followers:

@@ -27,6 +27,7 @@ def get_user_by_id(user_id):
     else:
         return None
 
+
 def get_users_by_email(email):
     response = supabase.table("users").select("*").eq("email", email).execute()
     return response.data
@@ -66,9 +67,10 @@ def get_post_by_id(id):
     return response.data
 
 
-def add_comment(id, comment):
+def add_comment(user_id, post_id, comment):
     data = {
-        'post_id': id,
+        'user_id': user_id,
+        'post_id': post_id,
         'comment': comment
     }
     response = supabase.table('comments').insert(data).execute()
@@ -117,6 +119,6 @@ def add_new_followers(user_id: int, follower_id: int):
 def get_followers_by_user_id(user_id: int):
     response = supabase.table('followers').select('follower_id').eq('user_id', user_id).execute()
     if response.data:
-        return response.data[-1]['follower_id']
+        return [item['follower_id'] for item in response.data[::-1]]
     else:
-        return None
+        return []
