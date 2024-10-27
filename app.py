@@ -185,7 +185,8 @@ def home():
     user_id = current_user.id
     posts = []
     all_post = get_all_posts()
-    return render_template('index.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
+    return render_template('index.html',
+                           user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
 @app.route('/explore', methods=['POST', 'GET'])
@@ -229,20 +230,20 @@ def view_profile(id):
     all_post = get_all_posts_by_user_id(id)
     user_id = current_user.id
     followers = get_followers_by_user_id(id)
-
+    idol = id
     is_following = user_id in followers
 
     if request.method == 'POST':
         if is_following:
             remove_follower(user_id, id)
             is_following = False
-        if not is_following:
+        else:
             add_new_follower(user_id, id)
             is_following = True
 
     return render_template('view.html', name=user['name'],
                            id=id, birthday=user['birthday'], sex=user['sex'],
-                           all_post=all_post, is_following=is_following)
+                           all_post=all_post, is_following=is_following, idol=idol, user_id=user_id)
 
 
 @app.route('/global')
@@ -294,6 +295,9 @@ def addpost():
 @app.route('/post/<int:id>', methods=('POST', 'GET'))
 @login_required
 def post(id):
+    post_id = id
+    post_author_id = get_user_id_by_post_id(post_id)
+    post_author = get_user_by_id(post_author_id)
     post_data = get_post_by_id(id)
     if not post_data:
         return redirect(url_for('explore'))
@@ -304,14 +308,15 @@ def post(id):
 
     if request.method == 'POST':
         user_id = current_user.id
-        post_id = id
         comment = request.form.get('comment')
         if comment:
             add_comment(user_id, post_id, comment)
+            flash('Your comment has been added!', 'success')
             return redirect(url_for('post', id=id))
 
     return render_template('post.html',
-                           title=title, content=content, id=id, comments=comments)
+                           title=title, content=content, id=id, comments=comments,
+                           post_author=post_author['name'], post_author_id=post_author_id)
 
 
 @app.route('/delete_post', methods=['GET', 'POST'])

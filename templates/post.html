@@ -38,6 +38,8 @@
             <div class="container">
                 <ul class="section__post__list">
                     <li class="section__post__item">
+                        <h2><a class="register__btn" href="{{ url_for('view_profile', id=post_author_id) }}">{{ post_author }}</a></h2>
+                        <br><br>
                         <h2 class="section__post__item__title">{{ title }}</h2>
                         <p>{{ content }}</p>
                         <img class="section__post__item__img" src="{{ image_url }}" alt="">
@@ -69,7 +71,7 @@
                         <li class="section__post__item">
                             <h3 class="section__post__item__title">{{ comment['comment'] }}</h3>
                             {% if post_owner == user_id %}
-                                <a class="delete__post" href="/delete_comment/{{ comment['id'] }}">DELETE COMMENT</a>
+                                <a class="delete__post" href="{{ url_for('delete_comment', id=comment['id']) }}">DELETE COMMENT</a>
                             {% endif %}
                         </li>
                     {% endfor %}

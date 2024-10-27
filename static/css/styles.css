@@ -830,3 +830,23 @@ li.dont_have {
     -webkit-text-fill-color: transparent;
     text-align: center;
 }
+
+
+.post-author {
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 20px
+    padding: 10px 20px;
+
+}
+
+.post-author:hover {
+    background-color: black;
+    color: yellow;
+}

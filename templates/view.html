@@ -48,11 +48,13 @@
             <div class="container">
                 <div class="background"></div>
                     <form class="buttons_follow" action="{{ url_for('view_profile', id=id) }}" method="post">
-                    {% if is_following == False %}
-                        <button type="submit" class="follow-btn">FOLLOW</button>
-                    {% elif is_following == True %}
-                        <button type="submit" class="unfollow-btn">UNFOLLOW</button>
-                    {% endif %}
+                        {% if user_id != idol %}
+                            {% if is_following == False %}
+                                <button type="submit" class="follow-btn">FOLLOW</button>
+                            {% elif is_following == True %}
+                                <button type="submit" class="unfollow-btn">UNFOLLOW</button>
+                            {% endif %}
+                        {%endif%}
                     </form>
                 <img class="profile__me__img" src="../static/img/profile.png" alt="#">
                 <ul class="profile__me__list">
