@@ -247,7 +247,7 @@ def view_profile(id):
         if is_following:
             remove_follower(user_id, id)
             is_following = False
-        if not is_following:
+        else:
             add_new_follower(user_id, id)
             is_following = True
 
