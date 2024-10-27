@@ -744,9 +744,9 @@ li.dont_have {
     -webkit-text-fill-color: transparent;
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
-    border: 2px solid red;
+    border: 1px solid red;
     border-radius: 5px;
     text-align: center;
     display: inline-block;

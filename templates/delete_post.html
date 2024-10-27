@@ -11,6 +11,7 @@
 
 <body>
         <header class="header">
+
             <div class="container">
                 <nav class="header__nav">
                     <div class="header__div">
@@ -20,9 +21,6 @@
                             </li>
                             <li class="header__item__nav">
                             <a href="/explore">Explore</a>
-                            </li>
-                            <li class="header__item__nav">
-                                <a href="/messages">Messages</a>
                             </li>
                             <li class="header__item__nav">
                                 <a href="/addpost">Add a post</a>
@@ -35,6 +33,7 @@
                 </nav>
             </div>
         </header>
+
     <h1 class="register__main__title">X-Whisper</h1>
     <H2 class="explore__h1">Delete a post</H2>
     <br><br><br>
@@ -47,6 +46,17 @@
                         <input class="form__register__item__input" type="text" id="delete_post" name="delete_post" required>
                         <input class="delete__post__submit" type="submit" value="Delete The Post">
                     </li>
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
                 </ul>
             </form>
         </div>
