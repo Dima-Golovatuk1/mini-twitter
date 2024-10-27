@@ -236,33 +236,24 @@ def profile():
 @app.route('/view_profile/<int:id>', methods=['GET', 'POST'])
 @login_required
 def view_profile(id):
-    followers = get_followers_by_user_id(id)
-    user_id = current_user.id
     user = get_user_by_id(id)
-
-    if user is None:
-        return redirect(url_for('home'))
-
     all_post = get_all_posts_by_user_id(id)
-    follow = False
+    user_id = current_user.id
+    followers = get_followers_by_user_id(id)
+
+    is_following = user_id in followers
 
     if request.method == 'POST':
-        if user_id not in followers:
-            follow = True
-            add_new_followers(user_id, id)
-            flash('You have successfully subscribed.')
-        else:
-            flash('You are already subscribed.')
+        if is_following:
+            remove_follower(user_id, id)
+            is_following = False
+        if not is_following:
+            add_new_follower(user_id, id)
+            is_following = True
 
-    return render_template(
-        'view.html',
-        id=id,
-        name=user['name'],
-        birthday=user['birthday'],
-        sex=user['sex'],
-        all_post=all_post,
-        follow=follow
-    )
+    return render_template('view.html', name=user['name'],
+                           id=id, birthday=user['birthday'], sex=user['sex'],
+                           all_post=all_post, is_following=is_following)
 
 
 @app.route('/global')

@@ -108,12 +108,16 @@ def get_post_by_title_partial(title):
     return response.data
 
 
-def add_new_followers(user_id: int, follower_id: int):
+def add_new_follower(user_id: int, follower_id: int):
     data = {
         'user_id': user_id,
         'follower_id': follower_id
     }
     response = supabase.table('followers').insert(data).execute()
+
+
+def remove_follower(user_id: int, follower_id: int):
+    response = supabase.table('followers').delete().eq('user_id', user_id).eq('follower_id', follower_id).execute()
 
 
 def get_followers_by_user_id(user_id: int):
