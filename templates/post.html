@@ -28,62 +28,68 @@
     <div class="flash-messages">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
         {% endif %}
         {% endwith %}
     </div>
 
-    <main>
-        <section class="section__post">
-            <div class="container">
-                <ul class="section__post__list">
-                    <li class="section__post__item">
-                        <h2><a class="register__btn" href="{{ url_for('view_profile', id=post_author_id) }}">{{
-                                post_author }}</a></h2>
-                        <br><br>
-                        <h2 class="section__post__item__title">{{ title }}</h2>
-                        <p>{{ content }}</p>
-                        <img class="section__post__item__img" src="{{ image_url }}" alt="">
-                        {% if video_url %}
-                        <div class="section__post__item__media">
-                            <iframe class="section__post__item__media__video"
-                                src="{{ video_url | replace('watch?v=', 'embed/') }}" frameborder="0"
+<main>
+    <section class="section__post">
+        <div class="container">
+            <ul class="section__post__list">
+                <li class="section__post__item">
+                    <h2><a class="register__btn" href="{{ url_for('view_profile', id=post_author_id) }}">{{ post_author }}</a></h2>
+                    <br><br>
+                    <h1 class="section__post__item__title">{{ title }}</h1>
+                    <br>
+                    <h3>{{ content }}</h3>
+                    {% if image_url %}
+                        <img class="section__post__item__img" src="{{ image_url }}" alt="Post image">
+                    {% endif %}
+                    {% if video_url %}
+                    <div class="section__post__item__media">
+                        <iframe class="section__post__item__media__video"
+                                src="{{ video_url | replace('watch?v=', 'embed/') }}"
+                                frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                        </div>
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
-        </section>
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    {% endif %}
+                    {% if is_post_author %}
+                        <a class="delete__post" href="{{ url_for('delete_post', id=id) }}">DELETE POST</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="section__post">
+        <div class="container">
+            <form class="form__comment" method="POST">
+                <input type="hidden" name="post_id" value="{{ id }}">
+                <label class="comment__label" for="comment">Your Comment:</label>
+                <textarea class="comment__input" id="comment" name="comment" rows="6" required></textarea>
+                <button class="submit__button form__comment__button" type="submit">Submit Comment</button>
+            </form>
+            <h3 class="comment__title">Comments:</h3>
+            <ul class="section__post__list">
+                {% for comment in comments|sort(attribute='id', reverse=True) %}
+                <li class="section__post__item">
+                    <h3 class="section__post__item__title">{{ comment['comment'] }}</h3>
+                    {% if comment['user_id'] == user_id %}
+                        <form action="{{ url_for('delete_comment', id=comment['id']) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="delete__post">DELETE COMMENT</button>
+                        </form>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+</main>
 
-
-        <section class="section__post">
-            <div class="container">
-                <form class="form__comment" method="POST">
-                    <input type="hidden" name="post_id" value="{{ id }}">
-                    <label class="comment__label" for="comment">Your Comment:</label>
-                    <textarea class="comment__input" id="comment" name="comment" rows="6" required></textarea>
-                    <button class="submit__button form__comment__button" type="submit">Submit Comment</button>
-                </form>
-
-                <h3 class="comment__title">Comments:</h3>
-                <ul class="section__post__list">
-                    {% for comment in comments|sort(attribute='id', reverse=True) %}
-                    <li class="section__post__item">
-                        <h3 class="section__post__item__title">{{ comment['comment'] }}</h3>
-                        {% if post_owner == user_id %}
-                        <a class="delete__post" href="{{ url_for('delete_comment', id=comment['id']) }}">DELETE
-                            COMMENT</a>
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </section>
-    </main>
 </body>
 
 </html>

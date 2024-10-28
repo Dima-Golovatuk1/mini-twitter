@@ -142,3 +142,8 @@ def get_user_id_by_post_id(post_id):
     if response.data:
         return response.data[0]['user_id']
     return []
+
+
+def is_following(user_id: int, follower_id: int) -> bool:
+    response = supabase.table('followers').select('*').eq('user_id', user_id).eq('follower_id', follower_id).execute()
+    return len(response.data) > 0 if response.data else False
