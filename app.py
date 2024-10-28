@@ -227,23 +227,30 @@ def profile():
 @login_required
 def view_profile(id):
     user = get_user_by_id(id)
-    all_post = get_all_posts_by_user_id(id)
+    all_posts = get_all_posts_by_user_id(id)
     user_id = current_user.id
-    followers = get_followers_by_user_id(id)
     idol = id
-    is_following = user_id in followers
+    is_following_status = is_following(user_id, idol)
 
-    if request.method == 'POST':
-        if is_following:
-            remove_follower(user_id, id)
-            is_following = False
-        else:
-            add_new_follower(user_id, id)
-            is_following = True
+    if user:
+        if request.method == 'POST':
+            if is_following_status:
+                remove_follower(user_id, id)
+                is_following_status = False
+                flash('You have unfollowed this user.', 'success')
+            else:
+                add_new_follower(user_id, id)
+                is_following_status = True
+                flash('You are now following this user.', 'success')
+            return redirect(url_for('view_profile', id=id))
 
-    return render_template('view.html', name=user['name'],
-                           id=id, birthday=user['birthday'], sex=user['sex'],
-                           all_post=all_post, is_following=is_following, idol=idol, user_id=user_id)
+        return render_template('view.html', name=user['name'],
+                               id=id, birthday=user['birthday'], sex=user['sex'],
+                               all_post=all_posts, is_following=is_following_status,
+                               idol=idol, user_id=user_id)
+    else:
+        flash("That user doesn't exist", 'danger')
+        return redirect(url_for('home'))
 
 
 @app.route('/global')
@@ -272,7 +279,6 @@ def addpost():
     user_id = current_user.id
     all_user_posts = get_all_posts_by_user_id(user_id)
     if request.method == 'POST':
-        user_id = current_user.id
         title = request.form.get('title')
         content = request.form.get('content')
         post_img = request.files.get('post_img')
@@ -282,14 +288,15 @@ def addpost():
             flash('Please fill out all required fields.', 'danger')
             return render_template('addpost.html')
 
+        image_url = None
+
         if post_img:
             image = post_img.filename
             image_path = f'static/downloaded_images/{image}'
             post_img.save(image_path)
-        else:
-            image_path = None
+            image_url = url_for('static', filename=f'downloaded_images/{image}')
 
-        create_new_post(user_id, title, content, image_path, post_video)
+        create_new_post(user_id, title, content, image_url, post_video)
         flash('Post created successfully!', 'success')
         return redirect(url_for('profile'))
 
@@ -299,28 +306,33 @@ def addpost():
 @app.route('/post/<int:id>', methods=('POST', 'GET'))
 @login_required
 def post(id):
-    post_id = id
-    post_author_id = get_user_id_by_post_id(post_id)
-    post_author = get_user_by_id(post_author_id)
     post_data = get_post_by_id(id)
     if not post_data:
         return redirect(url_for('explore'))
 
+    post_author_id = get_user_id_by_post_id(id)
+    post_author = get_user_by_id(post_author_id)
+
     title = post_data[0]['title']
     content = post_data[0]['content']
+    image_url = post_data[0].get('image_url')
+    video_url = post_data[0].get('video_url')
     comments = get_all_comments_by_post_id(id)
+    user_id = current_user.id
+    is_post_author = user_id == post_author_id
 
     if request.method == 'POST':
-        user_id = current_user.id
         comment = request.form.get('comment')
         if comment:
-            add_comment(user_id, post_id, comment)
+            add_comment(user_id, id, comment)
             flash('Your comment has been added!', 'success')
             return redirect(url_for('post', id=id))
 
     return render_template('post.html',
                            title=title, content=content, id=id, comments=comments,
-                           post_author=post_author['name'], post_author_id=post_author_id)
+                           post_author=post_author['name'], post_author_id=post_author_id,
+                           image_url=image_url, video_url=video_url, user_id=user_id,
+                           is_post_author=is_post_author)
 
 
 @app.route('/delete_post', methods=['GET', 'POST'])
