@@ -144,6 +144,19 @@ def get_user_id_by_post_id(post_id):
     return []
 
 
-def is_following(user_id: int, follower_id: int) -> bool:
+def get_all_post_by_follower(follower_id):
+    try:
+        response = supabase.table('followers').select('*').eq('follower_id', follower_id).execute()
+        list_followers = [item['user_id'] for item in response.data[:]]
+        if not list_followers:
+            return []
+        posts_response = supabase.table('posts').select('*').in_('user_id', list_followers).execute()
+        return posts_response.data
+    except Exception as e:
+        print(f"Error fetching posts for follower {follower_id}: {e}")
+        return []
+
+
+"""def is_following(user_id: int, follower_id: int) -> bool:
     response = supabase.table('followers').select('*').eq('user_id', user_id).eq('follower_id', follower_id).execute()
-    return len(response.data) > 0 if response.data else False
+    return len(response.data) > 0 if response.data else False"""
