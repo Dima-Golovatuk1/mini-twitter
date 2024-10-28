@@ -259,7 +259,11 @@ def global_page():
 @app.route('/following')
 @login_required
 def following():
-    return render_template('following.html')
+    name = current_user.name
+    user_id = current_user.id
+    posts = []
+    all_post = get_all_posts()
+    return render_template('following.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
 @app.route('/addpost', methods=["GET", "POST"])
