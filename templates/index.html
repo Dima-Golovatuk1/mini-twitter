@@ -62,28 +62,34 @@
     <main>
         <section class="section__post">
             <div class="container">
-                <ul class="section__post__list">
-                    {% for post in all_post|sort(attribute='id', reverse=True) %}
-                    <li class="section__post__item">
-                        <a href="/post/{{post['id']}}">
-                            <h2 class="section__post__item__title">{{ post['title'] }}</h2>
-                            <br>
-                            <h3 class="section__post__item__text">{{ post['content']}}</h3>
-                            <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
-                        </a>
-                        {% if post['video_url']%}
-                        <div class="section__post__item__media">
-                            <iframe class="section__post__item__media__video"
-                                src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
+                {% if all_post %}
+                    <ul class="section__post__list">
+                        {% for post in all_post|sort(attribute='id', reverse=True) %}
+                            <li class="section__post__item">
+                            <h2>
+                                <a class="register__btn" href="/view_profile/{{ post['author_id'] }}">{{ post['author_name'] }}</a>
+                            </h2>
+                            <a href="/post/{{ post['id'] }}">
+                                <h2 class="section__post__item__title">{{ post['title'] }}</h2>
+                                <br>
+                                <h3 class="section__post__item__text">{{ post['content'] }}</h3>
+                                <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
+                            </a>
+                            {% if post['video_url'] %}
+                            <div class="section__post__item__media">
+                                <iframe class="section__post__item__media__video"
+                                        src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
                             </div>
                             {% endif %}
-                        <h1 class="comment"><a href="/post/{{post['id']}}">Comment</a></h1>
-                    </li>
-
-                    {% endfor %}
-                </ul>
+                            <h1 class="comment"><a href="/post/{{ post['id'] }}">Comment</a></h1>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                <p>No posts available.</p>
+                {% endif %}
             </div>
         </section>
     </main>
