@@ -252,7 +252,6 @@ def view_profile(id):
         flash("That user doesn't exist", 'danger')
         return redirect(url_for('home'))
 
-
 @app.route('/global')
 @login_required
 def global_page():
