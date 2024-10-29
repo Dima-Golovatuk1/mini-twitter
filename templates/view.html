@@ -46,7 +46,7 @@
     <main class="profile">
         <section class="profile__me">
             <div class="container">
-                <div></div>
+                <img class="profile__me__img" src="../static/img/profile.png" alt="#">
                 <form class="buttons_follow" action="{{ url_for('view_profile', id=id) }}" method="post">
                     {% if user_id != idol %}
                         {% if not is_following %}
@@ -56,7 +56,6 @@
                         {% endif %}
                     {% endif %}
                 </form>
-                <img class="profile__me__img" src="../static/img/profile.png" alt="#">
                 <ul class="profile__me__list">
                     <li class="profile__me__item">{{name}}</li>
                     <li class="profile__me__item">id: {{id}}</li>
