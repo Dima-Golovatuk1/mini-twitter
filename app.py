@@ -319,8 +319,8 @@ def post(id):
     post_author_id = get_user_id_by_post_id(id)
     post_author = get_user_by_id(post_author_id)
 
-    #comment_author_id = get_comment_by_id(user_id)[0]['user_id']
-    #comment_author = get_user_by_id(comment_author_id)
+    comment_author_id = get_all_author_id_by_comment()
+    comment_author = get_user_by_id(comment_author_id)
 
     title = post_data[0]['title']
     content = post_data[0]['content']
@@ -341,7 +341,7 @@ def post(id):
                            title=title, content=content, id=id, comments=comments,
                            post_author=post_author['name'], post_author_id=post_author_id,
                            image_url=image_url, video_url=video_url, user_id=user_id,
-                           is_post_author=is_post_author)
+                           is_post_author=is_post_author, comment_author=comment_author)
 
 
 @app.route('/delete_post', methods=['GET', 'POST'])
