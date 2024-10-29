@@ -121,6 +121,7 @@ def remove_follower(user_id: int, follower_id: int):
 
 
 def get_followers_by_user_id(user_id: int):
+    response = supabase.table('followers').select('*').eq('user_id', user_id).execute()
     if response.data:
         return [item['follower_id'] for item in response.data[::]]
     else:
@@ -144,7 +145,7 @@ def get_user_id_by_post_id(post_id):
     return []
 
 
-def get_all_post_by_follower(follower_id):
+def get_all_post_by_follower(follower_id: int):
     try:
         response = supabase.table('followers').select('*').eq('follower_id', follower_id).execute()
         list_followers = [item['user_id'] for item in response.data[:]]
