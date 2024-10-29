@@ -9,6 +9,33 @@ app = Flask(__name__)
 app.secret_key = '-^c^e%1q4n%rc^fr6k5u$6#&_4e801ctf3%sro=_xycfcu5%qul'
 
 
+def get_embed_url(video_url):
+    if not video_url:
+        return None
+
+    if "tiktok.com" in video_url:
+        base_url = video_url.split("?")[0]
+        return f"https://www.tiktok.com/embed/{base_url.split('/')[-1]}"
+
+    if "youtube.com" in video_url and "watch?v=" in video_url:
+        video_url = video_url.replace("watch?v=", "embed/")
+    elif "youtu.be" in video_url:
+        video_id = video_url.split('/')[-1]
+        video_url = f"https://www.youtube.com/embed/{video_id}"
+
+    if "&t=" in video_url:
+        video_url = video_url.split("&t=")[0]
+
+    elif "vimeo.com" in video_url:
+        video_id = video_url.split('/')[-1]
+        video_url = f"https://player.vimeo.com/video/{video_id}"
+    elif "tiktok.com" in video_url:
+        video_id = video_url.split('/')[-1]
+        video_url = f"https://www.tiktok.com/embed/{video_id}"
+
+    return video_url
+
+
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
         self.id = id
@@ -183,10 +210,15 @@ def logout():
 def home():
     name = current_user.name
     user_id = current_user.id
-    posts = []
+
     all_post = get_all_posts()
+
+    for post in all_post:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
+
     return render_template('index.html',
-                           user_id=user_id, username=name, posts=posts, all_post=all_post)
+                           user_id=user_id, username=name, posts=all_post, all_post=all_post)
 
 
 @app.route('/explore', methods=['POST', 'GET'])
@@ -218,6 +250,11 @@ def profile():
     password = current_user.password
     posts = []
     all_user_posts = get_all_posts_by_user_id(user_id)
+
+    for post in all_user_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
+
     return render_template('profile.html',
                            username=name, email=email, DOB=DOB, gender=gender, user_id=user_id,
                            posts=posts, all_post=all_user_posts)
@@ -232,6 +269,11 @@ def view_profile(id):
     idol = id
 
     is_following_status = None
+
+    
+    for post in all_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
 
     if user:
         if request.method == 'POST':
