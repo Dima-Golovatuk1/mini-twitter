@@ -13,25 +13,30 @@ def get_embed_url(video_url):
     if not video_url:
         return None
 
+    # Обработка TikTok
     if "tiktok.com" in video_url:
-        base_url = video_url.split("?")[0]
-        return f"https://www.tiktok.com/embed/{base_url.split('/')[-1]}"
+        video_id = video_url.split('/')[-1].split('?')[0]
+        return f"https://www.tiktok.com/embed/{video_id}"
 
-    if "youtube.com" in video_url and "watch?v=" in video_url:
-        video_url = video_url.replace("watch?v=", "embed/")
+    # Обработка YouTube
+    if "youtube.com" in video_url:
+        if "watch?v=" in video_url:
+            video_url = video_url.replace("watch?v=", "embed/")
+        elif "/shorts/" in video_url:
+            video_id = video_url.split("/shorts/")[-1].split('?')[0]
+            video_url = f"https://www.youtube.com/embed/{video_id}"
     elif "youtu.be" in video_url:
-        video_id = video_url.split('/')[-1]
+        video_id = video_url.split('/')[-1].split('?')[0]
         video_url = f"https://www.youtube.com/embed/{video_id}"
 
-    if "&t=" in video_url:
-        video_url = video_url.split("&t=")[0]
+    # Удаление параметров после "&"
+    if "&" in video_url:
+        video_url = video_url.split("&")[0]
 
-    elif "vimeo.com" in video_url:
-        video_id = video_url.split('/')[-1]
+    # Обработка Vimeo
+    if "vimeo.com" in video_url:
+        video_id = video_url.split('/')[-1].split('?')[0]
         video_url = f"https://player.vimeo.com/video/{video_id}"
-    elif "tiktok.com" in video_url:
-        video_id = video_url.split('/')[-1]
-        video_url = f"https://www.tiktok.com/embed/{video_id}"
 
     return video_url
 
@@ -360,6 +365,7 @@ def post(id):
     content = post_data[0]['content']
     image_url = post_data[0].get('image_url')
     video_url = post_data[0].get('video_url')
+    video_url = get_embed_url(video_url)
     comments = get_all_comments_by_post_id(id)
     user_id = current_user.id
     is_post_author = user_id == post_author_id

@@ -49,15 +49,12 @@
                         <img class="section__post__item__img" src="{{ image_url }}" alt="Post image">
                     {% endif %}
                     {% if video_url %}
-                    <div class="section__post__item__media">
-                        <iframe class="section__post__item__media__video"
-                                src="{{ video_url | replace('watch?v=', 'embed/') }}"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                    {% endif %}
+                    <iframe class="section__post__item__media__video"
+                            src="{{ video_url }}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                {% endif %}
                     {% if is_post_author %}
                         <a class="delete__post" href="{{ url_for('delete_post', id=id) }}">DELETE POST</a>
                     {% endif %}
