@@ -7,6 +7,8 @@
     <title>Title</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all_users.css') }}">
+
 </head>
 
 <body>
@@ -14,7 +16,7 @@
         <div class="container">
             <nav class="header__nav">
                 <div class="header__div">
-                      <ul class="header__list__nav">
+                    <ul class="header__list__nav">
                         <li class="header__item__nav">
                             <a href="/">Home</a>
                         </li>
@@ -37,16 +39,16 @@
                 </div>
                 <ul class="header__nav__list">
                     <li class="header__nav__item">
-                        <a href="http://127.0.0.1:5000/global">
+                        <a href="/all_users">
                             <button class="header__nav__item__btn">
-                                Global
+                                All Users
                             </button>
                         </a>
                     </li>
                     <li class="header__nav__item">
-                        <a href="http://127.0.0.1:5000/following">
+                        <a href="/all_following_users">
                             <button class="header__nav__item__btn">
-                                Following
+                                Following Users
                             </button>
                         </a>
                     </li>
@@ -55,28 +57,17 @@
         </div>
     </header>
     <main>
+        <h1 class="add__post_h1">ALL USERS</h1>
         <section class="section__post">
             <div class="container">
                 <ul class="section__post__list">
-                    {% for post in all_post|sort(attribute='id', reverse=True) %}
-                    <li class="section__post__item">
-                        <a href="/post/{{post['id']}}">
-                            <h2 class="section__post__item__title">{{ post['title'] }}</h2>
-                            <br>
-                            <h3 class="section__post__item__text">{{ post['content']}}</h3>
-                            <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
-                        </a>
-                        {% if post['video_url']%}
-                        <div class="section__post__item__media">
-                            <iframe class="section__post__item__media__video"
-                                src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                            </div>
-                            {% endif %}
-                        <h1 class="comment"><a href="/post/{{post['id']}}">Comment</a></h1>
-                    </li>
-
+                    {% for user in users %}
+                        <li>
+                            <a href="/view_profile/{{ user['id'] }}">
+                                <h3>{{ user['name'] }}</h3>
+                                <h4> id: {{ user['id'] }}</h4>
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
