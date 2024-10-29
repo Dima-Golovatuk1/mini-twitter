@@ -311,12 +311,16 @@ def addpost():
 @app.route('/post/<int:id>', methods=('POST', 'GET'))
 @login_required
 def post(id):
+    user_id = current_user.id
     post_data = get_post_by_id(id)
     if not post_data:
         return redirect(url_for('explore'))
 
     post_author_id = get_user_id_by_post_id(id)
     post_author = get_user_by_id(post_author_id)
+
+    #comment_author_id = get_comment_by_id(user_id)[0]['user_id']
+    #comment_author = get_user_by_id(comment_author_id)
 
     title = post_data[0]['title']
     content = post_data[0]['content']
