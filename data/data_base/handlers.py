@@ -161,3 +161,11 @@ def get_all_post_by_follower(follower_id: int):
 def is_following(user_id: int, follower_id: int) -> bool:
     response = supabase.table('followers').select('*').eq('user_id', user_id).eq('follower_id', follower_id).execute()
     return len(response.data) > 0 if response.data else False
+
+
+def get_all_author_id_by_comment():
+    response = supabase.table('comments').select('user_id').execute()
+    if response.data:
+        return [item['user_id'] for item in response.data]
+    else:
+        return []
