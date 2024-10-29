@@ -333,6 +333,7 @@ def post(id):
     for comment in comments:
         comment_author = get_user_by_id(comment['user_id'])
         comment['author_name'] = comment_author['name']
+        comment['author_id'] = comment_author['id']
 
     if request.method == 'POST':
         comment = request.form.get('comment')
