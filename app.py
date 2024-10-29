@@ -272,9 +272,6 @@ def view_profile(id):
     all_posts = get_all_posts_by_user_id(id)
     user_id = current_user.id
     is_following_status = checking_if_user_is_follower(user_id, id)
-    print(user_id)
-    print(id)
-    print(is_following_status)
 
     for post in all_posts:
         if post.get('video_url'):
@@ -283,12 +280,10 @@ def view_profile(id):
         if request.method == 'POST':
             if is_following_status:
                 remove_follower(user_id, id)
-                print(is_following_status)
                 flash('You have unfollowed this user.', 'success')
                 redirect(url_for('view_profile', id=id))
             else:
                 add_new_follower(user_id, id)
-                print(is_following_status)
                 flash('You are now following this user.', 'success')
                 redirect(url_for('view_profile', id=id))
 
@@ -478,6 +473,7 @@ def all_following_users():
     if following_users:
         return render_template('all_following_users.html', users=following_users)
     else:
+        flash("You haven't any follows" ,'danger')
         return redirect(url_for('all_users'))
 
 
