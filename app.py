@@ -318,7 +318,7 @@ def post(id):
     post_author = get_user_by_id(post_author_id)
 
     comment_author_id = get_all_author_id_by_comment()
-    comment_author = get_user_by_id(comment_author_id)
+    comment_author = get_users_by_list_id(comment_author_id)
 
     title = post_data[0]['title']
     content = post_data[0]['content']
@@ -327,6 +327,11 @@ def post(id):
     comments = get_all_comments_by_post_id(id)
     user_id = current_user.id
     is_post_author = user_id == post_author_id
+
+    for comment in comments:
+        comment_author = get_user_by_id(comment['user_id'])
+        comment['author_name'] = comment_author['name']
+        comment['author_id'] = comment_author['id']
 
     if request.method == 'POST':
         comment = request.form.get('comment')

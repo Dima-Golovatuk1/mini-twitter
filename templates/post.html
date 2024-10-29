@@ -75,19 +75,17 @@
             </form>
             <h3 class="comment__title">Comments:</h3>
             <ul class="section__post__list">
-                {% for comment in comments|sort(attribute='id', reverse=True) %}
+            {% for comment in comments|sort(attribute='id', reverse=True) %}
                 <li class="section__post__item">
-                    {% for comm_author in comment_author%}
-                        <h4>{{comm_author}}</h4>
-                        <h3 class="section__post__item__title">{{ comment['comment'] }}</h3>
-                        {% if comment['user_id'] == user_id %}
-                            <form action="{{ url_for('delete_comment', id=comment['id']) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="delete__post">DELETE COMMENT</button>
-                            </form>
-                    {% endfor %}
+                    <h4> <a class="register__btn" href="{{ url_for('view_profile', id=comment['author_id']) }}">{{ comment['author_name'] }} </a> </h4>
+                    <h3 class="section__post__item__title">{{ comment['comment'] }}</h3>
+                    {% if comment['user_id'] == user_id %}
+                        <form action="{{ url_for('delete_comment', id=comment['id']) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="delete__post">DELETE COMMENT</button>
+                        </form>
                     {% endif %}
                 </li>
-                {% endfor %}
+            {% endfor %}
             </ul>
         </div>
     </section>
