@@ -67,7 +67,7 @@ body {
 .header__list__nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
 }
 
 .header__item__nav {

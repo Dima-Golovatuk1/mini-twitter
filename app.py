@@ -458,5 +458,28 @@ def delete_comment(id):
     return render_template('delete_comment.html', comment=comment[0], post_id=post_id)
 
 
+@app.route('/all_users')
+@login_required
+def all_users():
+    users = get_users()
+    return render_template('all_users.html', users=users)
+
+
+@app.route('/all_following_users')
+@login_required
+def all_following_users():
+    user_id = current_user.id
+    print(f"Current user ID: {user_id}")
+
+    following_ids = get_following_by_user_id(user_id)
+
+    following_users = get_users_by_list_id(following_ids)
+
+    if following_users:
+        return render_template('all_following_users.html', users=following_users)
+    else:
+        return redirect(url_for('all_users'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)
