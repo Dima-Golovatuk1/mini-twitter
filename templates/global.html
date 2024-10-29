@@ -13,8 +13,29 @@
     <header class="header">
         <div class="container">
             <nav class="header__nav">
+                <div class="flash-messages">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
                 <div class="header__div">
                       <ul class="header__list__nav">
+                    <a class="header__nav__link" href="http://127.0.0.1:5000/profile">
+                        <img class="header__nav__link__img" src="../static/img/profile.png" alt="#">
+                        <ul class="header__nav__link__list">
+                            <li>
+                                <p class="header__nav__link__nik">{{username}}</p>
+                            </li>
+                            <li>
+                                <p class="header__nav__link__name">{{user_id}}</p>
+                            </li>
+                        </ul>
+                    </a>
+                    <ul class="header__list__nav">
                         <li class="header__item__nav">
                             <a href="/">Home</a>
                         </li>
@@ -66,14 +87,13 @@
                             <h3 class="section__post__item__text">{{ post['content']}}</h3>
                             <img class="section__post__item__img" src="{{ post['image_url'] }}" alt="">
                         </a>
-                        {% if post['video_url']%}
-                        <div class="section__post__item__media">
-                            <iframe class="section__post__item__media__video"
-                                src="{{ post['video_url'] | replace('watch?v=', 'embed/') }}" frameborder="0"
+                        {% if post['video_url'] %}
+                        <iframe class="section__post__item__media__video"
+                                src="{{ post['video_url'] }}"
+                                frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen></iframe>
-                            </div>
-                            {% endif %}
+                    {% endif %}
                         <h1 class="comment"><a href="/post/{{post['id']}}">Comment</a></h1>
                     </li>
 
