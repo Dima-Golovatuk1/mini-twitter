@@ -266,16 +266,8 @@ def view_profile(id):
     user = get_user_by_id(id)
     all_posts = get_all_posts_by_user_id(id)
     user_id = current_user.id
-    is_following_status = checking_if_user_is_follower(user, user_id)
-    idol = id
-
-    is_following_status = None
-
-    
-    for post in all_posts:
-        if post.get('video_url'):
-            post['video_url'] = get_embed_url(post['video_url'])
-
+    is_following_status = checking_if_user_is_follower(user_id, id)
+    print(is_following_status)
     if user:
         if request.method == 'POST':
             if is_following_status:
@@ -284,8 +276,6 @@ def view_profile(id):
             else:
                 add_new_follower(user_id, id)
                 flash('You are now following this user.', 'success')
-
-            return redirect(url_for('view_profile', id=id))
 
         return render_template('view.html', name=user['name'],
                                id=id, birthday=user['birthday'], sex=user['sex'],
