@@ -273,7 +273,7 @@ def view_profile(id):
     user_id = current_user.id
     is_following_status = checking_if_user_is_follower(user_id, id)
     print(is_following_status)
-    
+
     for post in all_posts:
         if post.get('video_url'):
             post['video_url'] = get_embed_url(post['video_url'])
@@ -281,9 +281,11 @@ def view_profile(id):
         if request.method == 'POST':
             if is_following_status:
                 remove_follower(user_id, id)
+                print(is_following_status)
                 flash('You have unfollowed this user.', 'success')
-            if not is_following_status:
+            else:
                 add_new_follower(user_id, id)
+                print(is_following_status)
                 flash('You are now following this user.', 'success')
 
         return render_template('view.html', name=user['name'],
