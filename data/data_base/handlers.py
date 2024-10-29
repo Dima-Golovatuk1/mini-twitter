@@ -128,7 +128,6 @@ def get_followers_by_user_id(user_id: int):
         return []
 
 
-
 def checking_if_user_is_follower(follower_id, user_id):
     response = supabase.table('followers').select('*').eq('follower_id', follower_id).eq('user_id', user_id).execute()
     if response.data:
