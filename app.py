@@ -274,7 +274,7 @@ def following():
     name = current_user.name
     user_id = current_user.id
     posts = []
-    all_post = get_all_posts()
+    all_post = get_all_post_by_follower(user_id)
     return render_template('following.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
