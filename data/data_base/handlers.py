@@ -153,8 +153,8 @@ def get_all_post_by_follower(follower_id: int):
             return []
         posts_response = supabase.table('posts').select('*').in_('user_id', list_followers).execute()
         return posts_response.data
-    except Exception as e:
-        print(f"Error fetching posts for follower {follower_id}: {e}")
+    except Exception:
+        print(f"Error fetching posts for follower {follower_id}: {Exception}")
         return []
 
 

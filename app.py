@@ -230,7 +230,8 @@ def view_profile(id):
     all_posts = get_all_posts_by_user_id(id)
     user_id = current_user.id
     idol = id
-    is_following_status = is_following(user_id, idol)
+
+    is_following_status = None
 
     if user:
         if request.method == 'POST':
@@ -242,7 +243,11 @@ def view_profile(id):
                 add_new_follower(user_id, id)
                 is_following_status = True
                 flash('You are now following this user.', 'success')
-            return redirect(url_for('view_profile', id=id))
+
+            return render_template('view.html', name=user['name'],
+                                   id=id, birthday=user['birthday'], sex=user['sex'],
+                                   all_post=all_posts, is_following=is_following_status,
+                                   idol=idol, user_id=user_id)
 
         return render_template('view.html', name=user['name'],
                                id=id, birthday=user['birthday'], sex=user['sex'],
