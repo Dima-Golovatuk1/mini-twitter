@@ -110,14 +110,15 @@ def get_post_by_title_partial(title):
 
 def add_new_follower(user_id: int, follower_id: int):
     data = {
-        'user_id': follower_id,
-        'follower_id': user_id
+        'user_id': user_id,
+        'follower_id': follower_id
     }
     response = supabase.table('followers').insert(data).execute()
 
 
 def remove_follower(user_id: int, follower_id: int):
     response = supabase.table('followers').delete().eq('user_id', user_id).eq('follower_id', follower_id).execute()
+    return response
 
 
 def get_followers_by_user_id(user_id: int):
@@ -128,9 +129,9 @@ def get_followers_by_user_id(user_id: int):
         return []
 
 
-def checking_if_user_is_follower(follower_id, user_id):
+def checking_if_user_is_follower(user_id, follower_id):
     response = supabase.table('followers').select('*').eq('follower_id', follower_id).eq('user_id', user_id).execute()
-    return bool(response.data)
+    return response.data
 
 
 def get_comments_by_user_id_and_post_id(user_id, post_id):

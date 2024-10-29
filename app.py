@@ -272,6 +272,8 @@ def view_profile(id):
     all_posts = get_all_posts_by_user_id(id)
     user_id = current_user.id
     is_following_status = checking_if_user_is_follower(user_id, id)
+    print(user_id)
+    print(id)
     print(is_following_status)
 
     for post in all_posts:
@@ -283,10 +285,12 @@ def view_profile(id):
                 remove_follower(user_id, id)
                 print(is_following_status)
                 flash('You have unfollowed this user.', 'success')
+                redirect(url_for('view_profile', id=id))
             else:
                 add_new_follower(user_id, id)
                 print(is_following_status)
                 flash('You are now following this user.', 'success')
+                redirect(url_for('view_profile', id=id))
 
         return render_template('view.html', name=user['name'],
                                id=id, birthday=user['birthday'], sex=user['sex'],

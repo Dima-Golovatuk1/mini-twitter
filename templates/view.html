@@ -50,9 +50,9 @@
                 <form class="buttons_follow" action="{{ url_for('view_profile', id=id) }}" method="post">
                     {% if user_id != idol %}
                         {% if is_following %}
-                            <button type="submit" class="delete__post__submit">UNFOLLOW</button>
+                        <button type="submit" class="explore__input">FOLLOW</button>
                         {% else %}
-                            <button type="submit" class="explore__input">FOLLOW</button>
+                        <button type="submit" class="delete__post__submit">UNFOLLOW</button>
                         {% endif %}
                     {% endif %}
                 </form>
