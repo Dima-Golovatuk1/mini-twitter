@@ -13,21 +13,41 @@
     <header class="header">
         <div class="container">
             <nav class="header__nav">
+                <div class="flash-messages">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
                 <div class="header__div">
-                        <ul class="header__list__nav">
-                            <li class="header__item__nav">
-                                <a href="/">Home</a>
+                    <a class="header__nav__link" href="http://127.0.0.1:5000/profile">
+                        <img class="header__nav__link__img" src="../static/img/profile.png" alt="#">
+                        <ul class="header__nav__link__list">
+                            <li>
+                                <p class="header__nav__link__nik">{{username}}</p>
                             </li>
-                            <li class="header__item__nav">
-                            <a href="/explore">Explore</a>
-                            </li>
-                            <li class="header__item__nav">
-                                <a href="/addpost">Add a post</a>
-                            </li>
-                            <li class="header__item__nav">
-                                <a href="/delete_post">Delete a post</a>
+                            <li>
+                                <p class="header__nav__link__name">{{user_id}}</p>
                             </li>
                         </ul>
+                    </a>
+                    <ul class="header__list__nav">
+                        <li class="header__item__nav">
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/explore">Explore</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/addpost">Add a post</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/delete_post">Delete a post</a>
+                        </li>
+                    </ul>
                 </div>
                 <ul class="header__nav__list">
                     <li class="header__nav__item">

@@ -302,6 +302,10 @@ def global_page():
     user_id = current_user.id
     posts = []
     all_post = get_all_posts()
+
+    for post in all_post:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
     return render_template('global.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
@@ -312,6 +316,10 @@ def following():
     user_id = current_user.id
     posts = []
     all_post = get_all_post_by_follower(user_id)
+
+    for post in all_post:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
     return render_template('following.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
@@ -320,6 +328,9 @@ def following():
 def addpost():
     user_id = current_user.id
     all_user_posts = get_all_posts_by_user_id(user_id)
+    for post in all_user_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
     if request.method == 'POST':
         title = request.form.get('title')
         content = request.form.get('content')
@@ -392,6 +403,9 @@ def post(id):
 def delete_post():
     user_id = current_user.id
     all_user_posts = get_all_posts_by_user_id(user_id)
+    for post in all_user_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
 
     if request.method == 'POST':
         post_title = request.form.get('delete_post')
