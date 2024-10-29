@@ -231,8 +231,6 @@ def view_profile(id):
     user_id = current_user.id
     idol = id
 
-    is_following_status = None
-
     if user:
         if request.method == 'POST':
             if is_following_status:
