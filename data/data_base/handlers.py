@@ -169,3 +169,10 @@ def get_all_author_id_by_comment():
         return [item['user_id'] for item in response.data]
     else:
         return []
+
+
+def get_users_by_list_id(users_id: list):
+    response = supabase.table('users').select('*').in_('id', users_id).execute()
+    if response.data:
+        return response.data
+    
