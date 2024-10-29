@@ -175,4 +175,8 @@ def get_users_by_list_id(users_id: list):
     response = supabase.table('users').select('*').in_('id', users_id).execute()
     if response.data:
         return response.data
-    
+
+
+def check_if_following_true():
+
+
