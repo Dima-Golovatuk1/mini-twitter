@@ -276,9 +276,11 @@ def view_profile(id):
         if request.method == 'POST':
             if is_following_status:
                 remove_follower(user_id, id)
+                print(is_following_status)
                 flash('You have unfollowed this user.', 'success')
             if not is_following_status:
                 add_new_follower(user_id, id)
+                print(is_following_status)
                 flash('You are now following this user.', 'success')
 
         return render_template('view.html', name=user['name'],
