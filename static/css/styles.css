@@ -577,6 +577,7 @@ li.dont_have {
     text-align: center;
     background-color: #1a1a1a;
     margin-bottom: 40px;
+    padding-top: 20px;
     border-radius: 10px;
     border: #000000 1px solid;
     color: white;
@@ -687,11 +688,13 @@ li.dont_have {
 
 
 
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 770px) {
     .profile__me .container {
         justify-content: space-around;
         flex-direction: row;
     }
+}
+
 
 @media screen and (min-width: 1200px) {
     .profile__me__list {
@@ -699,7 +702,7 @@ li.dont_have {
         gap: 40px;
     }
 }
-}
+
 
 .submit__button {
     background: -webkit-linear-gradient(black, yellow, black);
@@ -785,11 +788,18 @@ li.dont_have {
     transition: all 0.3s ease;
 }
 
+
 .delete__post__submit:hover {
     background: red;
     -webkit-text-fill-color: black;
     border-color: black;
 }
+
+
+.buttons_follow{
+    margin-bottom: 20px;
+}
+
 
 .add__post_h1 {
     font-size: 40px;
@@ -799,6 +809,7 @@ li.dont_have {
     -webkit-text-fill-color: transparent;
     text-align: center;
 }
+
 
 .explore__input {
     background: -webkit-linear-gradient(black, yellow, yellow);
@@ -816,11 +827,13 @@ li.dont_have {
     transition: all 0.3s ease;
 }
 
+
 .explore__input:hover {
     background: yellow;
     -webkit-text-fill-color: black;
     border-color: black;
 }
+
 
 .explore__h1 {
     font-size: 40px;
@@ -867,4 +880,80 @@ li.dont_have {
 
 .comment__title{
     margin-bottom: 20px;
+}
+
+
+
+
+.logout__section .container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.logout__title {
+    font-size: 54px;
+    margin-bottom: 10px;
+    background: -webkit-linear-gradient(black, yellow, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.logout__text {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+.logout__btn {
+    background: -webkit-linear-gradient(black, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid yellow;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 20px;
+}
+
+
+.logout__btn:hover{
+    background: yellow;
+    -webkit-text-fill-color: black;
+    border-color: black;
+}
+
+
+.logout__link {
+    background: -webkit-linear-gradient(black, red, yellow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid red;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.logout__link:hover{
+    background: red;
+    -webkit-text-fill-color: black;
+    border-color: black;
 }
