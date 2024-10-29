@@ -128,6 +128,14 @@ def get_followers_by_user_id(user_id: int):
         return []
 
 
+def check_if_following_true(follower_id, user_id):
+    response = supabase.table('following').select('*').eq('follower_id', follower_id).eq('user_id', user_id).execute()
+    if response.data:
+        return True
+    else:
+        return None
+
+
 def get_comments_by_user_id_and_post_id(user_id, post_id):
     response = supabase.table('comments').select('*').eq('user_id', user_id).eq('post_id', post_id).execute()
     return response.data
@@ -176,7 +184,5 @@ def get_users_by_list_id(users_id: list):
     if response.data:
         return response.data
 
-
-def check_if_following_true():
 
 
