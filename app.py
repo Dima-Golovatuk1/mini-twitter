@@ -229,15 +229,14 @@ def view_profile(id):
     user = get_user_by_id(id)
     all_posts = get_all_posts_by_user_id(id)
     user_id = current_user.id
-    is_following_status = check_if_following_true(user_id, id)
-    idol = id
+    is_following_status = checking_if_user_is_follower(user_id, id)
 
     if user:
         if request.method == 'POST':
             if is_following_status:
                 remove_follower(user_id, id)
                 flash('You have unfollowed this user.', 'success')
-            else:
+            if not is_following_status:
                 add_new_follower(user_id, id)
                 flash('You are now following this user.', 'success')
 
