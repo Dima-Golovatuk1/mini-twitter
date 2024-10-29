@@ -185,4 +185,3 @@ def get_users_by_list_id(users_id: list):
         return response.data
 
 
-
