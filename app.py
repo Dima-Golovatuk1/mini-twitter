@@ -272,7 +272,6 @@ def view_profile(id):
     all_posts = get_all_posts_by_user_id(id)
     user_id = current_user.id
     is_following_status = checking_if_user_is_follower(user_id, id)
-    print(is_following_status)
 
     for post in all_posts:
         if post.get('video_url'):
@@ -281,12 +280,12 @@ def view_profile(id):
         if request.method == 'POST':
             if is_following_status:
                 remove_follower(user_id, id)
-                print(is_following_status)
                 flash('You have unfollowed this user.', 'success')
+                redirect(url_for('view_profile', id=id))
             else:
                 add_new_follower(user_id, id)
-                print(is_following_status)
                 flash('You are now following this user.', 'success')
+                redirect(url_for('view_profile', id=id))
 
         return render_template('view.html', name=user['name'],
                                id=id, birthday=user['birthday'], sex=user['sex'],
@@ -304,6 +303,10 @@ def global_page():
     user_id = current_user.id
     posts = []
     all_post = get_all_posts()
+
+    for post in all_post:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
     return render_template('global.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
@@ -314,6 +317,10 @@ def following():
     user_id = current_user.id
     posts = []
     all_post = get_all_post_by_follower(user_id)
+
+    for post in all_post:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
     return render_template('following.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
 
 
@@ -322,6 +329,9 @@ def following():
 def addpost():
     user_id = current_user.id
     all_user_posts = get_all_posts_by_user_id(user_id)
+    for post in all_user_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
     if request.method == 'POST':
         title = request.form.get('title')
         content = request.form.get('content')
@@ -394,6 +404,9 @@ def post(id):
 def delete_post():
     user_id = current_user.id
     all_user_posts = get_all_posts_by_user_id(user_id)
+    for post in all_user_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
 
     if request.method == 'POST':
         post_title = request.form.get('delete_post')
@@ -438,6 +451,30 @@ def delete_comment(id):
         return redirect(url_for("post", id=post_id))
 
     return render_template('delete_comment.html', comment=comment[0], post_id=post_id)
+
+
+@app.route('/all_users')
+@login_required
+def all_users():
+    users = get_users()
+    return render_template('all_users.html', users=users)
+
+
+@app.route('/all_following_users')
+@login_required
+def all_following_users():
+    user_id = current_user.id
+    print(f"Current user ID: {user_id}")
+
+    following_ids = get_following_by_user_id(user_id)
+
+    following_users = get_users_by_list_id(following_ids)
+
+    if following_users:
+        return render_template('all_following_users.html', users=following_users)
+    else:
+        flash("You haven't any follows" ,'danger')
+        return redirect(url_for('all_users'))
 
 
 if __name__ == '__main__':

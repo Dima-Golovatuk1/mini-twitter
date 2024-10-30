@@ -25,20 +25,26 @@
         <div class="container">
             <nav class="header__nav">
                 <div class="header__div">
-                        <ul class="header__list__nav">
-                            <li class="header__item__nav">
-                                <a href="/">Home</a>
-                            </li>
-                            <li class="header__item__nav">
+                    <ul class="header__list__nav">
+                        <li class="header__item__nav">
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="header__item__nav">
                             <a href="/explore">Explore</a>
-                            </li>
-                            <li class="header__item__nav">
-                                <a href="/addpost">Add a post</a>
-                            </li>
-                            <li class="header__item__nav">
-                                <a href="/delete_post">Delete a post</a>
-                            </li>
-                        </ul>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/addpost">Add a post</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/delete_post">Delete a post</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/all_users">All users</a>
+                        </li>
+                        <li class="header__item__nav">
+                            <a href="/all_following_users">All users you following</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         </div>
@@ -50,9 +56,9 @@
                 <form class="buttons_follow" action="{{ url_for('view_profile', id=id) }}" method="post">
                     {% if user_id != idol %}
                         {% if is_following %}
-                            <button type="submit" class="delete__post__submit">UNFOLLOW</button>
+                        <button type="submit" class="explore__input">FOLLOW</button>
                         {% else %}
-                            <button type="submit" class="explore__input">FOLLOW</button>
+                        <button type="submit" class="delete__post__submit">UNFOLLOW</button>
                         {% endif %}
                     {% endif %}
                 </form>
