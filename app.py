@@ -231,9 +231,17 @@ def home():
 def explore():
     all_posts = get_all_posts()
 
+    for post in all_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
+
     if request.method == 'POST':
         title = request.form.get('explore_input').strip()
         posts_by_title = get_post_by_title_partial(title)
+
+        for post in posts_by_title:
+            if post.get('video_url'):
+                post['video_url'] = get_embed_url(post['video_url'])
 
         if posts_by_title:
             return render_template('explore.html', all_post=posts_by_title, search=title)
