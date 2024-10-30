@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from app.data.data_base import get_user_by_id
 
+login_manager = LoginManager()
+
 
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
