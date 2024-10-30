@@ -184,8 +184,8 @@ def get_users_by_list_id(users_id: list):
 
 
 def get_following_by_user_id(user_id: int):
-    response = supabase.table('followers').select('*').eq('follower_id', user_id).execute()
+    response = supabase.table('followers').select('*').eq('user_id', user_id).execute()
     if response.data:
-        return [item['user_id'] for item in response.data]
+        return [item['follower_id'] for item in response.data]
     else:
         return []

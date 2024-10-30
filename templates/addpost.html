@@ -28,17 +28,12 @@
                         <li class="header__item__nav">
                             <a href="/all_users">All users</a>
                         </li>
-                        <li class="header__item__nav">
-                            <a href="/all_users">All users you following</a>
-                        </li>
                     </ul>
                     </div>
                 </nav>
             </div>
         </header>
-    <main class="register">
-        <div class="container">
-            {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <div class="flash-messages">
                         {% for category, message in messages %}
@@ -49,6 +44,8 @@
                     </div>
                 {% endif %}
             {% endwith %}
+    <main class="register">
+        <div class="container">
             <form class="form__register" action="{{ url_for('addpost') }}" method="POST" enctype="multipart/form-data">
                 <h1 class="register__main__title">X-Whisper</h1>
                 <h1 class="explore__h1">New post</h1>

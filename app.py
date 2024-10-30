@@ -465,8 +465,6 @@ def all_users():
 @login_required
 def all_following_users():
     user_id = current_user.id
-    print(f"Current user ID: {user_id}")
-
     following_ids = get_following_by_user_id(user_id)
 
     following_users = get_users_by_list_id(following_ids)
