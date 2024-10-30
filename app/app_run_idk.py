@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_validator import validate_email, EmailNotValidError
-from data.data_base.handlers import *
+from app.data.data_base import *
 
 
 app = Flask(__name__)
@@ -320,13 +320,13 @@ def global_page():
 def following():
     name = current_user.name
     user_id = current_user.id
-    posts = []
     all_post = get_all_post_by_follower(user_id)
 
     for post in all_post:
         if post.get('video_url'):
             post['video_url'] = get_embed_url(post['video_url'])
-    return render_template('following.html', user_id=user_id, username=name, posts=posts, all_post=all_post)
+
+    return render_template('following.html', user_id=user_id, username=name, posts=all_post)
 
 
 @app.route('/addpost', methods=["GET", "POST"])
@@ -351,7 +351,7 @@ def addpost():
 
         if post_img:
             image = post_img.filename
-            image_path = f'static/downloaded_images/{image}'
+            image_path = f'app/static/downloaded_images/{image}'
             post_img.save(image_path)
             image_url = url_for('static', filename=f'downloaded_images/{image}')
 

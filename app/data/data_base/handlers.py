@@ -1,5 +1,5 @@
 from supabase import create_client, Client
-from data.data_base.config import key, url
+from app.data.data_base.config import key, url
 
 supabase: Client = create_client(url, key)
 
@@ -151,16 +151,18 @@ def get_user_id_by_post_id(post_id):
     return []
 
 
-def get_all_post_by_follower(follower_id: int):
+def get_all_post_by_follower(user_id: int):
     try:
-        response = supabase.table('followers').select('*').eq('follower_id', follower_id).execute()
-        list_followers = [item['user_id'] for item in response.data[:]]
+        response = supabase.table('followers').select('*').eq('user_id', user_id).execute()
+        list_followers = [item['follower_id'] for item in response.data]
+
         if not list_followers:
             return []
-        posts_response = supabase.table('posts').select('*').in_('user_id', list_followers).execute()
+
+        posts_response = supabase.table('posts').select('*').in_('follower_id', list_followers).execute()
         return posts_response.data
-    except Exception:
-        print(f"Error fetching posts for follower {follower_id}: {Exception}")
+    except Exception as e:
+        print(f"Error fetching posts for user_id {user_id}: {str(e)}")
         return []
 
 
