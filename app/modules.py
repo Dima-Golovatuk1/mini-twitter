@@ -1,5 +1,6 @@
-from flask_login import UserMixin
-from data.data_base.handlers import get_user_by_id
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from app.data.data_base import get_user_by_id
 
 
 class User(UserMixin):
@@ -19,12 +20,19 @@ class User(UserMixin):
         return str(self.id)
 
 
+@login_manager.user_loader
 def load_user(user_id):
     user = get_user_by_id(user_id)
     if user:
         return User(id=user['id'], email=user['email'], name=user['name'], password=user['password'],
                     DOB=user['birthday'], gender=user['sex'])
     return None
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash("You need to be logged in to access this page.", "warning")
+    return redirect(url_for('login'))
 
 
 def get_embed_url(video_url):
