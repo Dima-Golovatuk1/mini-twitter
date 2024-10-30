@@ -3,6 +3,7 @@ from flask_login import LoginManager, UserMixin
 from app.data.data_base.handlers import *
 from email_validator import validate_email, EmailNotValidError
 
+
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
         self.id = id
