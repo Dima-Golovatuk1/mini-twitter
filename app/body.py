@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_login import LoginManager
 from routes.auth_routes import auth_bp
 from routes.post_routes import post_bp
 from routes.profile_routes import profile_bp
