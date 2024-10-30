@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from app.modules import *
+from app.data.data_base.handlers import *
 
 home_bp = Blueprint('home', __name__)
 

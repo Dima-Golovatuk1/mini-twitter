@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from app.data.data_base import get_user_by_id
+from flask import flash, redirect, url_for
+from flask_login import LoginManager, UserMixin
+from app.data.data_base.handlers import *
 
 
 class User(UserMixin):
@@ -20,19 +20,22 @@ class User(UserMixin):
         return str(self.id)
 
 
+login_manager = LoginManager()
+
+
 @login_manager.user_loader
 def load_user(user_id):
     user = get_user_by_id(user_id)
     if user:
-        return User(id=user['id'], email=user['email'], name=user['name'], password=user['password'],
-                    DOB=user['birthday'], gender=user['sex'])
+        return User(id=user['id'], email=user['email'], name=user['name'],
+                    password=user['password'], DOB=user['birthday'], gender=user['sex'])
     return None
 
 
 @login_manager.unauthorized_handler
 def unauthorized():
     flash("You need to be logged in to access this page.", "warning")
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
 
 
 def get_embed_url(video_url):
@@ -41,23 +44,23 @@ def get_embed_url(video_url):
 
     if "tiktok.com" in video_url:
         video_id = video_url.split('/')[-1].split('?')[0]
-        return f"https://www.tiktok.com/embed/{video_id}"
+        return f"https://www.tiktok.com/embed/%7Bvideo_id%7D"
 
     if "youtube.com" in video_url:
         if "watch?v=" in video_url:
             video_url = video_url.replace("watch?v=", "embed/")
         elif "/shorts/" in video_url:
             video_id = video_url.split("/shorts/")[-1].split('?')[0]
-            video_url = f"https://www.youtube.com/embed/{video_id}"
+            video_url = f"https://www.youtube.com/embed/%7Bvideo_id%7D"
     elif "youtu.be" in video_url:
         video_id = video_url.split('/')[-1].split('?')[0]
-        video_url = f"https://www.youtube.com/embed/{video_id}"
+        video_url = f"https://www.youtube.com/embed/%7Bvideo_id%7D"
 
     if "&" in video_url:
         video_url = video_url.split("&")[0]
 
     if "vimeo.com" in video_url:
         video_id = video_url.split('/')[-1].split('?')[0]
-        video_url = f"https://player.vimeo.com/video/{video_id}"
+        video_url = f"https://player.vimeo.com/video/%7Bvideo_id%7D"
 
     return video_url
