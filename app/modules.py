@@ -1,7 +1,7 @@
 from flask import flash, redirect, url_for
 from flask_login import LoginManager, UserMixin
 from app.data.data_base.handlers import *
-
+from email_validator import validate_email, EmailNotValidError
 
 class User(UserMixin):
     def __init__(self, id, email, name, password, DOB, gender, rem=None):
@@ -36,6 +36,14 @@ def load_user(user_id):
 def unauthorized():
     flash("You need to be logged in to access this page.", "warning")
     return redirect(url_for('auth.login'))
+
+
+def validate_email_format(email):
+    try:
+        valid = validate_email(email)
+        return True
+    except EmailNotValidError:
+        return False
 
 
 def get_embed_url(video_url):

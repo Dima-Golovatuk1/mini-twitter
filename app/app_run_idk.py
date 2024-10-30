@@ -125,13 +125,6 @@ def register():
 
     if request.method == 'POST':
 
-        def validate_email_format(email):
-            try:
-                valid = validate_email(email)
-                return True
-            except EmailNotValidError:
-                return False
-
         email = request.form.get('email')
         name = request.form.get('username')
         password = request.form.get('password')
