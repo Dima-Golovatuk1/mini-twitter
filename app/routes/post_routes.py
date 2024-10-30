@@ -79,7 +79,7 @@ def addpost():
 
         create_new_post(user_id, title, content, image_url, post_video)
         flash('Post created successfully!', 'success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile.profile'))
 
     return render_template('addpost.html', all_post=all_user_posts)
 
@@ -100,10 +100,10 @@ def delete_post():
             if post:
                 delete_post_by_id(post['id'])
                 flash("Post deleted successfully", 'success')
-                return redirect(url_for('delete_post'))
+                return redirect(url_for('post.delete_post'))
             else:
                 flash("No post found with that title.", 'danger')
-                return redirect(url_for('delete_post'))
+                return redirect(url_for('post.delete_post'))
 
     return render_template('delete_post.html', user_id=user_id, all_post=all_user_posts)
 
