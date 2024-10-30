@@ -541,17 +541,15 @@ li.dont_have {
 }
 
 .alert {
-<<<<<<< HEAD
     background: -webkit-linear-gradient(black, green, white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .alert-success {
-    background: -webkit-linear-gradient(yellow, green, white);
+    background: -webkit-linear-gradient(white, yellow, black);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-=======
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -559,10 +557,13 @@ li.dont_have {
 }
 
 .alert-success {
-    background-color: -webkit-linear-gradient(black, yellow, white);
-    color: yellow;
-
->>>>>>> 4313ca0a0711488f8d12f0ea76f15cc24fc0d2fe
+    background: -webkit-linear-gradient(white, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 25px;
 }
 
 .alert-danger {

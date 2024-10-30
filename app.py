@@ -13,12 +13,10 @@ def get_embed_url(video_url):
     if not video_url:
         return None
 
-    # Обработка TikTok
     if "tiktok.com" in video_url:
         video_id = video_url.split('/')[-1].split('?')[0]
         return f"https://www.tiktok.com/embed/{video_id}"
 
-    # Обработка YouTube
     if "youtube.com" in video_url:
         if "watch?v=" in video_url:
             video_url = video_url.replace("watch?v=", "embed/")
@@ -29,11 +27,9 @@ def get_embed_url(video_url):
         video_id = video_url.split('/')[-1].split('?')[0]
         video_url = f"https://www.youtube.com/embed/{video_id}"
 
-    # Удаление параметров после "&"
     if "&" in video_url:
         video_url = video_url.split("&")[0]
 
-    # Обработка Vimeo
     if "vimeo.com" in video_url:
         video_id = video_url.split('/')[-1].split('?')[0]
         video_url = f"https://player.vimeo.com/video/{video_id}"
@@ -423,6 +419,7 @@ def delete_post():
             post = get_post_by_title_and_user_id(post_title, user_id)
             if post:
                 delete_post_by_id(post['id'])
+                flash("Post deleted succesfully", 'success')
                 return redirect(url_for('delete_post'))
             else:
                 flash("No post found with that title.", 'danger')
