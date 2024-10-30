@@ -38,7 +38,7 @@ def login():
                 rem=rem
             )
             login_user(user_obj, remember=user_obj.remember())
-            return redirect(url_for('home'))
+            return redirect(url_for('home.home'))
         else:
             flash('Invalid email or password', 'danger')
             return redirect(url_for('login'))
@@ -53,13 +53,6 @@ def register():
 
     if request.method == 'POST':
 
-        def validate_email_format(email):
-            try:
-                valid = validate_email(email)
-                return True
-            except EmailNotValidError:
-                return False
-
         email = request.form.get('email')
         name = request.form.get('username')
         password = request.form.get('password')
@@ -67,6 +60,8 @@ def register():
         DOB = request.form.get('dob')
         gender = request.form.get('gender')
         users_list = get_users()
+
+        valid = validate_email_format(email)
 
         for user in users_list:
             if user['name'] == name:
@@ -119,7 +114,7 @@ def register():
         add_user_to_users(name, email, hash_password, DOB, gender)
 
         flash('Registration successful! You can now log in', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     return render_template('register.html')
 
