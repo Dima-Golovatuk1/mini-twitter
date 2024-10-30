@@ -541,14 +541,15 @@ li.dont_have {
 }
 
 .alert {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
+    background: -webkit-linear-gradient(black, green, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .alert-success {
-    background-color: #d4edda;
-    color: #155724;
+    background: -webkit-linear-gradient(yellow, green, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .alert-danger {
