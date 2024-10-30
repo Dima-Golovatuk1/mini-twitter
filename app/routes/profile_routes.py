@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from app.data.data_base.handlers import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -51,7 +51,7 @@ def view_profile(id):
                 add_new_follower(user_id, id)
                 flash('You are now following this user.', 'success')
 
-            return redirect(url_for('view_profile', id=id))
+            return redirect(url_for('profile.view_profile', id=id))
 
         return render_template('view.html', name=user['name'],
                                id=id, birthday=user['birthday'], sex=user['sex'],
@@ -59,4 +59,4 @@ def view_profile(id):
                                idol=id, user_id=user_id)
     else:
         flash("That user doesn't exist", 'danger')
-        return redirect(url_for('home'))
+        return redirect(url_for('home.home'))

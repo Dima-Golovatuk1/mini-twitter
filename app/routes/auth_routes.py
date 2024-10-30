@@ -13,7 +13,7 @@ login_manager.init_app(auth_bp)
 @auth_bp.route('/login', methods=["POST", "GET"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('home.home'))
 
     if request.method == 'POST':
         email = request.form.get('email')
@@ -23,7 +23,7 @@ def login():
 
         if not user:
             flash("Email doesn't exist", "danger")
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
 
         user = user[0]
 
@@ -41,7 +41,7 @@ def login():
             return redirect(url_for('home.home'))
         else:
             flash('Invalid email or password', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
 
     return render_template('login.html')
 
@@ -49,7 +49,7 @@ def login():
 @auth_bp.route('/register', methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('home.home'))
 
     if request.method == 'POST':
 
