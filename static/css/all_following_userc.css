@@ -19,6 +19,16 @@ body {
     padding: 0;
 }
 
+.header .container {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    border: #000000 1px solid;
+    max-width: 35%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 /* Header styling */
 .header {
     width: 100%;

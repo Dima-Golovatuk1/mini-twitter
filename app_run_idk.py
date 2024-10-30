@@ -13,12 +13,10 @@ def get_embed_url(video_url):
     if not video_url:
         return None
 
-    # Обработка TikTok
     if "tiktok.com" in video_url:
         video_id = video_url.split('/')[-1].split('?')[0]
         return f"https://www.tiktok.com/embed/{video_id}"
 
-    # Обработка YouTube
     if "youtube.com" in video_url:
         if "watch?v=" in video_url:
             video_url = video_url.replace("watch?v=", "embed/")
@@ -29,11 +27,9 @@ def get_embed_url(video_url):
         video_id = video_url.split('/')[-1].split('?')[0]
         video_url = f"https://www.youtube.com/embed/{video_id}"
 
-    # Удаление параметров после "&"
     if "&" in video_url:
         video_url = video_url.split("&")[0]
 
-    # Обработка Vimeo
     if "vimeo.com" in video_url:
         video_id = video_url.split('/')[-1].split('?')[0]
         video_url = f"https://player.vimeo.com/video/{video_id}"
@@ -231,9 +227,17 @@ def home():
 def explore():
     all_posts = get_all_posts()
 
+    for post in all_posts:
+        if post.get('video_url'):
+            post['video_url'] = get_embed_url(post['video_url'])
+
     if request.method == 'POST':
         title = request.form.get('explore_input').strip()
         posts_by_title = get_post_by_title_partial(title)
+
+        for post in posts_by_title:
+            if post.get('video_url'):
+                post['video_url'] = get_embed_url(post['video_url'])
 
         if posts_by_title:
             return render_template('explore.html', all_post=posts_by_title, search=title)
@@ -276,16 +280,17 @@ def view_profile(id):
     for post in all_posts:
         if post.get('video_url'):
             post['video_url'] = get_embed_url(post['video_url'])
+
     if user:
         if request.method == 'POST':
             if is_following_status:
                 remove_follower(user_id, id)
                 flash('You have unfollowed this user.', 'success')
-                redirect(url_for('view_profile', id=id))
             else:
                 add_new_follower(user_id, id)
                 flash('You are now following this user.', 'success')
-                redirect(url_for('view_profile', id=id))
+
+            return redirect(url_for('view_profile', id=id))
 
         return render_template('view.html', name=user['name'],
                                id=id, birthday=user['birthday'], sex=user['sex'],
@@ -414,6 +419,7 @@ def delete_post():
             post = get_post_by_title_and_user_id(post_title, user_id)
             if post:
                 delete_post_by_id(post['id'])
+                flash("Post deleted succesfully", 'success')
                 return redirect(url_for('delete_post'))
             else:
                 flash("No post found with that title.", 'danger')
@@ -464,8 +470,6 @@ def all_users():
 @login_required
 def all_following_users():
     user_id = current_user.id
-    print(f"Current user ID: {user_id}")
-
     following_ids = get_following_by_user_id(user_id)
 
     following_users = get_users_by_list_id(following_ids)
@@ -473,7 +477,7 @@ def all_following_users():
     if following_users:
         return render_template('all_following_users.html', users=following_users)
     else:
-        flash("You haven't any follows" ,'danger')
+        flash("You haven't any follows", 'danger')
         return redirect(url_for('all_users'))
 
 

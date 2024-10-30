@@ -541,26 +541,43 @@ li.dont_have {
 }
 
 .alert {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
+    background: -webkit-linear-gradient(black, green, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .alert-success {
-    background-color: #d4edda;
-    color: #155724;
+    background: -webkit-linear-gradient(white, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 25px;
+}
+
+.alert-success {
+    background: -webkit-linear-gradient(white, yellow, black);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 25px;
 }
 
 .alert-danger {
     background: -webkit-linear-gradient(black, red, white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-size: 25px;
 }
 
 .alert-warning {
     background: -webkit-linear-gradient(black, red, white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-size: 25px;
 }
 
 
