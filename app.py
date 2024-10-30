@@ -276,16 +276,17 @@ def view_profile(id):
     for post in all_posts:
         if post.get('video_url'):
             post['video_url'] = get_embed_url(post['video_url'])
+
     if user:
         if request.method == 'POST':
             if is_following_status:
                 remove_follower(user_id, id)
                 flash('You have unfollowed this user.', 'success')
-                redirect(url_for('view_profile', id=id))
             else:
                 add_new_follower(user_id, id)
                 flash('You are now following this user.', 'success')
-                redirect(url_for('view_profile', id=id))
+
+            return redirect(url_for('view_profile', id=id))
 
         return render_template('view.html', name=user['name'],
                                id=id, birthday=user['birthday'], sex=user['sex'],
@@ -473,7 +474,7 @@ def all_following_users():
     if following_users:
         return render_template('all_following_users.html', users=following_users)
     else:
-        flash("You haven't any follows" ,'danger')
+        flash("You haven't any follows", 'danger')
         return redirect(url_for('all_users'))
 
 
