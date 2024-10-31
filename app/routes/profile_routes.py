@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
-from app.data.data_base.handlers import *
+from app.data.data_base import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from app.modules import *
 

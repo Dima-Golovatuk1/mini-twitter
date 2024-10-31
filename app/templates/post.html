@@ -33,25 +33,26 @@
                 </ul>
             </div>
         </nav>
-    </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="flash-messages">
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-            {{ message }}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
-    {% endif %}
-    {% endwith %}
 </header>
 <main>
     <section class="section__post">
         <div class="container">
             <ul class="section__post__list">
                 <li class="section__post__item">
-                    <h2><a class="register__btn" href="{{ url_for('view_profile', id=post_author_id) }}">{{ post_author
+                    <h2><a class="register__btn" href="{{ url_for('profile.view_profile', id=post_author_id) }}">{{
+                        post_author
                         }}</a></h2>
                     <br><br>
                     <h1 class="section__post__item__title">{{ title }}</h1>
@@ -68,7 +69,7 @@
                             allowfullscreen></iframe>
                     {% endif %}
                     {% if is_post_author %}
-                    <a class="delete__post" href="{{ url_for('delete_post', id=id) }}">DELETE POST</a>
+                    <a class="delete__post" href="{{ url_for('post.delete_post', id=id) }}">DELETE POST</a>
                     {% endif %}
                 </li>
             </ul>
@@ -86,11 +87,11 @@
             <ul class="section__post__list">
                 {% for comment in comments|sort(attribute='id', reverse=True) %}
                 <li class="section__post__item">
-                    <h4><a class="register__btn" href="{{ url_for('view_profile', id=comment['author_id']) }}">{{
+                    <h4><a class="register__btn" href="{{ url_for('profile.view_profile', id=comment['author_id']) }}">{{
                         comment['author_name'] }} </a></h4>
                     <h3 class="section__post__item__title">{{ comment['comment'] }}</h3>
                     {% if comment['user_id'] == user_id %}
-                    <form action="{{ url_for('delete_comment', id=comment['id']) }}" method="POST"
+                    <form action="{{ url_for('post.delete_comment', id=comment['id']) }}" method="POST"
                           style="display:inline;">
                         <button type="submit" class="delete__post">DELETE COMMENT</button>
                     </form>

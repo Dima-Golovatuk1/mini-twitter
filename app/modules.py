@@ -1,6 +1,6 @@
 from flask import flash, redirect, url_for
 from flask_login import LoginManager, UserMixin
-from app.data.data_base.handlers import *
+from app.data.data_base import *
 from email_validator import validate_email, EmailNotValidError
 
 
