@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from app.data.data_base.handlers import *
+from app.data.data_base import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from app.modules import *
 
@@ -42,7 +42,7 @@ def post(id):
         if comment:
             add_comment(user_id, id, comment)
             flash('Your comment has been added!', 'success')
-            return redirect(url_for('post', id=id))
+            return redirect(url_for('post.post', id=id))
 
     return render_template('post.html',
                            title=title, content=content, id=id, comments=comments,

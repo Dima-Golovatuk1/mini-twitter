@@ -27,7 +27,7 @@ def all_following_users():
         return render_template('all_following_users.html', users=following_users)
     else:
         flash("You haven't any follows", 'danger')
-        return redirect(url_for('all_users'))
+        return redirect(url_for('other.all_users'))
 
 
 @other_bp.route('/global')

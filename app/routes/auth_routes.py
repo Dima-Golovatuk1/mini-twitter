@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.modules import *
-from app.data.data_base.handlers import *
+from app.data.data_base import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 
